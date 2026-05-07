@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#8bd6b7",
+                        "primary-container": "#065f46",
+                        "outline-variant": "#bec9c2",
+                        "on-secondary-fixed-variant": "#005236",
+                        "background": "#f9f9ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#d9e6dd",
+                        "on-secondary-container": "#00714d",
+                        "on-surface-variant": "#3f4944",
+                        "secondary": "#006c49",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#dce2f3",
+                        "surface-container-high": "#e2e8f8",
+                        "on-surface": "#151c27",
+                        "tertiary": "#333f39",
+                        "primary-fixed": "#a6f2d1",
+                        "on-tertiary-container": "#becac2",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "inverse-primary": "#8bd6b6",
+                        "secondary-fixed": "#6ffbbe",
+                        "inverse-on-surface": "#ebf1ff",
+                        "surface-tint": "#1b6b51",
+                        "on-primary-fixed": "#002116",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f0f3ff",
+                        "primary": "#004532",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "tertiary-container": "#4a564f",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#002113",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#131e19",
+                        "on-background": "#151c27",
+                        "outline": "#6f7973",
+                        "surface-bright": "#f9f9ff",
+                        "surface": "#f9f9ff",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2a313d",
+                        "surface-container-highest": "#dce2f3",
+                        "on-primary-fixed-variant": "#00513b",
+                        "secondary-container": "#6cf8bb",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "surface-container": "#e7eefe",
+                        "surface-dim": "#d3daea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "1rem",
+                        "xl": "3rem",
+                        "lg": "2rem",
+                        "xs": "0.5rem",
+                        "md": "1.5rem",
+                        "base": "4px",
+                        "gutter": "1.5rem",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"], "h3": ["Inter"], "button": ["Inter"],
+                        "body-sm": ["Inter"], "body-lg": ["Inter"], "label-caps": ["Inter"],
+                        "h2": ["Inter"], "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full h-16 px-6 bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-neutral-200">
+<div class="text-xl font-black text-emerald-900 font-h1">Sertifikasi Halal Portal</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-neutral-500 font-inter text-sm font-medium tracking-tight hover:text-emerald-600 transition-colors" href="#">Dashboard</a>
+<a class="text-neutral-500 font-inter text-sm font-medium tracking-tight hover:text-emerald-600 transition-colors" href="#">Bantuan</a>
+<a class="text-neutral-500 font-inter text-sm font-medium tracking-tight hover:text-emerald-600 transition-colors" href="#">Panduan</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="px-4 py-2 text-sm font-medium text-emerald-900 border border-emerald-900 rounded-lg hover:bg-neutral-50 transition-all">Simpan Draft</button>
+<button class="px-4 py-2 text-sm font-medium text-white bg-emerald-900 rounded-lg opacity-50 cursor-not-allowed">Kirim Assessment</button>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar -->
+<aside class="flex flex-col w-64 fixed h-screen top-0 left-0 pt-20 pb-6 z-30 bg-white border-r border-neutral-200">
+<div class="px-6 mb-8">
+<div class="flex items-center space-x-3 mb-2">
+<div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-900" data-icon="business_center">business_center</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface">PT. Usaha Berkah</h4>
+<p class="text-[10px] text-on-surface-variant font-label-caps">ID: PR-2023-001</p>
+</div>
+</div>
+<button class="w-full py-2 text-xs font-bold text-emerald-700 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-all">Cek Status</button>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center space-x-3 px-6 py-3 text-neutral-600 hover:bg-neutral-50 font-inter text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="business_center">business_center</span>
+<span>Profil Usaha</span>
+</a>
+<a class="flex items-center space-x-3 px-6 py-3 text-neutral-600 hover:bg-neutral-50 font-inter text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Dokumen Legal</span>
+</a>
+<a class="flex items-center space-x-3 px-6 py-3 bg-emerald-50 text-emerald-700 border-r-4 border-emerald-700 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="factory">factory</span>
+<span>Proses Produksi</span>
+</a>
+<a class="flex items-center space-x-3 px-6 py-3 text-neutral-600 hover:bg-neutral-50 font-inter text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Bahan Baku</span>
+</a>
+<a class="flex items-center space-x-3 px-6 py-3 text-neutral-600 hover:bg-neutral-50 font-inter text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span>Review Akhir</span>
+</a>
+</nav>
+<div class="px-6 pt-6 border-t border-neutral-100">
+<a class="flex items-center space-x-3 py-2 text-neutral-600 hover:text-emerald-700 transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Pengaturan</span>
+</a>
+<a class="flex items-center space-x-3 py-2 text-neutral-600 hover:text-red-600 transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span class="text-sm font-medium">Keluar</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 p-8 min-h-screen">
+<!-- Breadcrumbs & Header -->
+<div class="mb-8">
+<nav class="flex text-on-surface-variant text-sm mb-2 space-x-2">
+<span>Dashboard</span>
+<span class="material-symbols-outlined text-sm leading-none" data-icon="chevron_right">chevron_right</span>
+<span>Pengajuan APP-2024-089</span>
+<span class="material-symbols-outlined text-sm leading-none" data-icon="chevron_right">chevron_right</span>
+<span class="text-emerald-900 font-semibold">Pra-Assessment</span>
+</nav>
+<div class="flex justify-between items-end">
+<h1 class="text-h2 font-h2 text-emerald-950">Pra-Assessment — Hotel Two Star</h1>
+<div class="text-right">
+<p class="text-xs text-on-surface-variant mb-1 italic">Tersimpan otomatis 5 menit lalu</p>
+</div>
+</div>
+</div>
+<!-- Top Progress Area -->
+<div class="bg-white p-6 border border-neutral-200 rounded-xl mb-8">
+<div class="grid grid-cols-4 gap-4 mb-8">
+<!-- Step 1 -->
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm" data-icon="check">check</span>
+</div>
+<span class="text-sm font-semibold text-emerald-900">Profil Usaha</span>
+</div>
+<!-- Step 2 -->
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm" data-icon="check">check</span>
+</div>
+<span class="text-sm font-semibold text-emerald-900">Pilih Scope &amp; Level</span>
+</div>
+<!-- Step 3 -->
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 border-2 border-emerald-900 flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-emerald-900"></div>
+</div>
+<span class="text-sm font-bold text-emerald-900">Pra-Assessment</span>
+</div>
+<!-- Step 4 -->
+<div class="flex items-center space-x-3 opacity-40">
+<div class="w-8 h-8 rounded-full border-2 border-neutral-300 flex items-center justify-center"></div>
+<span class="text-sm font-medium text-neutral-500">Submit Pengajuan</span>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex-1 h-3 bg-tertiary-fixed rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim w-[68%]" style="width: 68%;"></div>
+</div>
+<span class="text-sm font-bold text-emerald-900">68% selesai · 8 dari 12 pertanyaan dijawab</span>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Sidebar Categories -->
+<div class="col-span-3 space-y-3">
+<div class="bg-white p-4 border border-neutral-200 rounded-xl flex justify-between items-center opacity-70">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Legalitas</span>
+<span class="text-sm font-semibold text-neutral-600">3/3 Pertanyaan</span>
+</div>
+<span class="material-symbols-outlined text-emerald-600" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="bg-white p-4 border-2 border-emerald-900 rounded-xl flex justify-between items-center shadow-sm">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-emerald-900 uppercase tracking-wider">Fasilitas Ibadah</span>
+<span class="text-sm font-semibold text-emerald-700">2/3 Pertanyaan</span>
+</div>
+<div class="w-2.5 h-2.5 rounded-full bg-emerald-700"></div>
+</div>
+<div class="bg-neutral-50 p-4 border border-neutral-200 rounded-xl flex justify-between items-center">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Makanan &amp; Minuman</span>
+<span class="text-sm font-semibold text-neutral-500">0/3 Pertanyaan</span>
+</div>
+<div class="w-2.5 h-2.5 rounded-full border border-neutral-300"></div>
+</div>
+<div class="bg-neutral-50 p-4 border border-neutral-200 rounded-xl flex justify-between items-center">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Pelayanan Tamu</span>
+<span class="text-sm font-semibold text-neutral-500">0/3 Pertanyaan</span>
+</div>
+<div class="w-2.5 h-2.5 rounded-full border border-neutral-300"></div>
+</div>
+</div>
+<!-- Main Form Area -->
+<div class="col-span-9 space-y-6">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-h3 font-h3 text-emerald-950">Fasilitas Ibadah</h3>
+<span class="text-sm font-medium text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">2 dari 3 pertanyaan dijawab</span>
+</div>
+<!-- Question 1 -->
+<div class="bg-white p-6 border-l-4 border-l-emerald-600 border border-neutral-200 rounded-xl hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<p class="text-body-md font-body-md font-semibold text-neutral-800">1. Apakah tersedia mushola atau ruang shalat yang layak untuk tamu?</p>
+<span class="material-symbols-outlined text-emerald-600" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="space-y-3 mb-4">
+<label class="flex items-center space-x-3 p-3 border border-emerald-900 bg-emerald-50/30 rounded-lg cursor-pointer">
+<input checked="" class="w-4 h-4 text-emerald-900 border-emerald-900 focus:ring-emerald-900" name="q1" type="radio"/>
+<span class="text-body-sm font-medium">Ya, tersedia dan terawat</span>
+</label>
+<label class="flex items-center space-x-3 p-3 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50">
+<input class="w-4 h-4 text-emerald-900 border-neutral-300 focus:ring-emerald-900" name="q1" type="radio"/>
+<span class="text-body-sm">Ya, namun kondisinya kurang baik</span>
+</label>
+<label class="flex items-center space-x-3 p-3 border border-neutral-200 rounded-lg cursor-pointer hover:bg-neutral-50">
+<input class="w-4 h-4 text-emerald-900 border-neutral-300 focus:ring-emerald-900" name="q1" type="radio"/>
+<span class="text-body-sm">Belum tersedia</span>
+</label>
+</div>
+<p class="text-xs text-on-surface-variant flex items-start space-x-2">
+<span class="material-symbols-outlined text-sm" data-icon="info">info</span>
+<span>Fasilitas shalat harus terpisah antara pria dan wanita, dilengkapi peralatan shalat dasar.</span>
+</p>
+</div>
+<!-- Question 2 -->
+<div class="bg-white p-6 border-l-4 border-l-emerald-600 border border-neutral-200 rounded-xl hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<p class="text-body-md font-body-md font-semibold text-neutral-800">2. Upload foto mushola atau area shalat yang tersedia</p>
+<span class="material-symbols-outlined text-emerald-600" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center space-x-4 mb-4">
+<div class="relative w-40 h-28 rounded-lg overflow-hidden group">
+<img class="w-full h-full object-cover" data-alt="interior of a modern clean prayer room with prayer rugs and soft warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI1rqxmkngMYN1LLgdTVbJ8QfZbNhpyZGJFeGjtxtEkOkG8C7OgocxM_4ZWUbAOqZSKb0pPP1WEQ_gN-M9KsD69a0FYB4w_A79zV7LI4GoaTMT7mBKFSZETvvwpxfOrfkSkYHvlsXUMat7HhTWp87mADaGU8ClQaS_I6rYMjSFq9N39MKoVEqdzRuPjA-HVx06oL4J3brvcDo0ZN0pCSRmgHgPDiqI4axh9U4UdnIchjyqgqJ_Vv96542mbTb81AgTnAEHJi3P5Q"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<button class="bg-white text-error p-1 rounded-full"><span class="material-symbols-outlined" data-icon="close">close</span></button>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-black/60 p-1 text-[10px] text-white truncate">mushola_foto.jpg</div>
+</div>
+<button class="border-2 border-dashed border-neutral-300 rounded-lg w-40 h-28 flex flex-col items-center justify-center text-neutral-400 hover:border-emerald-600 hover:text-emerald-600 transition-all">
+<span class="material-symbols-outlined" data-icon="add_a_photo">add_a_photo</span>
+<span class="text-[10px] font-bold mt-1">TAMBAH FOTO</span>
+</button>
+</div>
+<p class="text-xs text-on-surface-variant flex items-start space-x-2">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span>Format JPG/PNG, maks 10MB. Pastikan foto menampilkan kondisi terkini.</span>
+</p>
+</div>
+<!-- Question 3 -->
+<div class="bg-white p-6 border-l-4 border-l-amber-500 border border-amber-200 rounded-xl shadow-[0px_4px_10px_rgba(245,158,11,0.05)] hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center space-x-2">
+<p class="text-body-md font-body-md font-semibold text-neutral-800">3. Berapa kapasitas maksimum jamaah yang dapat shalat bersamaan?</p>
+<span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-black rounded uppercase tracking-tighter">WAJIB</span>
+</div>
+</div>
+<div class="relative max-w-xs mb-4">
+<input class="w-full pl-4 pr-16 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-900 focus:border-emerald-900" placeholder="Contoh: 20" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 font-medium">orang</span>
+</div>
+<p class="text-xs text-on-surface-variant flex items-start space-x-2">
+<span class="material-symbols-outlined text-sm" data-icon="lightbulb">lightbulb</span>
+<span>Perkiraan kapasitas berdasarkan luas ruangan tersedia.</span>
+</p>
+</div>
+<!-- Footer Navigation -->
+<div class="pt-8 flex justify-between items-center border-t border-neutral-200">
+<a class="flex items-center space-x-2 text-emerald-900 font-bold text-sm hover:underline" href="#">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+<span>Kategori Sebelumnya</span>
+</a>
+<button class="bg-emerald-900 text-white px-8 py-3 rounded-lg font-bold flex items-center space-x-2 hover:bg-emerald-950 transition-all shadow-md">
+<span>Kategori Berikutnya</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

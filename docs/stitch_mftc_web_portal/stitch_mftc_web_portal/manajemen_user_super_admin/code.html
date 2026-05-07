@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MFTC Portal - Manajemen User Internal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#d9e6dd",
+                        "primary-fixed": "#a6f2d1",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "on-secondary-fixed-variant": "#005236",
+                        "inverse-on-surface": "#ebf1ff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#00513b",
+                        "on-surface": "#151c27",
+                        "on-surface-variant": "#3f4944",
+                        "surface-container-highest": "#dce2f3",
+                        "secondary-container": "#6cf8bb",
+                        "surface-variant": "#dce2f3",
+                        "outline": "#6f7973",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#1b6b51",
+                        "primary": "#004532",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-background": "#151c27",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#8bd6b7",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "tertiary": "#333f39",
+                        "on-tertiary-fixed": "#131e19",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "inverse-primary": "#8bd6b6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e2e8f8",
+                        "surface-dim": "#d3daea",
+                        "surface-container-low": "#f0f3ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "primary-container": "#065f46",
+                        "inverse-surface": "#2a313d",
+                        "background": "#f9f9ff",
+                        "surface-container": "#e7eefe",
+                        "on-tertiary-container": "#becac2",
+                        "outline-variant": "#bec9c2",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#4a564f",
+                        "on-secondary-container": "#00714d",
+                        "on-primary-fixed": "#002116",
+                        "surface-bright": "#f9f9ff",
+                        "secondary": "#006c49",
+                        "on-secondary-fixed": "#002113"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "1.5rem",
+                        "base": "4px",
+                        "xl": "3rem",
+                        "container-max": "1280px",
+                        "sm": "1rem",
+                        "gutter": "1.5rem",
+                        "xs": "0.5rem",
+                        "lg": "2rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "button": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .sidebar-active {
+            font-weight: 600;
+        }
+        /* Custom scrollbar for clean corporate look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 bg-slate-50 border-r border-slate-200 w-64 z-50">
+<div class="px-6 mb-8">
+<h1 class="text-xl font-black text-emerald-900">MFTC Global</h1>
+<p class="text-xs text-slate-500 uppercase tracking-widest font-semibold mt-1">Certification Authority</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-emerald-50/50 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-900 bg-emerald-50 border-r-4 border-emerald-900 font-semibold transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-body-sm">User Management</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-emerald-50/50 transition-all" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span class="font-body-sm">Auditors</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-emerald-50/50 transition-all" href="#">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="font-body-sm">Sales Pipeline</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-emerald-50/50 transition-all" href="#">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-body-sm">Certificates</span>
+</a>
+</nav>
+<div class="px-4 mb-6">
+<button class="w-full py-3 bg-primary-container text-white rounded-lg font-button flex items-center justify-center gap-2 shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">person_add</span>
+                Add Internal User
+            </button>
+</div>
+<div class="border-t border-slate-200 pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-emerald-50/50 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-sm">System Settings</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-emerald-50/50 transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="flex justify-between items-center w-full px-6 h-16 sticky top-0 z-40 bg-white border-b border-slate-200 ml-0 md:pl-72">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-slate-50 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-emerald-900/20 placeholder:text-slate-400" placeholder="Cari nomor sertifikat, user, atau instansi..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-slate-900">Super Admin</p>
+<p class="text-[10px] text-slate-500">MFTC Portal</p>
+</div>
+<img alt="Super Admin Profile" class="w-10 h-10 rounded-full object-cover border border-slate-200" data-alt="Professional portrait of a male executive in a sharp business suit with a clean office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1K8yKh2FFT67GKBK-gce0hKHjh1NKQnikKHJKAoPqMiRCdhUYvpHllqC8gpRzXdKJ0cybpUstjzhmLe55aaijRm1cSxzmdbqD1x0dONNqIOZ0myk1EYpCAsX1ROQ0r6QQjyZcYMiXrJB6YL5XzxVQ2YIlBN44YqwLGCZKh1l1c2VSt9e-UdMhzyQUYomhiDx7QWVklJUtNlyArbpPeEIyMstY55CyckVv8dM4YfU-0AHZ617rsUVn0z4q1qzzp7K_XcFtwdU2NQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="md:ml-64 p-gutter max-w-container-max mx-auto">
+<!-- Page Header -->
+<div class="mb-lg">
+<h2 class="font-h2 text-primary">Manajemen User Internal</h2>
+<p class="font-body-sm text-on-surface-variant mt-1">Kelola akun Sales dan Auditor. Pelaku Usaha mendaftar secara mandiri.</p>
+</div>
+<!-- Filter & Action Row -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-md">
+<div class="flex flex-wrap items-center gap-3 flex-1">
+<div class="relative min-w-[300px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="w-full bg-white border border-slate-200 rounded py-2 pl-10 pr-4 text-sm focus:border-primary focus:ring-0" placeholder="Cari nama atau email..." type="text"/>
+</div>
+<select class="bg-white border border-slate-200 rounded py-2 px-3 text-sm focus:border-primary focus:ring-0 min-w-[140px]">
+<option>Semua Role</option>
+<option>Sales</option>
+<option>Auditor</option>
+</select>
+<select class="bg-white border border-slate-200 rounded py-2 px-3 text-sm focus:border-primary focus:ring-0 min-w-[140px]">
+<option>Semua Status</option>
+<option>Aktif</option>
+<option>Nonaktif</option>
+</select>
+</div>
+<button class="bg-primary text-white px-6 py-2 rounded font-button flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">add</span>
+                Tambah User
+            </button>
+</div>
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-lg">
+<div class="bg-white p-md border border-slate-200 rounded-xl">
+<p class="font-label-caps text-slate-500 mb-2 uppercase">TOTAL USER INTERNAL</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-slate-900">12</span>
+<span class="text-xs text-slate-400 font-medium">Personel</span>
+</div>
+</div>
+<div class="bg-white p-md border border-slate-200 rounded-xl">
+<p class="font-label-caps text-slate-500 mb-2 uppercase">SALES</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-slate-900">4</span>
+<span class="text-xs text-slate-400 font-medium">Personel</span>
+</div>
+</div>
+<div class="bg-white p-md border border-slate-200 rounded-xl">
+<p class="font-label-caps text-slate-500 mb-2 uppercase">AUDITOR</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-slate-900">8</span>
+<span class="text-xs text-slate-400 font-medium">Personel</span>
+</div>
+</div>
+</div>
+<!-- User Table -->
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 border-b border-slate-200">
+<tr>
+<th class="px-6 py-4 font-label-caps text-slate-500 uppercase">Nama</th>
+<th class="px-6 py-4 font-label-caps text-slate-500 uppercase">Email</th>
+<th class="px-6 py-4 font-label-caps text-slate-500 uppercase">Role</th>
+<th class="px-6 py-4 font-label-caps text-slate-500 uppercase text-center">Tugas Aktif</th>
+<th class="px-6 py-4 font-label-caps text-slate-500 uppercase">Status</th>
+<th class="px-6 py-4 font-label-caps text-slate-500 uppercase">Bergabung</th>
+<th class="px-6 py-4 font-label-caps text-slate-500 uppercase text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold text-xs">BS</div>
+<span class="font-body-sm font-semibold">Budi Santoso</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-600">budi.s@mftc.com</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase bg-purple-50 text-purple-700 border border-purple-100">Auditor</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-center font-medium">3 tugas</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-body-sm text-emerald-700 font-medium">Aktif</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-500">12 Jan 2024</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 hover:text-primary transition-colors" title="Edit"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-1 hover:text-red-600 transition-colors" title="Nonaktifkan"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold text-xs">SD</div>
+<span class="font-body-sm font-semibold">Sari Dewi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-600">sari.dewi@mftc.com</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase bg-purple-50 text-purple-700 border border-purple-100">Auditor</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-center font-medium">5 tugas</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-body-sm text-emerald-700 font-medium">Aktif</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-500">05 Feb 2024</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-1 hover:text-red-600 transition-colors"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold text-xs">RM</div>
+<span class="font-body-sm font-semibold">Reza Maulana</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-600">reza.m@mftc.com</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase bg-purple-50 text-purple-700 border border-purple-100">Auditor</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-center font-medium">1 tugas</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-body-sm text-emerald-700 font-medium">Aktif</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-500">10 Feb 2024</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-1 hover:text-red-600 transition-colors"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold text-xs">AF</div>
+<span class="font-body-sm font-semibold">Ahmad Fauzi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-600">ahmad.f@mftc.com</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">Sales</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-center text-slate-400">-</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-body-sm text-emerald-700 font-medium">Aktif</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-500">15 Feb 2024</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-1 hover:text-red-600 transition-colors"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold text-xs">DR</div>
+<span class="font-body-sm font-semibold">Dewi Rahayu</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-600">dewi.r@mftc.com</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase bg-blue-50 text-blue-700 border border-blue-100">Sales</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-center text-slate-400">-</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-body-sm text-emerald-700 font-medium">Aktif</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-500">18 Feb 2024</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-1 hover:text-red-600 transition-colors"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 6 (Nonaktif) -->
+<tr class="bg-slate-50/50 grayscale-[0.5] opacity-70">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold text-xs">HB</div>
+<span class="font-body-sm font-semibold text-slate-500">Hasan Basri</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-400">hasan.b@mftc.com</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase bg-slate-100 text-slate-400 border border-slate-200">Auditor</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-center text-slate-400">0 tugas</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-slate-300"></span>
+<span class="text-body-sm text-slate-400 font-medium">Nonaktif</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-slate-400">01 Jan 2024</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-1 hover:text-emerald-600 transition-colors" title="Aktifkan"><span class="material-symbols-outlined text-[20px]">check_circle</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-100 flex items-center justify-between bg-white">
+<span class="text-xs text-slate-500">Menampilkan 6 dari 12 user</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-slate-200 rounded text-xs hover:bg-slate-50 disabled:opacity-50" disabled="">Sebelumnya</button>
+<button class="px-3 py-1 border border-slate-200 rounded text-xs hover:bg-slate-50">Selanjutnya</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal Overlay (Main Form) -->
+<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+<div class="bg-white w-full max-w-lg rounded-xl shadow-2xl overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+<h3 class="font-h3 text-primary text-lg">Tambah / Edit User</h3>
+<button class="text-slate-400 hover:text-slate-600 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 space-y-4">
+<div>
+<label class="block font-label-caps text-slate-500 uppercase mb-1">Nama Lengkap*</label>
+<input class="w-full border-slate-200 rounded focus:border-primary focus:ring-0 text-sm py-2" placeholder="Contoh: Ahmad Maulana" type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-slate-500 uppercase mb-1">Email*</label>
+<input class="w-full border-slate-200 rounded focus:border-primary focus:ring-0 text-sm py-2" placeholder="nama@mftc.com" type="email"/>
+</div>
+<div>
+<label class="block font-label-caps text-slate-500 uppercase mb-2">Role</label>
+<div class="flex gap-6">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="text-primary focus:ring-primary h-4 w-4" name="role" type="radio"/>
+<span class="text-sm font-medium">Sales</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary h-4 w-4" name="role" type="radio"/>
+<span class="text-sm font-medium">Auditor</span>
+</label>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-label-caps text-slate-500 uppercase mb-1">Telepon</label>
+<input class="w-full border-slate-200 rounded focus:border-primary focus:ring-0 text-sm py-2" placeholder="0812..." type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-slate-500 uppercase mb-1">Password</label>
+<div class="relative">
+<input class="w-full bg-slate-50 border-slate-200 rounded text-sm py-2 pr-10" readonly="" type="text" value="MFTC-88xP9"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Auditor specialization - only visible if Auditor selected -->
+<div class="pt-2">
+<label class="block font-label-caps text-slate-500 uppercase mb-2">Spesialisasi</label>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1 bg-emerald-50 text-primary px-3 py-1 rounded text-xs font-semibold border border-emerald-100">Hotel <button><span class="material-symbols-outlined text-[14px]">close</span></button></span>
+<span class="inline-flex items-center gap-1 bg-emerald-50 text-primary px-3 py-1 rounded text-xs font-semibold border border-emerald-100">Restoran <button><span class="material-symbols-outlined text-[14px]">close</span></button></span>
+<span class="inline-flex items-center gap-1 bg-emerald-50 text-primary px-3 py-1 rounded text-xs font-semibold border border-emerald-100">Logistik <button><span class="material-symbols-outlined text-[14px]">close</span></button></span>
+<button class="inline-flex items-center gap-1 text-slate-400 border border-slate-200 border-dashed px-3 py-1 rounded text-xs font-semibold hover:border-primary hover:text-primary transition-all">+ Tambah</button>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 bg-slate-50 flex justify-end gap-3 border-t border-slate-200">
+<button class="px-5 py-2 font-button text-slate-600 hover:bg-slate-200 transition-colors rounded">Batal</button>
+<button class="px-5 py-2 font-button bg-primary text-white rounded hover:opacity-90 transition-opacity">Simpan User</button>
+</div>
+</div>
+</div>
+<!-- Small Modal Overlay (Password Reset) -->
+<div class="fixed inset-0 bg-slate-900/40 backdrop-blur-[2px] z-[110] flex items-center justify-center p-4">
+<div class="bg-white w-full max-w-sm rounded-lg shadow-xl overflow-hidden border border-slate-200">
+<div class="p-6">
+<div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mb-4 mx-auto">
+<span class="material-symbols-outlined text-2xl">lock_reset</span>
+</div>
+<h4 class="text-center font-h3 text-base mb-2">Reset password untuk Budi Santoso?</h4>
+<p class="text-center font-body-sm text-slate-500">Password baru akan digenerate secara otomatis. Pastikan untuk mencatatnya sebelum menutup jendela ini.</p>
+</div>
+<div class="px-6 py-4 bg-slate-50 flex flex-col gap-2 border-t border-slate-100">
+<button class="w-full py-2 font-button bg-primary text-white rounded hover:opacity-90 transition-opacity">Ya, Reset Password</button>
+<button class="w-full py-2 font-button text-slate-600 hover:bg-slate-200 transition-colors rounded">Batal</button>
+</div>
+</div>
+</div>
+</body></html>

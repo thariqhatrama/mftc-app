@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<title>Manajemen User Internal | MFTC Super Admin</title>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-surface-variant": "#3f4944",
+                      "inverse-surface": "#2a313d",
+                      "surface-container-high": "#e2e8f8",
+                      "surface-container-low": "#f0f3ff",
+                      "on-primary": "#ffffff",
+                      "surface": "#f9f9ff",
+                      "on-primary-container": "#8bd6b7",
+                      "error": "#ba1a1a",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#065f46",
+                      "on-surface": "#151c27",
+                      "on-background": "#151c27",
+                      "surface-variant": "#dce2f3",
+                      "secondary-fixed": "#6ffbbe",
+                      "on-secondary-fixed": "#002113",
+                      "background": "#f9f9ff",
+                      "tertiary": "#333f39",
+                      "primary-fixed": "#a6f2d1",
+                      "primary": "#065f46",
+                      "secondary": "#006c49",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#d3daea",
+                      "outline-variant": "#bec9c2",
+                      "surface-container-highest": "#dce2f3",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed-variant": "#005236",
+                      "on-tertiary-fixed-variant": "#3e4943",
+                      "outline": "#6f7973",
+                      "secondary-container": "#6cf8bb",
+                      "primary-fixed-dim": "#8bd6b6",
+                      "tertiary-container": "#4a564f",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#e7eefe",
+                      "inverse-on-surface": "#ebf1ff",
+                      "on-tertiary-container": "#becac2",
+                      "on-primary-fixed-variant": "#00513b",
+                      "surface-bright": "#f9f9ff",
+                      "inverse-primary": "#8bd6b6",
+                      "tertiary-fixed-dim": "#bdcac1",
+                      "tertiary-fixed": "#d9e6dd",
+                      "on-secondary-container": "#00714d",
+                      "on-tertiary-fixed": "#131e19",
+                      "surface-tint": "#065f46",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed": "#002116"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "0.5rem",
+                      "xl": "3rem",
+                      "sm": "1rem",
+                      "container-max": "1280px",
+                      "gutter": "1.5rem",
+                      "lg": "2rem",
+                      "md": "1.5rem",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "h3": ["Inter"],
+                      "button": ["Inter"],
+                      "h1": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "h2": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                      "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                      "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex font-['Inter'] antialiased">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 border-r border-gray-200 bg-white fixed left-0 top-0 flex flex-col py-6 z-50">
+<div class="px-6 mb-8">
+<h1 class="text-lg font-black text-emerald-900 tracking-tight">MFTC Portal</h1>
+<p class="text-xs text-gray-500 font-inter">Super Admin</p>
+</div>
+<nav class="flex-1 px-0 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-6 py-3 text-gray-500 hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200 ease-in-out transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span class="text-sm tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 bg-emerald-50 text-emerald-800 font-semibold border-r-4 border-emerald-800 transition-all duration-200 ease-in-out transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="group">group</span>
+<span class="text-sm tracking-tight">Manajemen User</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-gray-500 hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200 ease-in-out transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="verified_user">verified_user</span>
+<span class="text-sm tracking-tight">Verifikasi Pembayaran</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-gray-500 hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200 ease-in-out transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="text-sm tracking-tight">Konfigurasi Sistem</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-gray-500 hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200 ease-in-out transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="history">history</span>
+<span class="text-sm tracking-tight">Log Aktivitas</span>
+</a>
+</nav>
+<div class="px-3 mt-auto space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-gray-500 hover:bg-gray-50 hover:text-emerald-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="logout">logout</span>
+<span class="text-sm tracking-tight">Logout</span>
+</a>
+</div>
+</aside>
+<div class="flex-1 flex flex-col ml-64">
+<!-- TopNavBar Component -->
+<header class="h-16 px-6 w-full sticky top-0 z-40 border-b border-gray-200 bg-white flex items-center justify-between font-inter text-sm antialiased">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-emerald-900">MFTC Super Admin</span>
+<div class="relative w-80">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+<input class="bg-gray-100 border-none rounded-full py-2 pl-10 pr-4 text-sm w-full focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all" placeholder="Cari data..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-gray-600 hover:bg-gray-50 rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</button>
+<button class="p-2 text-gray-600 hover:bg-gray-50 rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="ml-2 flex items-center gap-3">
+<div class="w-9 h-9 rounded-full overflow-hidden border border-gray-200 cursor-pointer active:opacity-80 transition-all">
+<img alt="Admin Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGC6xiWBC6AUbPUe9_p2sR2PSmnWHmeBKznTIrG6-iFDJ70pZVxef8KcW8IH2pn1Zmvx2vrbBOnmwqGAs80B_QhK6I-AkDaHyIjAqj4V_ohaNSF3OEN2Uf3dsfihknpYSUYOx-lRg64vYbV7qItqFJu3cUloVVJ7sNllBdLeCTlE1_n8z3H-S59LBFUDq6Pc4a1QcSiXDnesAkDVRVjaUfaQJ_De7_nt6wE_q_glnjH7PT-D01KmiiKk5VKJ5YBiM0NINmmJ30jg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="p-8 max-w-[1280px] mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="font-h2 text-h2 text-emerald-900">Manajemen User Internal</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Kelola akun Sales dan Auditor. Pelaku Usaha mendaftar secara mandiri.</p>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-button text-button flex items-center gap-2 shadow-md hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>Tambah User</span>
+</button>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-8">
+<div class="bg-white p-md rounded-xl border border-gray-200 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-800">
+<span class="material-symbols-outlined">group</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-gray-500 uppercase">Total Internal</p>
+<p class="font-h3 text-h3 text-emerald-900">12</p>
+</div>
+</div>
+<div class="bg-white p-md rounded-xl border border-gray-200 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-800">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-gray-500 uppercase">Sales</p>
+<p class="font-h3 text-h3 text-emerald-900">4</p>
+</div>
+</div>
+<div class="bg-white p-md rounded-xl border border-gray-200 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-800">
+<span class="material-symbols-outlined">fact_check</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-gray-500 uppercase">Auditor</p>
+<p class="font-h3 text-h3 text-emerald-900">8</p>
+</div>
+</div>
+</div>
+<!-- Table Filters -->
+<div class="bg-white border border-gray-200 rounded-t-xl p-md flex flex-col md:flex-row gap-4 items-center">
+<div class="relative w-full md:w-1/3">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg font-body-sm text-body-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Cari nama atau email..." type="text"/>
+</div>
+<div class="flex gap-2 w-full md:w-auto overflow-x-auto">
+<select class="border border-gray-200 rounded-lg px-4 py-2 font-body-sm text-body-sm bg-surface outline-none min-w-[140px]">
+<option value="">Semua Role</option>
+<option value="auditor">Auditor</option>
+<option value="sales">Sales</option>
+</select>
+<select class="border border-gray-200 rounded-lg px-4 py-2 font-body-sm text-body-sm bg-surface outline-none min-w-[140px]">
+<option value="">Semua Status</option>
+<option value="aktif">Aktif</option>
+<option value="nonaktif">Nonaktif</option>
+</select>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white border-x border-b border-gray-200 rounded-b-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-white border-b border-gray-200">
+<tr>
+<th class="px-6 py-4 font-bold text-[12px] text-emerald-900 uppercase tracking-wider">Avatar + Nama</th>
+<th class="px-6 py-4 font-bold text-[12px] text-emerald-900 uppercase tracking-wider">Email</th>
+<th class="px-6 py-4 font-bold text-[12px] text-emerald-900 uppercase tracking-wider">Role</th>
+<th class="px-6 py-4 font-bold text-[12px] text-emerald-900 uppercase tracking-wider text-center">Tugas Aktif</th>
+<th class="px-6 py-4 font-bold text-[12px] text-emerald-900 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-bold text-[12px] text-emerald-900 uppercase tracking-wider">Bergabung</th>
+<th class="px-6 py-4 font-bold text-[12px] text-emerald-900 uppercase tracking-wider text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<!-- Budi Santoso -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-gray-200 overflow-hidden shrink-0">
+<img alt="Budi Santoso" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnCUtAfp1vVCOo8W6oYUdBRAcBhpyo-dqBDFUNTw58-1Lyrw6SX-nsMewVqOPLZRHIipmtsd9okOfHZMoRT5GDeUD8fUS0bofRQRFnRJmYpO1YPxTRzhXrrT_2dpnjPtuoZk1f4Ba0_rPd82iHCElG8yXXgaNfZKSz39XzcmgUvbG6qKsWtDsKgF2DgvWUKMsdmQVb8KkHr9n-0CI-8UIhuut72kUJp5A7q6XtpXHTdH8B14xtcRKRKwa-QGlG7z6ui2tSXt15wQ"/>
+</div>
+<span class="font-body-sm font-semibold text-emerald-900">Budi Santoso</span>
+</div>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">budi.s@mftc.go.id</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 uppercase">Auditor</span>
+</td>
+<td class="px-6 py-4 text-center font-body-sm font-medium">12</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 uppercase">Aktif</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">12 Jan 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-emerald-700 transition-colors p-1">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Sari Dewi -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-gray-200 overflow-hidden shrink-0">
+<img alt="Sari Dewi" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtAh229-KfvEl61Ir079G-wrHXB_2pYnOVC7Wq-4YYtlBd57qrF2PDf-JdOBpl-J0pbfvdZGseFMx6SYzR8IMhpe329R6K_a-bh7XzHsr7RXpsLsB8Jk6R2-ISR9R92sBZ-0N6b1J6CeAHbieqaVdyr7-692c77gllT-2wZDCH2Xpcn8w-taX_-aMZvJgH52V-tHmrsHSxGDo2Nk7KB82AbU1oRltqkLd4u6YD1SDsLkvRrOJ1w0WOwZCTULdHpO1afRiIWMG9OQ"/>
+</div>
+<span class="font-body-sm font-semibold text-emerald-900">Sari Dewi</span>
+</div>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">sari.dewi@mftc.go.id</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 uppercase">Auditor</span>
+</td>
+<td class="px-6 py-4 text-center font-body-sm font-medium">8</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 uppercase">Aktif</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">15 Feb 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-emerald-700 transition-colors p-1">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Reza Maulana -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-gray-200 overflow-hidden shrink-0">
+<img alt="Reza Maulana" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeeER2SgZL1bx0KsnqjD7TbpMKCXDFiVgSGMQXOvYYHqcT0qIRiQwoyLNx-q2OWJc12lFiLCFxhVSBnYXJMVFVS2N8bJM5dgN75x1wAelfV5nBAvKwB9eATfEh4KOFtj8UPwG_TPgzvv6VzbxvN_fFgldBl_6h46gLJiOBEa4JKL97fwMzcrDqnWIxxo7KvB92uWvfh2snGNZ4IW3I6z-DCvhRHWv6kZ44p10i0SRvZ5cclhezMf-ghKTmBNCkGApJJO4nP_u-vg"/>
+</div>
+<span class="font-body-sm font-semibold text-emerald-900">Reza Maulana</span>
+</div>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">reza.m@mftc.go.id</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 uppercase">Auditor</span>
+</td>
+<td class="px-6 py-4 text-center font-body-sm font-medium">5</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 uppercase">Aktif</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">02 Mar 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-emerald-700 transition-colors p-1">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Ahmad Fauzi -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-gray-200 overflow-hidden shrink-0">
+<img alt="Ahmad Fauzi" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAXzteA0cj2xIQjUmJzrkT6e5uoxkUr5BPn96r2jjPZybre1qEfJolraPmpR_KAB1C1Sx_ZqNhwlVb-OWSsPk7LHB7P36hV8NlEagDyfwIXgP-EBK8MJ199LCXoJL0t6qcgRzEsoKvtxRG275EMLwlbfiiER8ht4BcCEHrKe8ncr_EHt4gNDb4F1_iR48VcD36o184N6AYjGzSRQpNnlb-Mw8lmcOrJbbB7r6tIjBd6-Sz5kjf_UEyn_BRDmlHcmpk2yoN2YGoUg"/>
+</div>
+<span class="font-body-sm font-semibold text-emerald-900">Ahmad Fauzi</span>
+</div>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">ahmad.f@mftc.go.id</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 uppercase">Sales</span>
+</td>
+<td class="px-6 py-4 text-center font-body-sm font-medium">24</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 uppercase">Aktif</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">20 Apr 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-emerald-700 transition-colors p-1">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Dewi Rahayu -->
+<tr class="hover:bg-gray-50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-gray-200 overflow-hidden shrink-0">
+<img alt="Dewi Rahayu" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2jXRsQkIwwwNcv9z3X2pkfKhjbX9MJN1cCYQoidHD30nTPdtCk9KwEFSeTF_mLt6LkCSVHHU2PMzDGWJfiZUGGKCL7XByPGxtpgU5qQMD5fo5hfuxaxG-ghVikC8dQhKcD23lT-upz1XWlrBdZkJxb7wQx8u9WjU1qZlhXQugj9Sg4-jLX1U3vUO1twdVc1NC2yxkvG297Hlz-_Z_TEGQuqSVF_KKc7t1cA7X1WKMTl0Uvx3iqdBcLeMG4iaNTmL-l7b-zNLIyg"/>
+</div>
+<span class="font-body-sm font-semibold text-emerald-900">Dewi Rahayu</span>
+</div>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">dewi.r@mftc.go.id</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 uppercase">Sales</span>
+</td>
+<td class="px-6 py-4 text-center font-body-sm font-medium">18</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 uppercase">Aktif</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">10 May 2023</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-emerald-700 transition-colors p-1">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Hasan Basri -->
+<tr class="hover:bg-gray-50 transition-colors opacity-70">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full grayscale border border-gray-200 overflow-hidden shrink-0">
+<img alt="Hasan Basri" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUZnLzABf520ySOOzvqLtA_N2t3r8TZevoEgIUcmzzE3-Mxh4vl52dMY0MhvjnlytlvFgCYVl7MzbmMLWQK6kU7RfVFthGqsxhm6jb1iQMywP7Xhs8VVkF7fETWMOF1skzN9mvEifxL05cZnHGn2F7yOdgogPAhPt66XE-RWSbtW1Lz3pyWPhnyhSalVp3sSn8m4EyWKgymZcy2wEgrHKXw5_sHwhKcnhijO5sUDaLBIAdyossc76L3ijy644mRHPph1U4UQgRHA"/>
+</div>
+<span class="font-body-sm font-semibold text-gray-500">Hasan Basri</span>
+</div>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">hasan.b@mftc.go.id</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 uppercase">Auditor</span>
+</td>
+<td class="px-6 py-4 text-center font-body-sm font-medium">-</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-red-100 text-red-700 uppercase">Nonaktif</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-on-surface-variant">01 Jan 2022</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-emerald-700 transition-colors p-1">
+<span class="material-symbols-outlined text-xl">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-white border-t border-gray-200 flex items-center justify-between">
+<p class="font-body-sm text-gray-500">Menampilkan 6 dari 12 user internal</p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded hover:bg-gray-100 transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<span class="w-8 h-8 bg-emerald-900 text-white flex items-center justify-center rounded font-body-sm font-bold">1</span>
+<button class="p-2 rounded hover:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HalalCert Admin - Konfigurasi Sistem</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#6cf8bb",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#8bd6b6",
+                        "on-primary-fixed-variant": "#00513b",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#333f39",
+                        "on-secondary-container": "#00714d",
+                        "surface-container": "#e7eefe",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "secondary": "#006c49",
+                        "on-primary-fixed": "#002116",
+                        "primary-fixed": "#a6f2d1",
+                        "outline": "#6f7973",
+                        "background": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "inverse-surface": "#2a313d",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-tint": "#1b6b51",
+                        "on-primary-container": "#8bd6b7",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#e2e8f8",
+                        "surface-container-low": "#f0f3ff",
+                        "on-tertiary-container": "#becac2",
+                        "on-tertiary-fixed": "#131e19",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#bec9c2",
+                        "on-surface-variant": "#3f4944",
+                        "surface-container-highest": "#dce2f3",
+                        "inverse-on-surface": "#ebf1ff",
+                        "primary-container": "#065f46",
+                        "on-surface": "#151c27",
+                        "tertiary-fixed": "#d9e6dd",
+                        "surface": "#f9f9ff",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#d3daea",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#4a564f",
+                        "surface-variant": "#dce2f3",
+                        "on-background": "#151c27",
+                        "primary": "#004532",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "gutter": "1.5rem",
+                        "lg": "2rem",
+                        "sm": "1rem",
+                        "md": "1.5rem",
+                        "xl": "3rem",
+                        "container-max": "1280px",
+                        "xs": "0.5rem"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "h2": ["Inter"],
+                        "button": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .sidebar-active {
+            background-color: #f0fdf4; /* emerald-50 approximation */
+            color: #065f46;
+            border-right: 4px solid #065f46;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 border-r fixed left-0 top-0 bg-white border-gray-200 z-40 hidden md:block">
+<div class="flex flex-col h-full pt-6 pb-6 px-4">
+<div class="flex items-center gap-3 px-2 mb-10">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<div>
+<h2 class="text-emerald-900 font-black text-lg leading-none">HalalCert</h2>
+<p class="text-[10px] text-gray-500 font-medium tracking-widest uppercase">Super Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-sans text-sm font-medium rounded" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-sans text-sm font-medium rounded" href="#">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+<span>Organizations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-sans text-sm font-medium rounded" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span>Assessments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-emerald-50 text-emerald-900 border-r-4 border-emerald-900 transition-all duration-200 font-sans text-sm font-medium rounded-r-none" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Configuration</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-sans text-sm font-medium rounded" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>System Logs</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full py-2.5 bg-primary-container text-white font-button text-sm rounded shadow-sm hover:opacity-90 transition-opacity">
+                    New Certification
+                </button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 min-h-screen">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-6 h-16 w-full sticky top-0 z-30 bg-white border-b border-gray-200">
+<h1 class="font-h3 text-emerald-900 tracking-tight">Configuration Settings</h1>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 material-symbols-outlined" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-gray-50 border-none text-sm rounded-full w-64 focus:ring-2 focus:ring-emerald-500" placeholder="Search configuration..." type="text"/>
+</div>
+<div class="flex items-center gap-3 border-l pl-4 border-gray-100">
+<button class="p-2 text-gray-500 hover:bg-gray-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-gray-500 hover:bg-gray-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center overflow-hidden">
+<img alt="Super Admin Profile" class="w-full h-full object-cover" data-alt="professional headshot of a middle aged male executive in a neutral business suit with clean white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXde693__oPIfW2ZQy_oo2pLW50pkQHWPwAkpC3TrW1zJKVLhEFfxg5EM1NaTlt6TZplK_ZIaz9P8T5GX2d9OC9Sf-Rigfr-RRcPB3v9LZPtJHml_xBu59pC18K1Y3pYkaPK_X4K2ML6cUCsyFXAY-rsqpRVWblTYrt9aXC9ERitE0fwLa1Y6wFtNVoXTi4cqNItTIiJUVK7n_bmmhi5C3RIrBJ6UnL3ALWPO0FtYizbcAE9_vNcurcWjH65MsI0EmcOVioRGzDA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-6 max-w-container-max mx-auto">
+<!-- Tabs -->
+<div class="flex gap-8 mb-8 border-b border-gray-200">
+<button class="pb-3 px-2 text-gray-500 font-medium text-sm hover:text-emerald-800 transition-colors">Sistem</button>
+<button class="pb-3 px-2 text-emerald-900 border-b-2 border-emerald-900 font-bold text-sm">Pra-Assessment</button>
+</div>
+<!-- Toolbar & Actions -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-3 bg-white p-3 rounded border border-gray-200">
+<div class="flex items-center gap-2">
+<label class="text-[10px] font-label-caps text-gray-400 uppercase">Scope</label>
+<select class="border-gray-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 py-1.5 px-3">
+<option>Hotel</option>
+<option>Restoran</option>
+<option>Rumah Potong Hewan</option>
+</select>
+</div>
+<div class="w-px h-6 bg-gray-200 mx-2"></div>
+<div class="flex items-center gap-2">
+<label class="text-[10px] font-label-caps text-gray-400 uppercase">Level</label>
+<select class="border-gray-200 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 py-1.5 px-3">
+<option>Two Star</option>
+<option>Three Star</option>
+<option>Five Star</option>
+</select>
+</div>
+<button class="ml-2 bg-emerald-50 text-emerald-900 px-4 py-1.5 text-sm font-semibold rounded hover:bg-emerald-100 transition-colors">
+                        Terapkan
+                    </button>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-2">
+<button class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded text-sm font-medium hover:bg-gray-50 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="visibility">visibility</span>
+                        Preview Form
+                    </button>
+<button class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded text-sm font-medium hover:bg-gray-50 transition-all">
+<span class="material-symbols-outlined text-base" data-icon="upload_file">upload_file</span>
+                        Import JSON
+                    </button>
+<button class="flex items-center gap-2 bg-primary-container text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-base" data-icon="add">add</span>
+                        Tambah Pertanyaan
+                    </button>
+</div>
+</div>
+<!-- Stats & Context -->
+<div class="flex items-center gap-4 mb-4">
+<span class="text-sm text-gray-500 font-medium">
+<strong class="text-emerald-900">12</strong> pertanyaan aktif · <strong class="text-gray-400">2</strong> nonaktif
+                </span>
+<span class="px-2 py-0.5 bg-secondary-container/10 text-secondary text-[10px] font-bold rounded uppercase">Scope: Hotel</span>
+</div>
+<!-- Main Data Table Container -->
+<div class="bg-white rounded border border-gray-200 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-gray-50 border-b border-gray-200">
+<tr>
+<th class="py-3 px-4 text-center w-10"></th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-gray-500 uppercase tracking-wider">No.</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-gray-500 uppercase tracking-wider">Kategori</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-gray-500 uppercase tracking-wider">Pertanyaan</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-gray-500 uppercase tracking-wider">Tipe Input</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-gray-500 uppercase tracking-wider">Wajib</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-gray-500 uppercase tracking-wider">Aktif</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-gray-500 uppercase tracking-wider text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<!-- Row 1 -->
+<tr class="hover:bg-emerald-50/20 transition-colors group">
+<td class="py-4 px-4 text-center cursor-grab text-gray-300 group-hover:text-gray-400">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</td>
+<td class="py-4 px-4 text-body-sm font-medium">1</td>
+<td class="py-4 px-4">
+<span class="bg-gray-100 text-gray-700 text-[11px] font-bold px-2 py-0.5 rounded">Legalitas</span>
+</td>
+<td class="py-4 px-4 text-body-sm text-on-surface max-w-xs">Apakah usaha memiliki NIB yang masih aktif?</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-1.5 text-gray-500">
+<span class="material-symbols-outlined text-base" data-icon="radio_button_checked">radio_button_checked</span>
+<span class="text-xs">radio</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="text-emerald-700 text-xs font-semibold">Ya</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                        Aktif
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="text-emerald-700 hover:underline text-xs font-bold uppercase tracking-wider">Edit</button>
+<button class="text-error hover:underline text-xs font-bold uppercase tracking-wider">Nonaktif</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-emerald-50/20 transition-colors group">
+<td class="py-4 px-4 text-center cursor-grab text-gray-300 group-hover:text-gray-400">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</td>
+<td class="py-4 px-4 text-body-sm font-medium">2</td>
+<td class="py-4 px-4">
+<span class="bg-gray-100 text-gray-700 text-[11px] font-bold px-2 py-0.5 rounded">Legalitas</span>
+</td>
+<td class="py-4 px-4 text-body-sm text-on-surface max-w-xs">Upload dokumen NIB (PDF)</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-1.5 text-gray-500">
+<span class="material-symbols-outlined text-base" data-icon="upload_file">upload_file</span>
+<span class="text-xs">file_upload</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="text-emerald-700 text-xs font-semibold">Ya</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                        Aktif
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="text-emerald-700 hover:underline text-xs font-bold uppercase tracking-wider">Edit</button>
+<button class="text-error hover:underline text-xs font-bold uppercase tracking-wider">Nonaktif</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-emerald-50/20 transition-colors group">
+<td class="py-4 px-4 text-center cursor-grab text-gray-300 group-hover:text-gray-400">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</td>
+<td class="py-4 px-4 text-body-sm font-medium">3</td>
+<td class="py-4 px-4">
+<span class="bg-gray-100 text-gray-700 text-[11px] font-bold px-2 py-0.5 rounded">Fasilitas Ibadah</span>
+</td>
+<td class="py-4 px-4 text-body-sm text-on-surface max-w-xs">Apakah tersedia mushola/area shalat?</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-1.5 text-gray-500">
+<span class="material-symbols-outlined text-base" data-icon="radio_button_checked">radio_button_checked</span>
+<span class="text-xs">radio</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="text-emerald-700 text-xs font-semibold">Ya</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                                        Aktif
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="text-emerald-700 hover:underline text-xs font-bold uppercase tracking-wider">Edit</button>
+<button class="text-error hover:underline text-xs font-bold uppercase tracking-wider">Nonaktif</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 (Muted/Nonaktif) -->
+<tr class="bg-gray-50/50 grayscale-[0.5] opacity-70 group">
+<td class="py-4 px-4 text-center cursor-grab text-gray-200">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</td>
+<td class="py-4 px-4 text-body-sm font-medium text-gray-400">4</td>
+<td class="py-4 px-4">
+<span class="bg-gray-200 text-gray-500 text-[11px] font-bold px-2 py-0.5 rounded">Makanan Halal</span>
+</td>
+<td class="py-4 px-4 text-body-sm text-gray-500 italic max-w-xs">Nomor sertifikat halal dapur</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-1.5 text-gray-400">
+<span class="material-symbols-outlined text-base" data-icon="short_text">short_text</span>
+<span class="text-xs">text</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<span class="text-gray-400 text-xs font-semibold">Tidak</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-200 text-gray-600">
+                                        Nonaktif
+                                    </span>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="text-emerald-600 hover:underline text-xs font-bold uppercase tracking-wider">Aktifkan</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="bg-white px-6 py-4 border-t border-gray-100 flex items-center justify-between">
+<span class="text-xs text-gray-500">Showing 1 to 4 of 14 entries</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-400 cursor-not-allowed">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary-container text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-600 hover:bg-gray-50 text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-600 hover:bg-gray-50">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bento Hint Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+<div class="md:col-span-2 p-6 bg-emerald-900 text-white rounded-xl relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-h3 mb-2">Automated Rules Engine</h4>
+<p class="text-emerald-100 text-body-sm mb-4 max-w-md">Questions configured here are automatically propagated to the Pre-Assessment portal for new hotel applicants in the 2-Star category.</p>
+<div class="flex gap-4">
+<div class="bg-white/10 p-4 rounded backdrop-blur-sm border border-white/10">
+<p class="text-[10px] uppercase tracking-widest text-emerald-300 font-bold mb-1">Last Sync</p>
+<p class="font-mono text-sm">2023-10-24 14:02</p>
+</div>
+<div class="bg-white/10 p-4 rounded backdrop-blur-sm border border-white/10">
+<p class="text-[10px] uppercase tracking-widest text-emerald-300 font-bold mb-1">Version</p>
+<p class="font-mono text-sm">v4.2.1-stable</p>
+</div>
+</div>
+</div>
+<!-- Decorative Graphic -->
+<div class="absolute -right-12 -bottom-12 opacity-10">
+<span class="material-symbols-outlined !text-[240px]" data-icon="verified">verified</span>
+</div>
+</div>
+<div class="p-6 bg-white border border-gray-200 rounded-xl flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-secondary mb-4 text-3xl" data-icon="lightbulb">lightbulb</span>
+<h4 class="font-bold text-lg mb-2">Quick Tip</h4>
+<p class="text-sm text-gray-500 leading-relaxed">Drag and drop rows to change the display sequence of questions in the final certification form.</p>
+</div>
+<button class="mt-4 text-secondary font-bold text-xs uppercase flex items-center gap-1 group">
+                        Learn More 
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,42 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:20128/v1",
+    "ANTHROPIC_AUTH_TOKEN": "sk-e7ed18c1ed99519c-1s11ce-e417c677",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "kombo-1",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "cc/claude-sonnet-4-6",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "cc/claude-haiku-4-5-20251001"
+  },
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "Bash(php artisan *)",
+      "Bash(findstr /i \"filament\")",
+      "mcp__laravel-boost__search-docs",
+      "mcp__laravel-boost__database-query",
+      "Bash(vendor/bin/pint *)",
+      "Bash(findstr /n \".\")",
+      "Bash(findstr /i \"DB_\")",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(curl -s http://localhost:5173/)",
+      "mcp__laravel-boost__application-info",
+      "Bash(exit 1)",
+      "PowerShell(php artisan config:clear)",
+      "PowerShell(php artisan route:list --path=sanctum --except-vendor; php artisan route:list --path=api/v1/auth --except-vendor)",
+      "PowerShell(php artisan test --compact --filter=AuthApiTest)",
+      "mcp__laravel-boost__last-error",
+      "mcp__laravel-boost__read-log-entries",
+      "PowerShell($headers = @{ Origin = 'http://localhost:5173' }; try { Invoke-WebRequest -Uri \"http://127.0.0.1:8000/sanctum/csrf-cookie\" -Headers $headers -UseBasicParsing | Select-Object StatusCode,Headers } catch { $_.Exception.Response.StatusCode.value__; $_.Exception.Message })",
+      "PowerShell(Get-Service *)",
+      "PowerShell(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/v1/public/health\" -UseBasicParsing | Select-Object StatusCode,Content)",
+      "PowerShell(try { $response = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/v1/public/health\" -UseBasicParsing -TimeoutSec 10; \"StatusCode: $\\($response.StatusCode\\)\"; \"Content:\"; $response.Content } catch { \"ERROR\"; $_.Exception.Message; if \\($_.Exception.Response\\) { \"StatusCode: $\\($_.Exception.Response.StatusCode.value__\\)\" } })"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ],
+  "hasCompletedOnboarding": true
+}

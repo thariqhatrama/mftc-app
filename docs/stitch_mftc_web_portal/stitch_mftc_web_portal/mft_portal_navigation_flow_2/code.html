@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#dce2f3",
+                    "primary-container": "#065f46",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-container": "#4a564f",
+                    "on-tertiary-container": "#becac2",
+                    "tertiary": "#333f39",
+                    "surface-container-low": "#f0f3ff",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-primary-fixed-variant": "#00513b",
+                    "surface-container-high": "#e2e8f8",
+                    "background": "#f9f9ff",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#d3daea",
+                    "inverse-primary": "#8bd6b6",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#dce2f3",
+                    "primary-fixed": "#a6f2d1",
+                    "outline-variant": "#bec9c2",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#151c27",
+                    "inverse-on-surface": "#ebf1ff",
+                    "secondary-fixed-dim": "#4edea3",
+                    "secondary-container": "#6cf8bb",
+                    "secondary": "#006c49",
+                    "on-primary-container": "#8bd6b7",
+                    "error": "#ba1a1a",
+                    "on-surface": "#151c27",
+                    "on-tertiary-fixed": "#131e19",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#1b6b51",
+                    "on-surface-variant": "#3f4944",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#e7eefe",
+                    "primary": "#004532",
+                    "outline": "#6f7973",
+                    "on-secondary-fixed-variant": "#005236",
+                    "inverse-surface": "#2a313d",
+                    "tertiary-fixed-dim": "#bdcac1",
+                    "surface-bright": "#f9f9ff",
+                    "surface": "#f9f9ff",
+                    "on-primary-fixed": "#002116",
+                    "tertiary-fixed": "#d9e6dd",
+                    "on-tertiary-fixed-variant": "#3e4943",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#8bd6b6",
+                    "on-secondary-fixed": "#002113"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sm": "1rem",
+                    "container-max": "1280px",
+                    "lg": "2rem",
+                    "base": "4px",
+                    "md": "1.5rem",
+                    "xl": "3rem",
+                    "xs": "0.5rem",
+                    "gutter": "1.5rem"
+            },
+            "fontFamily": {
+                    "h2": ["Inter"],
+                    "h1": ["Inter"],
+                    "button": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "h3": ["Inter"]
+            },
+            "fontSize": {
+                    "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopAppBar Shell -->
+<header class="flex justify-between items-center h-16 px-6 w-full sticky top-0 z-50 bg-white dark:bg-gray-950 font-inter antialiased border-b border-gray-200 dark:border-gray-800 flat no shadows">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold text-emerald-900 dark:text-emerald-50">MFTC Sales Portal</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-xl text-body-sm focus:outline-none focus:border-primary" placeholder="Cari aplikasi..." type="text"/>
+</div>
+<div class="flex items-center gap-xs ml-4">
+<button class="p-2 rounded-full hover:bg-gray-50 transition-colors"><span class="material-symbols-outlined text-emerald-900">notifications</span></button>
+<button class="p-2 rounded-full hover:bg-gray-50 transition-colors"><span class="material-symbols-outlined text-emerald-900">settings</span></button>
+<button class="p-2 rounded-full hover:bg-gray-50 transition-colors"><span class="material-symbols-outlined text-emerald-900">help_outline</span></button>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-2 border border-outline-variant">
+<img alt="User profile" data-alt="professional portrait of a business executive in a modern office with soft daylight and clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDagI_OrueVGSwm0X6YACJrhF4xsDuY1dpI1LbAGhLklEWVThMed_mLvO25bN3OcWHF8I2kOOTOkBSErfM8tgLNMrkjVmoTOWTpPl9NliWSgZnEF0LloTrLU7_iaIdQsddVjFQqMIKRGZb0HX4SVz6g7mO1vcVWH_ZWKQXzMVlUeGiC1OMVrJ0VYsolXHs9pwtoebNPz4w4BXmA-IdG5YK-K-_09PwqkweZIKpDKZwfE9cDm6PUsh69nZ6wxdTGYFHQDs5KiBK80A"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar Shell -->
+<nav class="flex flex-col fixed left-0 top-16 h-[calc(100vh-64px)] py-4 bg-gray-50 dark:bg-gray-900 h-screen w-64 border-r border-gray-200 dark:border-gray-800 flat no shadows font-inter text-sm font-medium">
+<div class="px-6 mb-8 mt-2">
+<h1 class="text-xl font-black tracking-tight text-emerald-900 dark:text-emerald-50">MFTC</h1>
+<p class="text-xs text-gray-500 uppercase tracking-widest font-bold">Management Console</p>
+</div>
+<div class="flex flex-col flex-grow">
+<!-- Navigation Tabs -->
+<a class="flex items-center px-6 py-3 transition-all duration-150 text-emerald-900 dark:text-emerald-400 border-r-4 border-emerald-800 dark:border-emerald-500 bg-emerald-50/50 dark:bg-emerald-900/20" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-6 py-3 transition-all duration-150 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">description</span>
+<span>Applications</span>
+</a>
+<a class="flex items-center px-6 py-3 transition-all duration-150 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">rate_review</span>
+<span>Review Queue</span>
+</a>
+<a class="flex items-center px-6 py-3 transition-all duration-150 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">engineering</span>
+<span>Auditors</span>
+</a>
+<a class="flex items-center px-6 py-3 transition-all duration-150 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">receipt_long</span>
+<span>Invoices</span>
+</a>
+</div>
+<div class="mt-auto px-6 space-y-2 border-t border-gray-200 dark:border-gray-800 pt-6 mb-16">
+<a class="flex items-center text-gray-600 hover:text-emerald-800 py-2" href="#">
+<span class="material-symbols-outlined mr-3">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center text-gray-600 hover:text-emerald-800 py-2" href="#">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area (Canvas) -->
+<main class="ml-64 w-full p-gutter">
+<div class="max-w-container-max mx-auto">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-h1 text-h1 text-primary">Ringkasan Penjualan</h2>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80">Selamat datang kembali, Administrator. Berikut adalah data hari ini.</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface border border-outline text-primary px-4 py-2 rounded-xl flex items-center font-button text-button hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined mr-2">download</span>
+                            Ekspor PDF
+                        </button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-xl flex items-center font-button text-button hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined mr-2">add</span>
+                            Aplikasi Baru
+                        </button>
+</div>
+</div>
+<!-- Summary Statistics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-xl">
+<!-- Stat Card 1 -->
+<div class="bg-white border-l-4 border-l-primary-container p-md border-y border-r border-outline-variant rounded-lg flex flex-col justify-between shadow-sm">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Aplikasi</span>
+<span class="material-symbols-outlined text-primary-container opacity-40">description</span>
+</div>
+<div class="mt-4">
+<p class="font-h2 text-h2 text-primary">1,284</p>
+<p class="text-xs text-secondary flex items-center mt-1">
+<span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
+                                +12.5% bulan ini
+                            </p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-white border-l-4 border-l-on-secondary-container p-md border-y border-r border-outline-variant rounded-lg flex flex-col justify-between shadow-sm">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Invoice Pending</span>
+<span class="material-symbols-outlined text-secondary opacity-40">payments</span>
+</div>
+<div class="mt-4">
+<p class="font-h2 text-h2 text-on-surface">42</p>
+<p class="text-xs text-error flex items-center mt-1">
+<span class="material-symbols-outlined text-[16px] mr-1">warning</span>
+                                8 butuh perhatian segera
+                            </p>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-white border-l-4 border-l-secondary-fixed p-md border-y border-r border-outline-variant rounded-lg flex flex-col justify-between shadow-sm">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Siap Audit</span>
+<span class="material-symbols-outlined text-primary-fixed-dim opacity-60">fact_check</span>
+</div>
+<div class="mt-4">
+<p class="font-h2 text-h2 text-on-surface">156</p>
+<p class="text-xs text-on-surface-variant opacity-60 mt-1">Dalam antrian verifikasi</p>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-white border-l-4 border-l-primary p-md border-y border-r border-outline-variant rounded-lg flex flex-col justify-between shadow-sm">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Auditor Ditugaskan</span>
+<span class="material-symbols-outlined text-primary opacity-40">engineering</span>
+</div>
+<div class="mt-4">
+<p class="font-h2 text-h2 text-on-surface">89</p>
+<p class="text-xs text-secondary flex items-center mt-1">98% kapasitas terpakai</p>
+</div>
+</div>
+</div>
+<!-- Main Grid Layout (Bento Style) -->
+<div class="grid grid-cols-12 gap-md items-start">
+<!-- Trend Chart Section (8 cols) -->
+<div class="col-span-12 lg:col-span-8 bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex justify-between items-center mb-lg">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Tren Aplikasi Bulanan</h3>
+<p class="text-body-sm text-on-surface-variant">Visualisasi performa sertifikasi tahun 2024</p>
+</div>
+<select class="bg-surface-container-low border border-outline-variant rounded-lg text-body-sm px-4 py-2 focus:outline-none focus:border-primary">
+<option>Januari - Juni 2024</option>
+<option>Juli - Desember 2024</option>
+</select>
+</div>
+<!-- Pseudo Chart Content -->
+<div class="h-64 flex items-end justify-between gap-2 pt-4 relative">
+<!-- Background Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between opacity-5 pointer-events-none">
+<div class="border-t border-on-surface w-full"></div>
+<div class="border-t border-on-surface w-full"></div>
+<div class="border-t border-on-surface w-full"></div>
+<div class="border-t border-on-surface w-full"></div>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container/20 rounded-t-lg group-hover:bg-primary-container/40 transition-colors" style="height: 40%"></div>
+<span class="text-label-caps mt-sm text-on-surface-variant">JAN</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container/30 rounded-t-lg group-hover:bg-primary-container/40 transition-colors" style="height: 60%"></div>
+<span class="text-label-caps mt-sm text-on-surface-variant">FEB</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container/50 rounded-t-lg group-hover:bg-primary-container/60 transition-colors" style="height: 55%"></div>
+<span class="text-label-caps mt-sm text-on-surface-variant">MAR</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary rounded-t-lg group-hover:opacity-90 transition-opacity" style="height: 85%"></div>
+<span class="text-label-caps mt-sm text-on-surface-variant">APR</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container/70 rounded-t-lg group-hover:bg-primary-container/80 transition-colors" style="height: 70%"></div>
+<span class="text-label-caps mt-sm text-on-surface-variant">MEI</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full bg-primary-container/90 rounded-t-lg group-hover:bg-primary-container transition-colors" style="height: 95%"></div>
+<span class="text-label-caps mt-sm text-on-surface-variant">JUN</span>
+</div>
+</div>
+</div>
+<!-- Recent Activity Section (4 cols) -->
+<div class="col-span-12 lg:col-span-4 space-y-md">
+<div class="bg-white border border-outline-variant rounded-xl p-md shadow-sm">
+<h3 class="font-h3 text-body-lg font-bold text-on-surface mb-md">Aktivitas Terbaru</h3>
+<div class="space-y-sm">
+<div class="flex gap-sm items-start pb-sm border-b border-outline-variant last:border-0 last:pb-0">
+<div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-sm">assignment_turned_in</span>
+</div>
+<div>
+<p class="text-body-sm font-medium">Aplikasi #A23049 Disetujui</p>
+<p class="text-xs text-on-surface-variant">Restoran Padang Merdeka • 2 jam yang lalu</p>
+</div>
+</div>
+<div class="flex gap-sm items-start pb-sm border-b border-outline-variant last:border-0 last:pb-0">
+<div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-amber-700 text-sm">contact_page</span>
+</div>
+<div>
+<p class="text-body-sm font-medium">Auditor Ditugaskan</p>
+<p class="text-xs text-on-surface-variant">Bpk. Ahmad Suherman • 5 jam yang lalu</p>
+</div>
+</div>
+<div class="flex gap-sm items-start pb-sm border-b border-outline-variant last:border-0 last:pb-0">
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-blue-700 text-sm">receipt</span>
+</div>
+<div>
+<p class="text-body-sm font-medium">Invoice Terkirim</p>
+<p class="text-xs text-on-surface-variant">Hotel Mulia Jakarta • 8 jam yang lalu</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-md text-primary font-button text-xs py-2 hover:bg-primary/5 rounded-lg transition-colors">Lihat Semua Aktivitas</button>
+</div>
+<!-- Mini Promo/Status Card -->
+<div class="relative rounded-xl overflow-hidden aspect-[4/3] group shadow-sm">
+<img alt="Training section" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="modern industrial kitchen with stainless steel surfaces and professional chefs in clean uniforms working diligently" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACjTN6f_usFqY82ZdMdgeP_wOxHtcg_e0BM9nbDofCSJFSstO3eiAtEnA19jy4U6_gS_YRBT4bR3SHFJiy3E-7xvY46oMHOO6AboTrtYU7aEC71DMVNp4WRU4FJQgJw-g8p_6KGuJ5Vg1ex4enRQLAySpq-Yx9uVIk86AuFq1Fi8sOCIR6pHH7kqeg1WPp4zq6x7r84XdD3BDQXaNpXTT0tix5iRJ8O5oLpjkluRQgT18kUlPt2OjWfEE-2adB76Z4Ga_3unOvag"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
+<div class="absolute bottom-0 p-md text-white">
+<span class="bg-secondary text-[10px] uppercase font-bold tracking-widest px-2 py-1 rounded mb-2 inline-block">Update Baru</span>
+<h4 class="font-h3 text-body-lg font-bold leading-tight">Modul Pelatihan Auditor Baru Tersedia</h4>
+<p class="text-xs opacity-80 mt-2">Dapatkan sertifikasi kepatuhan terbaru 2024.</p>
+</div>
+</div>
+</div>
+<!-- Data Table Section (Full Width) -->
+<div class="col-span-12 bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-gray-50/50">
+<h3 class="font-h3 text-body-lg font-bold text-on-surface">Review Antrian Aplikasi</h3>
+<button class="text-primary font-button text-button flex items-center">
+                                Filter <span class="material-symbols-outlined ml-1">filter_list</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-gray-100/50">
+<tr>
+<th class="px-lg py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Pemohon</th>
+<th class="px-sm py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Kategori</th>
+<th class="px-sm py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Status</th>
+<th class="px-sm py-3 font-label-caps text-label-caps text-on-surface-variant uppercase">Tanggal</th>
+<th class="px-lg py-3 font-label-caps text-label-caps text-on-surface-variant uppercase text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<tr class="hover:bg-primary-container/5 transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center font-bold text-primary">KF</div>
+<div>
+<p class="font-body-sm font-semibold">Kopi Kenangan</p>
+<p class="text-xs text-on-surface-variant">ID: #MFTC-8821</p>
+</div>
+</div>
+</td>
+<td class="px-sm py-4">
+<span class="text-body-sm text-on-surface-variant">F&amp;B - Retail</span>
+</td>
+<td class="px-sm py-4">
+<span class="inline-block px-3 py-1 bg-green-100 text-emerald-800 text-[10px] font-bold uppercase rounded-full">Aktif / Bersertifikat</span>
+</td>
+<td class="px-sm py-4">
+<span class="text-body-sm text-on-surface-variant">12 Mei 2024</span>
+</td>
+<td class="px-lg py-4 text-right">
+<button class="text-primary hover:bg-primary/10 p-2 rounded-lg"><span class="material-symbols-outlined">visibility</span></button>
+<button class="text-on-surface-variant hover:bg-gray-100 p-2 rounded-lg ml-2"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-primary-container/5 transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center font-bold text-primary">HM</div>
+<div>
+<p class="font-body-sm font-semibold">Hotel Marriot</p>
+<p class="text-xs text-on-surface-variant">ID: #MFTC-8822</p>
+</div>
+</div>
+</td>
+<td class="px-sm py-4">
+<span class="text-body-sm text-on-surface-variant">Hospitality</span>
+</td>
+<td class="px-sm py-4">
+<span class="inline-block px-3 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold uppercase rounded-full">Menunggu Review</span>
+</td>
+<td class="px-sm py-4">
+<span class="text-body-sm text-on-surface-variant">14 Mei 2024</span>
+</td>
+<td class="px-lg py-4 text-right">
+<button class="text-primary hover:bg-primary/10 p-2 rounded-lg"><span class="material-symbols-outlined">visibility</span></button>
+<button class="text-on-surface-variant hover:bg-gray-100 p-2 rounded-lg ml-2"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr class="hover:bg-primary-container/5 transition-colors">
+<td class="px-lg py-4">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center font-bold text-primary">SL</div>
+<div>
+<p class="font-body-sm font-semibold">Siloam Hospital</p>
+<p class="text-xs text-on-surface-variant">ID: #MFTC-8825</p>
+</div>
+</div>
+</td>
+<td class="px-sm py-4">
+<span class="text-body-sm text-on-surface-variant">Healthcare</span>
+</td>
+<td class="px-sm py-4">
+<span class="inline-block px-3 py-1 bg-pink-100 text-red-600 text-[10px] font-bold uppercase rounded-full">Butuh Tindakan</span>
+</td>
+<td class="px-sm py-4">
+<span class="text-body-sm text-on-surface-variant">15 Mei 2024</span>
+</td>
+<td class="px-lg py-4 text-right">
+<button class="text-primary hover:bg-primary/10 p-2 rounded-lg"><span class="material-symbols-outlined">edit_square</span></button>
+<button class="text-on-surface-variant hover:bg-gray-100 p-2 rounded-lg ml-2"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-lg py-sm border-t border-outline-variant flex justify-between items-center">
+<span class="text-xs text-on-surface-variant opacity-60">Menampilkan 3 dari 156 entri</span>
+<div class="flex gap-xs">
+<button class="p-2 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-gray-50"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="p-2 border border-primary bg-primary text-on-primary rounded-lg text-sm px-4">1</button>
+<button class="p-2 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-gray-50 text-sm px-4">2</button>
+<button class="p-2 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-gray-50"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

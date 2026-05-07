@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit User | MFTC Certification System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-surface-variant": "#3f4944",
+                        "inverse-surface": "#2a313d",
+                        "surface-container-high": "#e2e8f8",
+                        "surface-container-low": "#f0f3ff",
+                        "on-primary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "on-primary-container": "#8bd6b7",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#065f46",
+                        "on-surface": "#151c27",
+                        "on-background": "#151c27",
+                        "surface-variant": "#dce2f3",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary-fixed": "#002113",
+                        "background": "#f9f9ff",
+                        "tertiary": "#333f39",
+                        "primary-fixed": "#a6f2d1",
+                        "primary": "#004532",
+                        "secondary": "#006c49",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d3daea",
+                        "outline-variant": "#bec9c2",
+                        "surface-container-highest": "#dce2f3",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "outline": "#6f7973",
+                        "secondary-container": "#6cf8bb",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "tertiary-container": "#4a564f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#e7eefe",
+                        "inverse-on-surface": "#ebf1ff",
+                        "on-tertiary-container": "#becac2",
+                        "on-primary-fixed-variant": "#00513b",
+                        "surface-bright": "#f9f9ff",
+                        "inverse-primary": "#8bd6b6",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "tertiary-fixed": "#d9e6dd",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-fixed": "#131e19",
+                        "surface-tint": "#1b6b51",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002116"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "0.5rem",
+                        "xl": "3rem",
+                        "sm": "1rem",
+                        "container-max": "1280px",
+                        "gutter": "1.5rem",
+                        "lg": "2rem",
+                        "md": "1.5rem",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "button": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h2": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f9f9ff;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface bg-surface min-h-screen flex flex-row">
+<!-- Sidebar (SideNavBar) -->
+<aside class="h-screen w-64 border-r border-slate-200 dark:border-slate-800 sticky top-0 left-0 bg-white dark:bg-slate-950 flex flex-col h-full overflow-y-auto font-['Inter'] antialiased text-sm">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight text-emerald-900 dark:text-emerald-50">MFTC Admin</h2>
+</div>
+<p class="text-xs text-slate-500 mt-1">Super Admin Portal</p>
+</div>
+<nav class="flex-1 px-4 py-2 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-900 dark:text-emerald-400 border-r-4 border-emerald-900 dark:border-emerald-500 font-semibold rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Certifications</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">business_center</span>
+<span>Agencies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span>Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-4 py-6 border-t border-slate-100 mt-auto">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:text-emerald-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:text-emerald-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col min-w-0 bg-surface">
+<!-- Header (TopAppBar) -->
+<header class="w-full sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur-md flex items-center justify-between px-8 py-3 font-['Inter'] tracking-tight">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm focus:ring-2 focus:ring-primary-container outline-none" placeholder="Cari sertifikasi atau pengguna..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 border-r border-slate-200 pr-6">
+<button class="material-symbols-outlined text-slate-500 hover:text-primary transition-all">notifications</button>
+<button class="material-symbols-outlined text-slate-500 hover:text-primary transition-all">translate</button>
+<button class="material-symbols-outlined text-slate-500 hover:text-primary transition-all">apps</button>
+</div>
+<div class="flex items-center gap-3 cursor-pointer">
+<img class="w-8 h-8 rounded-full border border-slate-200" data-alt="professional headshot of a middle-aged male executive with glasses in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrZt8q6U4Mqb5gaAP79x3d-Sokh_-GCsho5867ZR2fi6jYK2G4Z_wCLtZJaP2HKGZ1CLP2P7gaVEwYmvKer9IschPvFkCxd04myumBC62_ZvO-7CW8M1W8PeTYJ-n5Ka2QO73vrC8fOausrF3U8YojEIPa3ODy6HK4lv0hB0R8PLIvS1fC08ELvxj6MG6dBcCJvmriGTMiW1K5DZUhfVgcamKgoM8Y6wqO7sKkWYMB8abXbNqae5SQmTBlcz0JXHZooMwSoDgIAQ"/>
+<div class="hidden lg:block text-right">
+<p class="text-xs font-bold text-emerald-900 leading-none">Super Admin</p>
+<p class="text-[10px] text-slate-500">MFTC Central</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 overflow-y-auto px-8 py-10 max-w-container-max mx-auto w-full">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-2 text-label-caps font-label-caps text-outline uppercase tracking-wider">
+<a class="hover:text-primary" href="#">Manajemen User</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-bold">Edit User</span>
+</nav>
+<!-- Page Title Area -->
+<div class="flex items-center justify-between mb-8">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface">Edit User</h1>
+<p class="text-body-md text-on-surface-variant mt-1">Perbarui profil dan wewenang pengguna sistem.</p>
+</div>
+</div>
+<!-- Main Form Card -->
+<div class="bg-white rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="p-gutter lg:p-xl">
+<form class="space-y-8">
+<!-- Section: Informasi Dasar -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-1">
+<h3 class="font-h3 text-h3 text-primary-container mb-2">Informasi Profil</h3>
+<p class="text-body-sm text-on-surface-variant">Data utama yang akan ditampilkan pada identitas sertifikat dan log aktivitas.</p>
+</div>
+<div class="lg:col-span-2 space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase">Nama Lengkap*</label>
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-lg focus:border-primary-container focus:ring-0 transition-all font-body-md text-on-surface outline-none" type="text" value="Budi Santoso"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase">Email*</label>
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-lg focus:border-primary-container focus:ring-0 transition-all font-body-md text-on-surface outline-none" type="email" value="budi@sucofindo.co.id"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase">No. Telepon</label>
+<input class="w-full max-w-sm px-4 py-3 bg-white border border-outline-variant rounded-lg focus:border-primary-container focus:ring-0 transition-all font-body-md text-on-surface outline-none" type="tel" value="081234567890"/>
+</div>
+</div>
+</div>
+<hr class="border-slate-100"/>
+<!-- Section: Wewenang & Peran -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-1">
+<h3 class="font-h3 text-h3 text-primary-container mb-2">Akses &amp; Spesialisasi</h3>
+<p class="text-body-sm text-on-surface-variant">Atur tingkat wewenang pengguna dalam alur kerja sertifikasi MFTC.</p>
+</div>
+<div class="lg:col-span-2 space-y-8">
+<div class="flex flex-col gap-3">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase">Role Pengguna*</label>
+<div class="flex flex-wrap gap-4">
+<label class="relative flex items-center gap-3 p-4 border border-outline-variant rounded-xl cursor-pointer hover:border-secondary transition-all w-full sm:w-48 group">
+<input class="w-4 h-4 text-primary focus:ring-0" name="role" type="radio"/>
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">Sales</span>
+<span class="text-xs text-on-surface-variant">Manajemen prospek</span>
+</div>
+</label>
+<label class="relative flex items-center gap-3 p-4 border-2 border-primary-container bg-emerald-50 rounded-xl cursor-pointer transition-all w-full sm:w-48 group">
+<input checked="" class="w-4 h-4 text-primary-container focus:ring-0" name="role" type="radio"/>
+<div class="flex flex-col">
+<span class="font-semibold text-primary-container">Auditor</span>
+<span class="text-xs text-on-primary-fixed-variant">Verifikasi teknis</span>
+</div>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase">Spesialisasi</label>
+<div class="flex flex-wrap gap-2 p-3 bg-slate-50 border border-outline-variant rounded-lg">
+<span class="inline-flex items-center gap-1 bg-secondary text-white px-3 py-1.5 rounded-full text-xs font-semibold uppercase">
+                                            Hotel
+                                            <button class="material-symbols-outlined text-sm" type="button">close</button>
+</span>
+<span class="inline-flex items-center gap-1 bg-secondary text-white px-3 py-1.5 rounded-full text-xs font-semibold uppercase">
+                                            Restoran
+                                            <button class="material-symbols-outlined text-sm" type="button">close</button>
+</span>
+<button class="inline-flex items-center gap-1 text-primary-container border-2 border-dashed border-primary-container/30 px-3 py-1 rounded-full text-xs font-bold hover:bg-emerald-50 transition-colors" type="button">
+<span class="material-symbols-outlined text-sm">add</span>
+                                            Tambah
+                                        </button>
+</div>
+<p class="text-[11px] text-on-surface-variant italic">Auditor hanya dapat ditugaskan pada sertifikasi sesuai spesialisasi ini.</p>
+</div>
+</div>
+</div>
+<hr class="border-slate-100"/>
+<!-- Section: Keamanan -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-1">
+<h3 class="font-h3 text-h3 text-primary-container mb-2">Keamanan</h3>
+<p class="text-body-sm text-on-surface-variant">Manajemen kata sandi dan autentikasi.</p>
+</div>
+<div class="lg:col-span-2">
+<div class="p-4 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary-container text-3xl">lock_reset</span>
+<div>
+<p class="font-semibold text-on-surface">Atur Ulang Kata Sandi</p>
+<p class="text-xs text-on-surface-variant">Kirim email tautan pengaturan ulang sandi kepada pengguna.</p>
+</div>
+</div>
+<button class="px-4 py-2 text-primary-container border border-primary-container font-semibold rounded-lg hover:bg-emerald-50 transition-all text-sm" type="button">
+                                        Kirim Email
+                                    </button>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Footer Actions -->
+<div class="bg-slate-50 px-gutter py-md lg:px-xl flex items-center justify-end gap-4 border-t border-slate-200">
+<button class="px-6 py-2.5 font-semibold text-on-surface-variant hover:text-primary transition-all" type="button">
+                        Batal
+                    </button>
+<button class="px-8 py-2.5 bg-primary-container text-white font-semibold rounded-lg hover:bg-primary transition-all flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-lg">save</span>
+                        Simpan Perubahan
+                    </button>
+</div>
+</div>
+<!-- Footer Meta -->
+<div class="mt-8 flex items-center justify-between text-[11px] text-slate-400 font-label-caps uppercase tracking-widest px-2">
+<div>ID Pengguna: USR-882-9011</div>
+<div>Terakhir diperbarui: 24 Okt 2023, 14:20 WIB</div>
+</div>
+</div>
+</main>
+</body></html>

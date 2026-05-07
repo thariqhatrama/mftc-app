@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#dce2f3",
+                        "inverse-surface": "#2a313d",
+                        "on-primary-fixed-variant": "#00513b",
+                        "on-tertiary-fixed": "#131e19",
+                        "on-primary-container": "#8bd6b7",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#065f46",
+                        "surface-container": "#e7eefe",
+                        "surface-bright": "#f9f9ff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#333f39",
+                        "background": "#f9f9ff",
+                        "on-secondary-container": "#00714d",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-background": "#151c27",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#ebf1ff",
+                        "on-tertiary-container": "#becac2",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#6f7973",
+                        "on-surface-variant": "#3f4944",
+                        "outline-variant": "#bec9c2",
+                        "primary": "#004532",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-container-low": "#f0f3ff",
+                        "primary-fixed": "#a6f2d1",
+                        "secondary-container": "#6cf8bb",
+                        "surface-dim": "#d3daea",
+                        "tertiary-fixed": "#d9e6dd",
+                        "surface-variant": "#dce2f3",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "on-primary-fixed": "#002116",
+                        "surface-container-high": "#e2e8f8",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-container": "#4a564f",
+                        "surface": "#f9f9ff",
+                        "secondary": "#006c49",
+                        "surface-tint": "#1b6b51",
+                        "on-secondary-fixed-variant": "#005236",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#8bd6b6",
+                        "on-surface": "#151c27"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "1rem",
+                        "xs": "0.5rem",
+                        "container-max": "1280px",
+                        "xl": "3rem",
+                        "gutter": "1.5rem",
+                        "base": "4px",
+                        "md": "1.5rem",
+                        "lg": "2rem"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Inter"],
+                        "button": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<nav class="sticky top-0 z-50 w-full bg-white/95 dark:bg-slate-950/95 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between px-6 py-4 max-w-[1280px] mx-auto">
+<div class="text-2xl font-black tracking-tighter text-emerald-900 dark:text-emerald-50">MFTC</div>
+<div class="hidden md:flex items-center gap-8 font-inter text-sm font-medium tracking-tight">
+<a class="text-emerald-700 dark:text-emerald-400 border-b-2 border-emerald-700 pb-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-all duration-200" href="#">Standards</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-all duration-200" href="#">Pricing</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-all duration-200" href="#">About Us</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-all duration-200" href="#">Resources</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-all duration-200" href="#">Contact</a>
+</div>
+<button class="bg-primary-container text-on-primary font-button px-6 py-2.5 rounded-lg active:opacity-80 transition-all duration-200">
+                Get Certified
+            </button>
+</div>
+</nav>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative py-24 bg-surface-container-low overflow-hidden">
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASo5Zm6SHF9UrpHPJ78HT7H9RAJ9VTqtK0Fbi3HBgkeHML40WbPLBu4MnldqNtzTsalqgtIDjBx60iOeGl-_ztzwKQeBmbulJbUBiCmLQVwbaTQit5K4_GaHnDvFf-jdF6KT5GUXBN4LdL_sIk88jByupQpWg0ifACcsl5z5r5AGN7t9HH6ZMZNjCd185mF9gLmFS1j2AD0M7QKN4KVY2zwklfFQbmSb3Sw2j8qWMeAUtmpSv-0BMMViVNf1np-yq5NDpLqmwBUg');"></div>
+<div class="max-w-[1280px] mx-auto px-6 relative z-10">
+<div class="max-w-3xl">
+<span class="font-label-caps text-label-caps text-secondary mb-4 block">SERTIFIKASI GLOBAL</span>
+<h1 class="font-h1 text-h1 text-primary mb-6">Standar Pariwisata Ramah Muslim (MFTC)</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                        Kerangka kerja komprehensif untuk memastikan kualitas layanan dan kepatuhan terhadap prinsip-prinsip keramahan Muslim dalam industri pariwisata global.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Key Criteria Cards (Bento Grid Style) -->
+<section class="py-20 max-w-[1280px] mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-4 group hover:border-secondary transition-colors duration-300">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">mosque</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-primary mb-2">Fasilitas Ibadah</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ketersediaan ruang shalat yang bersih, arah kiblat yang akurat, dan fasilitas wudhu yang memadai di area publik.</p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 flex items-center gap-2 text-secondary font-button">
+                        Pelajari Detail <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-4 group hover:border-secondary transition-colors duration-300">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary">Makanan Halal</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Jaminan penyediaan makanan dan minuman bersertifikat halal dengan proses pengolahan yang terpisah.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col gap-4 group hover:border-secondary transition-colors duration-300">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">person_pin_circle</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary">Pelayanan Umum</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Staff yang terlatih dalam etika pelayanan ramah Muslim dan penyediaan informasi wisata religi lokal.</p>
+</div>
+<div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant p-lg rounded-xl flex flex-col md:flex-row gap-6 group hover:border-secondary transition-colors duration-300">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-primary mb-2">Higienitas &amp; Sanitasi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standar kebersihan yang mengacu pada prinsip Thayyib, memastikan lingkungan yang sehat dan nyaman bagi pengunjung.</p>
+</div>
+</div>
+<div class="md:col-span-2 relative rounded-xl overflow-hidden min-h-[240px]">
+<img alt="Interior masjid modern" class="absolute inset-0 w-full h-full object-cover" data-alt="Interior of a modern mosque with minimalist white architecture, soft natural light, and geometric patterns on the walls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWkyYYrf232zZS1NhrOFB4O9GOP0Y-3d9bQBZi_5ekExdqpoSbdIUx1SLEC2tHlDP0nlHJg2-0TJeuAU1ivIj9-LkxhP_tw-ez68m52VSq5rOU5-J0b69735KvLequdAzs-Yl6PoeqsxcLYSRR7b4kXwzKxPgwFuQMsPFq-qjW4wcMw8Spi6viliD8ZQBjjkgAhzBdHE31ae0ryDvUXG4nmghK7Gn1qOniwwzm6v-eGrUrR7jujxA_GmXgKj4Qua4tfoGuiWH48Q"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-lg">
+<p class="text-white font-body-md italic">"Kenyamanan ibadah adalah prioritas utama dalam ekosistem MFTC."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Comparison Table (Matriks Level Bintang) -->
+<section class="py-20 bg-surface-container-low">
+<div class="max-w-[1280px] mx-auto px-6">
+<div class="text-center mb-12">
+<h2 class="font-h2 text-h2 text-primary mb-4">Matriks Level Bintang</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Perbandingan persyaratan minimum untuk setiap kategori sertifikasi</p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 border-b border-outline-variant">
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase">Kriteria Utama</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase text-center">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-amber-500" data-weight="fill">star</span>
+                                        One Star
+                                    </div>
+</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase text-center">
+<div class="flex flex-col items-center">
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-amber-500" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-amber-500" data-weight="fill">star</span>
+</div>
+                                        Two Stars
+                                    </div>
+</th>
+<th class="p-md font-label-caps text-label-caps text-on-surface-variant uppercase text-center">
+<div class="flex flex-col items-center">
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-amber-500" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-amber-500" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-amber-500" data-weight="fill">star</span>
+</div>
+                                        Three Stars
+                                    </div>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="p-md font-body-sm font-semibold text-primary">Informasi Arah Kiblat</td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Tersedia</span></td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Terverifikasi</span></td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Terverifikasi Digital</span></td>
+</tr>
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="p-md font-body-sm font-semibold text-primary">Sertifikasi Halal Dapur</td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-amber-100 text-amber-800 text-[10px] font-bold uppercase">Self-Declared</span></td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Tersertifikasi</span></td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Internasional</span></td>
+</tr>
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="p-md font-body-sm font-semibold text-primary">Peralatan Shalat (Mukena/Sajadah)</td>
+<td class="p-md text-center"><span class="material-symbols-outlined text-error">close</span></td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Tersedia</span></td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Premium/Higienis</span></td>
+</tr>
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="p-md font-body-sm font-semibold text-primary">Layanan Ramah Muslim 24/7</td>
+<td class="p-md text-center"><span class="material-symbols-outlined text-error">close</span></td>
+<td class="p-md text-center"><span class="material-symbols-outlined text-error">close</span></td>
+<td class="p-md text-center"><span class="inline-flex px-2 py-1 rounded bg-green-100 text-green-800 text-[10px] font-bold uppercase">Wajib</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Dokumen Acuan -->
+<section class="py-20 max-w-[1280px] mx-auto px-6">
+<div class="flex flex-col md:flex-row items-center justify-between gap-lg">
+<div class="max-w-xl">
+<h2 class="font-h2 text-h2 text-primary mb-4">Dokumen Acuan</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Unduh panduan resmi dan dokumen standar teknis untuk persiapan proses audit sertifikasi institusi Anda.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+<a class="flex items-center gap-3 p-4 bg-white border border-outline-variant rounded-xl hover:shadow-md transition-all group" href="#">
+<div class="w-10 h-10 rounded bg-red-50 flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div>
+<div class="text-[12px] font-bold text-slate-400 uppercase leading-none mb-1">Standard v2.1</div>
+<div class="font-button text-primary group-hover:text-secondary transition-colors">Panduan Teknis.pdf</div>
+</div>
+</a>
+<a class="flex items-center gap-3 p-4 bg-white border border-outline-variant rounded-xl hover:shadow-md transition-all group" href="#">
+<div class="w-10 h-10 rounded bg-emerald-50 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined">download</span>
+</div>
+<div>
+<div class="text-[12px] font-bold text-slate-400 uppercase leading-none mb-1">Checklist</div>
+<div class="font-button text-primary group-hover:text-secondary transition-colors">Self-Assessment.xlsx</div>
+</div>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 px-6 py-12 max-w-[1280px] mx-auto">
+<div class="flex flex-col gap-4">
+<div class="text-lg font-bold text-slate-900 dark:text-white">MFTC</div>
+<p class="font-inter text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">© 2024 Muslim-Friendly Tourism Certification. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 font-inter text-xs uppercase tracking-widest">
+<a class="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Terms of Service</a>
+<a class="text-emerald-700 font-bold hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Certification Standards</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Global Registry</a>
+</div>
+</div>
+</footer>
+</body></html>

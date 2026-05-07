@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .certificate-textured {
+            background-image: radial-gradient(circle at 2px 2px, rgba(0,69,50,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .font-inter { font-family: 'Inter', sans-serif; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#065f46",
+                        "secondary-container": "#6cf8bb",
+                        "on-primary-fixed": "#002116",
+                        "on-surface": "#151c27",
+                        "on-background": "#151c27",
+                        "tertiary-container": "#4a564f",
+                        "on-secondary-container": "#00714d",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9ff",
+                        "on-primary-fixed-variant": "#00513b",
+                        "on-tertiary-container": "#becac2",
+                        "surface-container": "#e7eefe",
+                        "surface-tint": "#1b6b51",
+                        "outline": "#6f7973",
+                        "inverse-primary": "#8bd6b6",
+                        "tertiary-fixed": "#d9e6dd",
+                        "secondary": "#006c49",
+                        "on-surface-variant": "#3f4944",
+                        "surface-bright": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#a6f2d1",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-container-low": "#f0f3ff",
+                        "outline-variant": "#bec9c2",
+                        "on-secondary-fixed-variant": "#005236",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "on-primary-container": "#8bd6b7",
+                        "inverse-on-surface": "#ebf1ff",
+                        "inverse-surface": "#2a313d",
+                        "tertiary": "#333f39",
+                        "surface-container-highest": "#dce2f3",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed": "#131e19",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#065f46",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e2e8f8",
+                        "surface-variant": "#dce2f3",
+                        "surface-dim": "#d3daea",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "gutter": "1.5rem",
+                        "sm": "1rem",
+                        "md": "1.5rem",
+                        "xs": "0.5rem",
+                        "base": "4px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "button": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "inter": ["Inter"]
+                    },
+                    "fontSize": {
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-background antialiased">
+<!-- SideNavBar (Pelaku Usaha Role) -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-200 flex flex-col pt-4 pb-8 z-40 transition-all duration-200 ease-in-out">
+<div class="mb-8 px-6">
+<h1 class="text-lg font-black text-emerald-900 font-inter">MFTC Portal</h1>
+<p class="text-xs font-medium text-gray-500 font-inter">Pelaku Usaha</p>
+</div>
+<nav class="flex flex-col gap-1 flex-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-gray-600 hover:bg-gray-50 hover:text-emerald-700 transition-all text-sm font-medium font-inter" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+            Dashboard
+        </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-emerald-50 text-emerald-700 border-r-4 border-emerald-700 transition-all text-sm font-medium font-inter" href="#">
+<span class="material-symbols-outlined" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Sertifikasi
+        </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-gray-600 hover:bg-gray-50 hover:text-emerald-700 transition-all text-sm font-medium font-inter" href="#">
+<span class="material-symbols-outlined" data-icon="edit_document">edit_document</span>
+            Tugas Perbaikan
+        </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-gray-600 hover:bg-gray-50 hover:text-emerald-700 transition-all text-sm font-medium font-inter" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+            Pusat Dokumen
+        </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-gray-600 hover:bg-gray-50 hover:text-emerald-700 transition-all text-sm font-medium font-inter" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+            Riwayat Audit
+        </a>
+</nav>
+<div class="mt-auto px-3 flex flex-col gap-1 pt-4 border-t border-gray-100">
+<button class="bg-primary text-white px-4 py-2.5 rounded-lg font-button text-button flex items-center justify-center gap-2 mb-4 hover:opacity-90 transition-all active:opacity-80">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+            Pengajuan Baru
+        </button>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-gray-500 hover:text-emerald-700 transition-all text-sm font-medium font-inter" href="#">
+<span class="material-symbols-outlined" data-icon="manage_accounts">manage_accounts</span>
+            Pengaturan Akun
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-gray-500 hover:text-emerald-700 transition-all text-sm font-medium font-inter" href="#">
+<span class="material-symbols-outlined" data-icon="exit_to_app">exit_to_app</span>
+            Keluar
+        </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen p-gutter max-w-container-max">
+<!-- Header Section -->
+<header class="flex justify-between items-end mb-xl">
+<div>
+<nav class="flex gap-2 text-label-caps text-outline mb-2 uppercase tracking-widest text-[10px] font-bold">
+<span>PORTAL</span>
+<span>/</span>
+<span class="text-primary">SERTIFIKAT</span>
+</nav>
+<h2 class="font-h2 text-h2 text-on-surface">Sertifikat Saya</h2>
+</div>
+<div class="flex gap-md">
+<button class="flex items-center gap-xs px-md py-sm border border-gray-300 text-on-surface font-button text-button rounded-lg hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+                Bagikan
+            </button>
+<button class="flex items-center gap-xs px-md py-sm bg-primary text-white font-button text-button rounded-lg hover:opacity-90 transition-all">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                Unduh PDF
+            </button>
+</div>
+</header>
+<!-- Content Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left Column: Certificate Preview -->
+<div class="col-span-12 lg:col-span-8">
+<div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm relative certificate-textured p-12 aspect-[1/1.414] flex flex-col items-center text-center">
+<!-- Ornamental Borders -->
+<div class="absolute inset-4 border-2 border-emerald-900/10 rounded-lg pointer-events-none"></div>
+<div class="absolute inset-8 border border-emerald-900/5 rounded-md pointer-events-none"></div>
+<!-- Certificate Header -->
+<div class="mb-12">
+<img alt="MFTC Logo" class="w-24 h-24 mb-6 mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGRXIE9SjoG-aKykpa6CnqTfEqV4NbR-b7s37hM_HBDA0MAc-vsJllxVaeKIazcvMDOxl4h54dDfg2xbaXYjji3QkmYN-mgIhKPDkpBsAn__VLPFT1VDqpGSWvPoh-GNphBKjPDsj8sg42iwJoRdUdXA3RGem0fGEy0kdQGRnyRTO-1aGjUkjRJ6wUUuHuqi1ytzREZXtLuahG2RCYpn8oNT4vDpGFJ2oEyRJoXB-XqLf1gjnWhKWkIThB1yVq2HPLgA0_usET6w"/>
+<h1 class="font-h1 text-h3 text-primary mb-1 uppercase tracking-[0.2em]">Certificate of Excellence</h1>
+<p class="font-label-caps text-outline uppercase tracking-widest">Muslim-Friendly Tourism Certification</p>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<p class="font-body-md text-outline italic mb-2">Ini menyatakan bahwa</p>
+<h3 class="font-h1 text-h1 text-on-surface mb-8">Nusantara Grand Resort &amp; Spa</h3>
+<div class="w-24 h-px bg-primary/20 mx-auto mb-8"></div>
+<p class="font-body-md text-on-surface-variant max-w-md mx-auto mb-10 leading-relaxed">
+                        Telah berhasil memenuhi seluruh standar dan kriteria yang ditetapkan untuk layanan berkualitas tinggi dalam ekosistem pariwisata ramah Muslim global.
+                    </p>
+<!-- Level Badge -->
+<div class="inline-flex flex-col items-center gap-2 mb-12">
+<div class="flex gap-1 text-amber-500 mb-2">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="bg-emerald-50 text-emerald-900 font-label-caps py-2 px-6 rounded-full border border-emerald-200 uppercase tracking-widest text-[10px] font-bold">
+                            KATEGORI DUA BINTANG
+                        </span>
+</div>
+</div>
+<!-- Certificate Footer -->
+<div class="w-full grid grid-cols-3 gap-md items-end mt-auto text-left">
+<div>
+<p class="font-label-caps text-outline mb-1 text-[10px]">NOMOR SERTIFIKAT</p>
+<p class="font-body-sm font-bold text-on-surface">MFTC-2024-ID-8829</p>
+</div>
+<div class="text-center">
+<img alt="Verification QR" class="w-20 h-20 mx-auto opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzrKYR2HI0wY81R3Dr1eTUZ-xneuxsVDM855L1j-CQeNQL55x8Vtw17J7PJEMIbfySq_jOas3LCAzU05bzKuUj8q1NphBkaV4tpLBji7OxkbPmVDtkIApejjDWGzpe5Dlp-wUxBOobkNhWEQ-vI__zMXiVnSak5y7ghm5_QbpEe49C9R5xdJsTBuMzc4VUfx22R4mtTEp-GLwZY4zxKTf-wMUR_WyEy12CWBba8SSAe2-3IDQFkK-O0vfqPLdPajQZKsk-efJ0Zg"/>
+<p class="text-[8px] mt-2 text-outline">PINDAI UNTUK VERIFIKASI</p>
+</div>
+<div class="text-right">
+<p class="font-label-caps text-outline mb-1 text-[10px]">BERLAKU HINGGA</p>
+<p class="font-body-sm font-bold text-on-surface">12 DESEMBER 2026</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Metadata -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- Status Card -->
+<div class="bg-white border border-gray-200 rounded-xl p-md shadow-sm">
+<div class="flex items-center justify-between mb-md">
+<span class="font-label-caps text-outline uppercase text-[10px] font-bold tracking-widest">Status Sertifikat</span>
+<span class="bg-primary text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Aktif</span>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between items-center py-xs border-b border-gray-50">
+<span class="text-body-sm text-outline">Diterbitkan</span>
+<span class="text-body-sm font-medium text-on-surface">12 Des 2023</span>
+</div>
+<div class="flex justify-between items-center py-xs border-b border-gray-50">
+<span class="text-body-sm text-outline">Masa Berlaku</span>
+<span class="text-body-sm font-medium text-on-surface">3 Tahun</span>
+</div>
+<div class="flex justify-between items-center py-xs">
+<span class="text-body-sm text-outline">Lembaga Pemeriksa</span>
+<span class="text-body-sm font-medium text-on-surface">MFTC Global</span>
+</div>
+</div>
+</div>
+<!-- Renewal Progress -->
+<div class="bg-white border border-gray-200 rounded-xl p-md shadow-sm">
+<h3 class="font-label-caps text-outline mb-md uppercase text-[10px] font-bold tracking-widest">Progress Perpanjangan</h3>
+<div class="relative pt-1">
+<div class="flex mb-2 items-center justify-between">
+<div>
+<span class="text-[10px] font-bold inline-block py-1 px-2 uppercase rounded-full text-emerald-700 bg-emerald-50 border border-emerald-100">
+                                33% Waktu Berjalan
+                            </span>
+</div>
+<div class="text-right">
+<span class="text-[10px] font-bold inline-block text-emerald-700">
+                                730 Hari Tersisa
+                            </span>
+</div>
+</div>
+<div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-100">
+<div class="shadow-none flex flex-col text-center white-space-nowrap text-white justify-center bg-primary" style="width:33%"></div>
+</div>
+</div>
+<p class="text-[12px] text-outline leading-tight">Masa berlaku masih cukup lama. Persiapan perpanjangan disarankan dilakukan 6 bulan sebelum berakhir.</p>
+</div>
+<!-- Info Banner -->
+<div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-md flex gap-sm items-start">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="info">info</span>
+<div>
+<h4 class="text-body-sm font-bold text-emerald-900 mb-1">Hak Penggunaan Logo</h4>
+<p class="text-[12px] text-gray-600 leading-relaxed">
+                        Sebagai pemegang sertifikat Kategori Dua Bintang, Anda berhak menggunakan logo MFTC pada materi promosi fisik dan digital sesuai panduan merek.
+                    </p>
+<a class="inline-block mt-xs text-[12px] font-bold text-primary hover:underline" href="#">Unduh Paket Logo</a>
+</div>
+</div>
+<!-- Quick Links -->
+<div class="flex flex-col gap-xs mt-auto">
+<button class="w-full flex items-center justify-between p-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline" data-icon="history">history</span>
+<span class="text-body-sm font-medium">Riwayat Sertifikasi</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline" data-icon="assignment">assignment</span>
+<span class="text-body-sm font-medium">Dokumen Pendukung</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Anchor -->
+<footer class="ml-64 bg-white border-t border-gray-100 mt-xl">
+<div class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto">
+<div class="mb-6 md:mb-0">
+<h3 class="text-base font-bold text-emerald-900 mb-2 font-inter">HalalCertify Tourism</h3>
+<p class="font-inter text-[10px] font-medium uppercase tracking-widest text-gray-400">© 2024 Muslim Friendly Tourism Certification. Seluruh hak cipta dilindungi.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-inter text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-emerald-700 transition-colors" href="#">Kebijakan Privasi</a>
+<a class="font-inter text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-emerald-700 transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="font-inter text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-emerald-700 transition-colors" href="#">Pusat Bantuan</a>
+</div>
+</div>
+</footer>
+</body></html>

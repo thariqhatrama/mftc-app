@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #065f46;
+            border-radius: 4px;
+        }
+        .font-inter { font-family: 'Inter', sans-serif; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#065f46",
+                        "primary-container": "#065f46",
+                        "on-primary": "#ffffff",
+                        "secondary": "#006c49",
+                        "background": "#f9f9ff",
+                        "surface": "#ffffff",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h1": ["Inter"],
+                        "h2": ["Inter"],
+                        "h3": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "button": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background font-inter text-gray-900 antialiased">
+<!-- TopNavBar from COMPONENTS_42 -->
+<nav class="fixed top-0 w-full z-40 bg-white border-b border-gray-200 h-16">
+<div class="flex justify-between items-center h-full px-6 max-w-full mx-auto">
+<div class="flex items-center gap-8">
+<div class="text-xl font-bold text-emerald-900">MFTC Portal</div>
+<div class="hidden md:flex space-x-6 items-center">
+<a class="text-sm font-semibold text-emerald-700" href="#">Beranda</a>
+<a class="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors" href="#">Standar</a>
+<a class="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors" href="#">Harga</a>
+<a class="text-sm font-medium text-gray-600 hover:text-emerald-700 transition-colors" href="#">Tentang</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-gray-600 hover:bg-gray-50 p-2 rounded-full transition-colors">notifications</button>
+<button class="material-symbols-outlined text-gray-600 hover:bg-gray-50 p-2 rounded-full transition-colors">help</button>
+<div class="h-8 w-px bg-gray-200 mx-2"></div>
+<button class="text-sm font-medium text-gray-600 hover:text-emerald-700">Profil</button>
+<button class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-semibold active:opacity-80 transition-all">Daftar</button>
+</div>
+</div>
+</nav>
+<div class="flex pt-16 min-h-screen">
+<!-- SideNavBar 'Pelaku Usaha' Role from COMPONENTS_42 -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 border-r border-gray-200 bg-white flex flex-col py-6 overflow-y-auto">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-700 text-xl">business_center</span>
+</div>
+<div class="text-lg font-black text-emerald-900 leading-tight">MFTC Portal</div>
+</div>
+<div class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Pelaku Usaha</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-gray-600 font-medium text-sm hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">grid_view</span>
+                    Dashboard
+                </a>
+<a class="flex items-center px-6 py-3 bg-emerald-50 text-emerald-700 border-r-4 border-emerald-700 font-semibold text-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">verified</span>
+                    Sertifikasi
+                </a>
+<a class="flex items-center px-6 py-3 text-gray-600 font-medium text-sm hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">edit_document</span>
+                    Tugas Perbaikan
+                </a>
+<a class="flex items-center px-6 py-3 text-gray-600 font-medium text-sm hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">folder_open</span>
+                    Pusat Dokumen
+                </a>
+<a class="flex items-center px-6 py-3 text-gray-600 font-medium text-sm hover:bg-gray-50 hover:text-emerald-700 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-3">history</span>
+                    Riwayat Audit
+                </a>
+</nav>
+<div class="mt-auto px-4 pt-4 border-t border-gray-100 space-y-1">
+<a class="flex items-center px-4 py-2 text-gray-500 text-sm font-medium hover:text-emerald-700 hover:bg-gray-50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined mr-3">manage_accounts</span>
+                    Pengaturan Akun
+                </a>
+<a class="flex items-center px-4 py-2 text-gray-500 text-sm font-medium hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined mr-3">exit_to_app</span>
+                    Keluar
+                </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 ml-64 p-8 bg-gray-50/50">
+<div class="max-w-4xl mx-auto">
+<header class="mb-10">
+<h1 class="text-3xl font-bold text-gray-900 mb-2">Permohonan Sertifikasi Baru</h1>
+<p class="text-gray-500">Lengkapi langkah-langkah berikut untuk memulai proses sertifikasi Pariwisata Ramah Muslim Anda.</p>
+</header>
+<!-- 3-Step Wizard Indicator with formal Indonesian terminology -->
+<div class="relative flex justify-between items-center mb-12 px-10">
+<div class="absolute top-[20px] left-10 right-10 h-[2px] bg-gray-200 -z-10"></div>
+<div class="absolute top-[20px] left-10 w-1/2 h-[2px] bg-primary -z-10"></div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold ring-4 ring-white border-2 border-primary">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<span class="text-[11px] font-bold text-primary uppercase tracking-wider">Ruang Lingkup</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-white text-primary flex items-center justify-center font-bold ring-4 ring-white border-2 border-primary shadow-sm">
+                            2
+                        </div>
+<span class="text-[11px] font-bold text-primary uppercase tracking-wider">Lokasi Multisitus</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-white text-gray-300 flex items-center justify-center font-bold ring-4 ring-white border-2 border-gray-200">
+                            3
+                        </div>
+<span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Unggah Dokumen</span>
+</div>
+</div>
+<!-- Step 2 Content -->
+<div class="space-y-8">
+<!-- Info Card -->
+<div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm flex items-start gap-4">
+<div class="bg-emerald-50 p-3 rounded-xl">
+<span class="material-symbols-outlined text-emerald-700" data-icon="info">info</span>
+</div>
+<div>
+<h3 class="font-bold text-emerald-900 mb-1 text-lg">Langkah 2: Tambah Lokasi Multisitus</h3>
+<p class="text-sm text-gray-600 leading-relaxed">Silakan daftarkan semua cabang atau lokasi yang memerlukan sertifikasi. Kantor pusat utama Anda harus dicantumkan terlebih dahulu sebagai lokasi utama.</p>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+<div class="p-6 border-b border-gray-100 flex justify-between items-center">
+<h4 class="font-bold text-gray-900">Lokasi Terdaftar</h4>
+<button class="flex items-center gap-2 border-2 border-primary text-primary px-4 py-2 rounded-lg text-sm font-bold hover:bg-emerald-50 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                Tambah Lokasi
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Nama Lokasi</th>
+<th class="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Alamat</th>
+<th class="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Kontak Person</th>
+<th class="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="px-6 py-5">
+<div class="font-bold text-gray-900">Grand Halal Resort - HQ</div>
+<div class="text-[10px] text-emerald-700 font-bold uppercase">Lokasi Utama</div>
+</td>
+<td class="px-6 py-5 text-sm text-gray-600">Jl. Malioboro No. 12, Yogyakarta, Indonesia</td>
+<td class="px-6 py-5">
+<div class="text-sm font-medium text-gray-900">Ahmad Subagyo</div>
+<div class="text-xs text-gray-500">ahmad@ghresort.com</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-gray-400 hover:text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50/50 transition-colors">
+<td class="px-6 py-5 font-bold text-gray-900">Boutique Halal Suites - Cabang A</td>
+<td class="px-6 py-5 text-sm text-gray-600">Jl. Sunset Road, Bali, Indonesia</td>
+<td class="px-6 py-5">
+<div class="text-sm font-medium text-gray-900">Dewi Lestari</div>
+<div class="text-xs text-gray-500">dewi@ghresort.com</div>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-1">
+<button class="text-gray-400 hover:text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="text-gray-400 hover:text-red-600 p-2 rounded-lg">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-gray-50 border-t border-gray-100 text-center">
+<span class="text-xs font-medium text-gray-500">Total lokasi terdaftar: 2</span>
+</div>
+</div>
+<!-- Package Summary -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-white border border-gray-200 rounded-xl p-8 shadow-sm relative overflow-hidden">
+<div class="flex items-center gap-3 mb-6">
+<span class="bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">Paket Aktif</span>
+<span class="text-gray-400 text-xs font-medium">Dipilih pada Langkah 1</span>
+</div>
+<h2 class="text-2xl font-bold text-emerald-900 mb-3">Hospitality Excellence Plus</h2>
+<p class="text-sm text-gray-500 mb-8 leading-relaxed">Sertifikasi lengkap untuk hotel &amp; resor dengan kapabilitas multisitus, termasuk pelatihan staf dan laporan audit premium.</p>
+<div class="flex flex-wrap gap-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-700 text-xl">payments</span>
+</div>
+<div>
+<div class="text-[10px] text-gray-400 font-bold uppercase">Harga Paket</div>
+<div class="text-emerald-900 font-bold">IDR 15.000.000</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-700 text-xl">schedule</span>
+</div>
+<div>
+<div class="text-[10px] text-gray-400 font-bold uppercase">Periode</div>
+<div class="text-emerald-900 font-bold">Perpanjangan Tahunan</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-emerald-900 rounded-xl p-8 text-white relative overflow-hidden flex flex-col justify-center">
+<div class="relative z-10">
+<h4 class="text-xl font-bold mb-4">Butuh Bantuan?</h4>
+<p class="text-emerald-100 text-sm mb-8 leading-relaxed">Pakar kepatuhan kami siap membantu konfigurasi multisitus Anda.</p>
+<button class="w-full bg-white text-emerald-900 py-3 rounded-lg font-bold text-sm hover:bg-emerald-50 transition-all shadow-lg">
+                                    Hubungi Penasihat
+                                </button>
+</div>
+<div class="absolute -bottom-6 -right-6 opacity-10">
+<span class="material-symbols-outlined text-[140px]">support_agent</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-6">
+<button class="flex items-center gap-2 text-gray-500 font-bold text-sm hover:text-emerald-900 transition-all">
+<span class="material-symbols-outlined">arrow_back</span>
+                        Kembali ke Ruang Lingkup
+                    </button>
+<div class="flex gap-4 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-6 py-3 border-2 border-gray-200 text-gray-700 rounded-lg font-bold text-sm hover:bg-gray-50 transition-all">
+                            Simpan Draft
+                        </button>
+<button class="flex-1 sm:flex-none px-10 py-3 bg-primary text-white rounded-lg font-bold text-sm shadow-lg shadow-emerald-900/20 hover:scale-[1.02] active:scale-95 transition-all">
+                            Selanjutnya: Dokumen
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Main Footer -->
+<footer class="w-full border-t border-gray-100 bg-white ml-64 w-[calc(100%-16rem)]">
+<div class="max-w-[1280px] mx-auto py-8 px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-xs font-medium text-gray-400">
+                © 2024 Muslim Friendly Tourism Certification. Hak Cipta Dilindungi.
+            </div>
+<div class="flex gap-8">
+<a class="text-xs font-medium text-gray-400 hover:text-emerald-700 transition-colors" href="#">Kebijakan Privasi</a>
+<a class="text-xs font-medium text-gray-400 hover:text-emerald-700 transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-xs font-medium text-gray-400 hover:text-emerald-700 transition-colors" href="#">Pusat Bantuan</a>
+</div>
+</div>
+</footer>
+</body></html>

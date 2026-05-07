@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f9f9ff",
+                    "surface": "#f9f9ff",
+                    "on-tertiary-container": "#becac2",
+                    "surface-container": "#e7eefe",
+                    "background": "#f9f9ff",
+                    "surface-container-highest": "#dce2f3",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#131e19",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#d3daea",
+                    "primary-container": "#065f46",
+                    "tertiary-fixed": "#d9e6dd",
+                    "inverse-primary": "#8bd6b6",
+                    "on-primary-fixed-variant": "#00513b",
+                    "on-secondary-fixed": "#002113",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#bec9c2",
+                    "on-surface-variant": "#3f4944",
+                    "error-container": "#ffdad6",
+                    "secondary": "#006c49",
+                    "on-surface": "#151c27",
+                    "tertiary": "#333f39",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2a313d",
+                    "surface-variant": "#dce2f3",
+                    "surface-container-high": "#e2e8f8",
+                    "surface-container-low": "#f0f3ff",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary-fixed-dim": "#bdcac1",
+                    "primary": "#004532",
+                    "on-primary-container": "#8bd6b7",
+                    "inverse-on-surface": "#ebf1ff",
+                    "surface-tint": "#1b6b51",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#8bd6b6",
+                    "on-primary-fixed": "#002116",
+                    "primary-fixed": "#a6f2d1",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-container": "#4a564f",
+                    "outline": "#6f7973",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#151c27"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "1.5rem",
+                    "sm": "1rem",
+                    "base": "4px",
+                    "xl": "3rem",
+                    "lg": "2rem",
+                    "gutter": "1.5rem",
+                    "xs": "0.5rem",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "h3": ["Inter"],
+                    "h2": ["Inter"],
+                    "h1": ["Inter"],
+                    "button": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                    "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface-bright text-on-background">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 docked full-width top-0 z-40 fixed">
+<div class="flex justify-between items-center h-16 px-6 w-full font-inter antialiased text-sm">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold tracking-tight text-emerald-900 dark:text-emerald-100">MFTC Auditor Portal</span>
+<div class="h-6 w-[1px] bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-2 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+<span class="font-medium">Kembali ke Daftar Audit</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-lg">
+<span class="material-symbols-outlined text-emerald-600" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48" placeholder="Cari data audit..." type="text"/>
+</div>
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer active:opacity-70">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<img alt="Auditor Profile Avatar" class="w-8 h-8 rounded-full border border-slate-200" data-alt="Professional auditor headshot with neutral background and formal attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn1gOnLgyi8khfEdhoTyD4eHL3jemT53NQn888RRBmgetHZquucJjIgcf-i83k2uCDnT1yMhZCoBUnOJem0UQMBPSSY_7lGv64uxztJzuvCrRLKkYkXeqaXIyCEiMjWhUSVoESEHUCwaXLJ9J-wpnvPpaBkQ30uwJOng7_0UklD8-DIL5__DhiWGrgjE_wbQX0AW31AIW9HLX1xvR-IAyVEj-ED8vQDUvtAuIHCt4zYN6hmDHjXv7p6SnW-UAGlDSzT5lNhkr98Q"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="bg-white dark:bg-slate-900 h-screen w-64 border-r border-slate-200 dark:border-slate-800 fixed left-0 top-0 pt-20 hidden md:flex flex-col font-inter text-sm font-medium">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-emerald-900 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</div>
+<div>
+<h1 class="text-xl font-black text-emerald-900 dark:text-emerald-50 leading-none">MFTC</h1>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Auditor Console</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-emerald-700 dark:text-emerald-400 border-r-4 border-emerald-700 bg-emerald-50/50 dark:bg-emerald-900/20 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span>Audits</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="domain">domain</span>
+<span>Establishments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="p-4">
+<button class="w-full bg-emerald-900 text-white py-3 rounded-lg font-semibold hover:bg-emerald-800 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Audit Report
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 pb-24 px-6 bg-surface-bright min-h-screen">
+<div class="max-w-[1280px] mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">Detail Audit &amp; Checklist</h2>
+<p class="font-body-md text-body-sm text-outline mt-1">Audit ID: #AUD-2024-GHRS-001 • Status: Sedang Berlangsung</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex flex-col items-end">
+<span class="text-[10px] font-bold uppercase text-outline tracking-wider">Progress Audit</span>
+<div class="flex items-center gap-2">
+<div class="w-32 h-2 bg-tertiary-fixed rounded-full overflow-hidden">
+<div class="bg-primary w-[65%] h-full"></div>
+</div>
+<span class="font-bold text-primary">65%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3-Column Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left: Navigation / Quick Links (Optional 1 col or combined) -->
+<!-- Center: Checklist (8 cols) -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<!-- Tabs Selection -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="flex border-b border-outline-variant">
+<button class="flex-1 py-4 text-center font-button text-primary border-b-2 border-primary bg-surface-container-low">
+                                Checklist
+                            </button>
+<button class="flex-1 py-4 text-center font-button text-outline hover:bg-surface-container-low transition-colors">
+                                Non-Conformity
+                            </button>
+<button class="flex-1 py-4 text-center font-button text-outline hover:bg-surface-container-low transition-colors">
+                                Revisi PU
+                            </button>
+<button class="flex-1 py-4 text-center font-button text-outline hover:bg-surface-container-low transition-colors">
+                                Laporan
+                            </button>
+</div>
+<!-- Checklist Content -->
+<div class="p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-h3 text-h3 text-primary">Aspek Fasilitas &amp; Pelayanan</h3>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 border border-outline text-body-sm font-medium rounded-lg">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                                        Filter
+                                    </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-highest">
+<tr>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface uppercase tracking-wider w-12">No</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface uppercase tracking-wider">Kriteria Audit</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface uppercase tracking-wider text-center">Status</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-on-surface uppercase tracking-wider text-center">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="px-4 py-4 text-body-sm">1.1</td>
+<td class="px-4 py-4">
+<p class="font-bold text-on-surface">Ketersediaan Fasilitas Shalat</p>
+<p class="text-xs text-outline mt-1">Akomodasi wajib menyediakan ruang shalat yang bersih dan memadai atau akses mudah ke masjid.</p>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800 uppercase">Compliant</span>
+</td>
+<td class="px-4 py-4 text-center">
+<button class="text-primary hover:underline font-medium text-sm">Edit</button>
+</td>
+</tr>
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="px-4 py-4 text-body-sm">1.2</td>
+<td class="px-4 py-4">
+<p class="font-bold text-on-surface">Arah Kiblat di Kamar</p>
+<p class="text-xs text-outline mt-1">Penunjuk arah kiblat harus terlihat jelas di setiap unit kamar tamu.</p>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800 uppercase">Non-Compliant</span>
+</td>
+<td class="px-4 py-4 text-center">
+<button class="text-primary hover:underline font-medium text-sm">Edit</button>
+</td>
+</tr>
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="px-4 py-4 text-body-sm">1.3</td>
+<td class="px-4 py-4">
+<p class="font-bold text-on-surface">Peralatan Shalat (Mukena/Sajadah)</p>
+<p class="text-xs text-outline mt-1">Penyediaan peralatan shalat yang bersih atas permintaan atau tersedia di kamar.</p>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-500 uppercase">N/A</span>
+</td>
+<td class="px-4 py-4 text-center">
+<button class="text-primary hover:underline font-medium text-sm">Edit</button>
+</td>
+</tr>
+<tr class="hover:bg-secondary/5 transition-colors">
+<td class="px-4 py-4 text-body-sm">1.4</td>
+<td class="px-4 py-4">
+<p class="font-bold text-on-surface">Fasilitas Wudhu Terpisah</p>
+<p class="text-xs text-outline mt-1">Tersedia tempat wudhu yang memperhatikan privasi gender jika di area publik.</p>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800 uppercase">Pending</span>
+</td>
+<td class="px-4 py-4 text-center">
+<button class="text-primary hover:underline font-medium text-sm">Input</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Info Pengajuan (4 cols) -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<div class="bg-white border-l-4 border-primary shadow-sm rounded-xl overflow-hidden sticky top-24">
+<div class="p-6">
+<h3 class="font-label-caps text-label-caps text-primary uppercase mb-4">Info Pengajuan</h3>
+<div class="mb-6">
+<img alt="Grand Halal Resort &amp; Spa" class="w-full h-40 object-cover rounded-lg mb-4" data-alt="Luxury resort with infinity pool and palm trees overlooking the ocean at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTeabLpw2oxC6O7VB3lUdxpUTjGkTo01QfLmTLbSc0V_kbj8zj6jVwqyyQKZF_oRqMcRLcqMD8JadyzwNF5zyRzB5fqWi1_0r5N4bLiPT73IeGyRvl9gx2T1VLE1l1BDUO5hJVyy1kga5Glkx-1OlxHtL-NNxJfo85ZQFfjfa5UuzDdDwceZXh2psrm5_8gJmMfsmq7_0cFanNrj0qf9Zcbmboo-9Hsb5KHbBmREMAQoWjrF2DXKKZy3OkyHvBCxsLf-raIki0RA"/>
+<h4 class="font-h3 text-h3 text-on-surface">Grand Halal Resort &amp; Spa</h4>
+<div class="flex items-center gap-1 text-yellow-500 mt-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star_half</span>
+<span class="text-xs text-outline font-medium ml-1">4.5 Rating</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-outline uppercase tracking-wider">Tipe Akomodasi</span>
+<span class="text-body-sm font-medium">Resort &amp; Spa (Bintang 5)</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-outline uppercase tracking-wider">Lokasi</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="location_on">location_on</span>
+<span class="text-body-sm font-medium">Nusa Dua, Bali</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-outline uppercase tracking-wider">Tanggal Audit</span>
+<span class="text-body-sm font-medium">12 - 14 Oktober 2024</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-outline uppercase tracking-wider">Lead Auditor</span>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]">person</span>
+</div>
+<span class="text-body-sm font-medium">Dr. Ahmad Faisal, M.Sc</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<button class="w-full py-3 px-4 border border-primary text-primary rounded-lg font-button text-button hover:bg-emerald-50 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                    Unduh Dokumen Pendukung
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Bottom Action Bar -->
+<footer class="fixed bottom-0 left-0 md:left-64 right-0 bg-white border-t border-outline-variant px-8 py-4 z-50 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 text-emerald-600">
+<span class="material-symbols-outlined animate-pulse" data-icon="cloud_done">cloud_done</span>
+<span class="text-xs font-medium">Tersimpan otomatis: 14:02 WIB</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 text-outline hover:text-on-surface font-button transition-colors">
+                Batalkan Perubahan
+            </button>
+<button class="px-6 py-2.5 border border-primary text-primary rounded-lg font-button hover:bg-emerald-50 transition-colors">
+                Simpan Draft
+            </button>
+<button class="px-8 py-2.5 bg-primary text-white rounded-lg font-button hover:bg-emerald-800 transition-colors shadow-lg shadow-primary/20">
+                Finalisasi Audit
+            </button>
+</div>
+</footer>
+</body></html>

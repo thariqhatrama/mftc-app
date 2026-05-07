@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review Laporan Audit | MFTC Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f9f9ff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#d9e6dd",
+                        "inverse-on-surface": "#ebf1ff",
+                        "secondary-fixed": "#6ffbbe",
+                        "primary-container": "#065f46",
+                        "on-primary-container": "#8bd6b7",
+                        "surface-container": "#e7eefe",
+                        "surface-tint": "#1b6b51",
+                        "primary": "#004532",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-tertiary-container": "#becac2",
+                        "surface-container-low": "#f0f3ff",
+                        "on-primary-fixed": "#002116",
+                        "surface-container-high": "#e2e8f8",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#4a564f",
+                        "tertiary": "#333f39",
+                        "inverse-surface": "#2a313d",
+                        "secondary-fixed-dim": "#4edea3",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#6cf8bb",
+                        "on-surface": "#151c27",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#8bd6b6",
+                        "on-primary-fixed-variant": "#00513b",
+                        "outline-variant": "#bec9c2",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-highest": "#dce2f3",
+                        "on-tertiary-fixed": "#131e19",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "on-secondary-container": "#00714d",
+                        "surface-variant": "#dce2f3",
+                        "outline": "#6f7973",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d3daea",
+                        "on-secondary-fixed": "#002113",
+                        "on-background": "#151c27",
+                        "on-surface-variant": "#3f4944",
+                        "surface-bright": "#f9f9ff",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9ff",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "secondary": "#006c49",
+                        "primary-fixed": "#a6f2d1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "1.5rem",
+                        "xs": "0.5rem",
+                        "base": "4px",
+                        "xl": "3rem",
+                        "sm": "1rem",
+                        "md": "1.5rem",
+                        "container-max": "1280px",
+                        "lg": "2rem"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "button": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watermark-draft {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 8rem;
+            font-weight: 900;
+            opacity: 0.05;
+            pointer-events: none;
+            letter-spacing: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- SideNavBar Integration -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 flex flex-col py-6 px-4 space-y-2 z-50">
+<div class="mb-8 px-4">
+<h1 class="text-lg font-black tracking-tighter text-emerald-900 dark:text-emerald-50">MFTC Portal</h1>
+<p class="text-xs text-slate-500 font-medium">Super Admin Access</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center space-x-3 text-slate-600 dark:text-slate-400 px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-emerald-800 dark:hover:text-emerald-300 transition-all duration-150 rounded-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Inter'] antialiased text-sm font-medium tracking-tight">Admin Dashboard</span>
+</a>
+<a class="flex items-center space-x-3 text-slate-600 dark:text-slate-400 px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-emerald-800 dark:hover:text-emerald-300 transition-all duration-150 rounded-md" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Inter'] antialiased text-sm font-medium tracking-tight">User Management</span>
+</a>
+<a class="flex items-center space-x-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-900 dark:text-emerald-400 rounded-md px-4 py-2 border-r-4 border-emerald-800 active:scale-[0.99] opacity-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="font-['Inter'] antialiased text-sm font-medium tracking-tight">Report Reviews</span>
+</a>
+</nav>
+</aside>
+<!-- TopAppBar Integration -->
+<header class="sticky top-0 w-full z-40 border-b border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md shadow-sm dark:shadow-none flex justify-between items-center h-16 px-8 ml-64 max-w-[calc(100%-16rem)]">
+<div class="flex items-center">
+<span class="text-xl font-bold text-emerald-900 dark:text-emerald-100 font-['Inter']">MFTC Certification</span>
+</div>
+<div class="flex items-center space-x-6">
+<span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-emerald-700" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-emerald-700" data-icon="settings">settings</span>
+<span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-emerald-700" data-icon="help">help</span>
+<div class="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center overflow-hidden border border-emerald-200">
+<img alt="Super Admin Avatar" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUJeArFWhgH3inHoGvQuPIiMukqACgMH3C3SXQCaAfPNDfQjNtF91Ka-vx4LFWkEHu89yfa3bDgyD_23Ui0lqLwDgdpP2MhHJlLFWg2R7Cmt6TJ16bw2xyw6urRQitnwgnEE87eIIpDc0GvSg-VTtMf2OX6rhRHH8C9S3_SmSBPPhJywDC2bPqva-vqXNxO-PW7m63eq_vYZh0A71INUNjgn9qfYFOA_GVIa-nhKSFMk3b925eB_aTouUq1xMQJuWFQRJGzcTiAg"/>
+</div>
+</div>
+</header>
+<main class="ml-64 p-8 min-h-screen">
+<!-- Breadcrumb & Title -->
+<div class="mb-6">
+<nav class="flex text-label-caps text-slate-500 mb-2 gap-2 items-center">
+<span>Administrasi</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="chevron_right">chevron_right</span>
+<span>Laporan Masuk</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold">APP-2024-089</span>
+</nav>
+<h2 class="font-h2 text-h2 text-primary">Review Laporan Audit</h2>
+</div>
+<!-- Top Summary Bar -->
+<section class="bg-white border border-slate-200 rounded-xl p-md mb-lg shadow-sm flex flex-wrap justify-between items-center gap-4">
+<div class="flex gap-6">
+<div class="flex flex-col">
+<span class="text-label-caps text-slate-400">COMPANY / SCOPE</span>
+<div class="flex items-center gap-2">
+<span class="font-h3 text-body-md font-bold text-on-surface">Grand Halal Resort &amp; Spa</span>
+<span class="px-2 py-0.5 bg-surface-container rounded text-label-caps font-bold">HOTEL</span>
+<span class="text-amber-500">★★</span>
+</div>
+</div>
+<div class="w-px h-10 bg-slate-100"></div>
+<div class="flex flex-col">
+<span class="text-label-caps text-slate-400">AUDITOR / DATE</span>
+<p class="text-body-md font-medium">Reza Maulana <span class="text-slate-400 mx-1">•</span> 24–25 Okt 2024</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-label-caps font-black rounded-full border border-emerald-200">REPORT_SUBMITTED</span>
+<span class="text-xs text-error font-medium mt-1">Tersisa 4 hari (batas: 30 Oktober 2024)</span>
+</div>
+</div>
+</section>
+<!-- 3-Column Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- LEFT COLUMN (30%) -->
+<div class="col-span-12 lg:col-span-3 space-y-6">
+<!-- Audit Stats Card -->
+<div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+<h4 class="font-label-caps text-slate-400 mb-4">STATISTIK AUDIT</h4>
+<ul class="space-y-4">
+<li class="flex justify-between items-center">
+<span class="text-body-sm text-slate-600">Kriteria Diperiksa</span>
+<span class="font-bold text-on-surface">20</span>
+</li>
+<li class="flex justify-between items-center">
+<span class="text-body-sm text-emerald-600 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span> Compliant
+                            </span>
+<span class="font-bold text-emerald-700">18</span>
+</li>
+<li class="flex justify-between items-center">
+<span class="text-body-sm text-slate-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="remove_circle">remove_circle</span> N/A
+                            </span>
+<span class="font-bold text-slate-400">2</span>
+</li>
+<li class="flex justify-between items-center">
+<span class="text-body-sm text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="cancel">cancel</span> Non-Compliant
+                            </span>
+<span class="font-bold text-error">0</span>
+</li>
+</ul>
+<div class="mt-6 pt-4 border-t border-slate-100">
+<div class="flex justify-between items-center mb-2">
+<span class="text-body-sm font-medium">NC closed history</span>
+<span class="text-body-sm font-bold">3/3</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-full"></div>
+</div>
+</div>
+</div>
+<!-- Auditor Recommendation Card -->
+<div class="bg-emerald-50 border-l-4 border-emerald-600 rounded-r-xl p-6">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-emerald-600 text-3xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<span class="text-label-caps text-emerald-700 font-black">REKOMENDASI: SETUJUI</span>
+</div>
+</div>
+<p class="text-body-sm text-emerald-900 leading-relaxed italic">
+                        "Seluruh kriteria wajib telah terpenuhi dengan dokumentasi pendukung yang sangat lengkap. Fasilitas menunjukkan komitmen tinggi terhadap standar pelayanan ramah muslim."
+                    </p>
+</div>
+<!-- Links Panel -->
+<div class="space-y-2">
+<button class="w-full flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl hover:border-emerald-300 hover:bg-emerald-50/30 transition-all group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-600" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="text-body-sm font-medium text-on-surface">Unduh Laporan Lengkap (PDF)</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-emerald-600" data-icon="download">download</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl hover:border-emerald-300 hover:bg-emerald-50/30 transition-all group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-600" data-icon="description">description</span>
+<span class="text-body-sm font-medium text-on-surface">Lihat Self-Assessment PU</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-emerald-600" data-icon="visibility">visibility</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl hover:border-emerald-300 hover:bg-emerald-50/30 transition-all group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-600" data-icon="folder_zip">folder_zip</span>
+<span class="text-body-sm font-medium text-on-surface">Lihat Semua Dokumen</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-emerald-600" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- CENTER COLUMN (40%) - Certificate Preview -->
+<div class="col-span-12 lg:col-span-6">
+<div class="bg-white border-2 border-dashed border-slate-200 rounded-2xl p-12 relative overflow-hidden shadow-inner flex flex-col items-center min-h-[700px]">
+<div class="watermark-draft">DRAFT</div>
+<!-- Certificate Content Area -->
+<div class="w-full border-[12px] border-emerald-900/5 p-12 flex flex-col items-center text-center relative z-10 bg-white shadow-lg">
+<div class="mb-12">
+<img alt="MFTC Official Logo" class="h-24 w-auto grayscale opacity-90" data-alt="minimalist logo for Muslim-friendly Tourism Certification with emerald green circular geometry and modern typography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdXiD5trf_xFKg4IMuSFrtu-fODcm9taVIpacn0yeSS4yVPR9k6MZFk-S5BKJxEkelfhpek_l-e6MUOOUCAUZMswnHiwr2XYl4PdNAT1LdIxj622QEBaINrKg93SZIBYdHTXFNYBgiCchBTtHVbJvvOC2HTKEYzZMx1hYjB2iJ4G8-zF9OARY_le2KhDnFRD4NEY4tBKeM5hZ2o-jGxI-_zz9RoSk3eVPYWjW3DhJQp0ZbS2O8aaSSznxAPPlSfiWRlGo_xOxmtA"/>
+</div>
+<h1 class="font-h1 text-[32px] tracking-widest text-emerald-900 mb-4 font-black">CERTIFICATE OF EXCELLENCE</h1>
+<p class="text-label-caps text-slate-500 tracking-[0.3em] mb-12">MUSLIM-FRIENDLY TOURISM CERTIFICATION</p>
+<p class="text-body-md text-slate-400 italic mb-2">This is to certify that</p>
+<h2 class="text-h2 font-bold text-emerald-950 mb-8 border-b-2 border-emerald-900/20 px-8 pb-2">Grand Halal Resort &amp; Spa</h2>
+<p class="text-body-md text-slate-600 mb-8 max-w-md mx-auto">Has met the required standards for the provision of services in accordance with the Global Muslim-friendly Criteria.</p>
+<div class="mb-12 py-4 px-12 bg-emerald-900 text-white rounded-full">
+<span class="font-bold tracking-widest text-lg">★★ TWO STAR CATEGORY</span>
+</div>
+<div class="grid grid-cols-2 w-full gap-8 mt-auto pt-12 border-t border-slate-100">
+<div class="text-left">
+<p class="text-label-caps text-slate-400 mb-1">VALIDITY PERIOD</p>
+<p class="text-body-sm font-bold text-emerald-900">25 Oct 2024 — 24 Oct 2027</p>
+<p class="text-label-caps text-slate-400 mt-4 mb-1">CERTIFICATE NO.</p>
+<p class="text-body-sm font-bold text-emerald-900">MFTC/HTL/2024/0089</p>
+</div>
+<div class="flex justify-end">
+<div class="w-24 h-24 bg-slate-50 border border-slate-200 p-2">
+<img alt="Verification QR Code" class="w-full h-full grayscale" data-alt="standard black and white QR code for digital certificate verification on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb-mDkgE4SXhh0iACL6V7GH-RjlKfpzwUTNbokmhxVV3Put1P86aoBoTgdiK7pnngikN6DIA8GiCFyLcUgp9V0oX35Y2C_eJsvhZWby_8iBmdkXChCkXYzuuIi4gw8-FLUFl7EO7gXmpZi3Y_SxhY9ieHListYUqtmwFGkApoIfcc0NmkyOlK8ZH4P-pxhYCkBCqrtqOWTIVWVKSBOylTfhumnWdWitioGrmU4wDuxFNDqbvUXJgZDO1I_KFwerYt7Qw_-e9N7vA"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN (30%) - Action Panel -->
+<div class="col-span-12 lg:col-span-3 space-y-6">
+<!-- APPROVE card -->
+<div class="bg-emerald-50 border-2 border-emerald-600 rounded-xl p-6 relative">
+<div class="absolute top-4 right-4">
+<span class="material-symbols-outlined text-emerald-600" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="material-symbols-outlined text-emerald-600 text-5xl mb-4" data-icon="verified">verified</span>
+<h3 class="font-h3 text-body-lg font-bold text-emerald-950 mb-2">Setujui &amp; Terbitkan</h3>
+<p class="text-body-sm text-emerald-800 mb-6">Sertifikat akan otomatis digenerate dengan nomor seri resmi dan dikirim ke email Pelaku Usaha (PU).</p>
+<button class="w-full py-4 bg-emerald-800 text-white rounded-xl font-bold hover:bg-emerald-950 transition-colors shadow-lg shadow-emerald-900/20">
+                        Setujui Laporan
+                    </button>
+</div>
+<!-- REJECT card -->
+<div class="bg-white border border-slate-200 rounded-xl p-6">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-slate-400" data-icon="assignment_return">assignment_return</span>
+<h3 class="font-h3 text-body-md font-bold text-on-surface">Kembalikan ke Auditor</h3>
+</div>
+<p class="text-body-sm text-slate-500 mb-4">Minta perbaikan atau klarifikasi tambahan kepada auditor terkait laporan ini.</p>
+<div class="mb-4">
+<label class="text-label-caps text-slate-400 block mb-2">ALASAN PENGEMBALIAN</label>
+<textarea class="w-full border-slate-200 rounded-lg text-body-sm p-3 focus:ring-emerald-600 focus:border-emerald-600 min-h-[100px]" placeholder="Tulis alasan atau instruksi perbaikan di sini..."></textarea>
+</div>
+<button class="w-full py-3 bg-white text-error border border-error rounded-lg font-medium hover:bg-error/5 transition-colors">
+                        Kembalikan Laporan
+                    </button>
+</div>
+<div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+<p class="text-xs text-slate-400 italic">Audit Log: Terakhir diupdate oleh Reza Maulana 3 jam yang lalu</p>
+</div>
+</div>
+</div>
+</main>
+<!-- CONFIRMATION MODAL (HIDDEN BY DEFAULT, SHOWN FOR DEMO) -->
+<!-- Remove 'hidden' to view state -->
+<div class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-emerald-950/40 backdrop-blur-sm">
+<div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center animate-in fade-in zoom-in duration-300">
+<div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-4xl" data-icon="task_alt">task_alt</span>
+</div>
+<h3 class="font-h3 text-primary mb-4">Konfirmasi Penerbitan Sertifikat</h3>
+<p class="text-body-md text-slate-600 mb-8">Setelah disetujui, sertifikat akan langsung dikirim ke PU melalui email dan tersedia untuk diunduh secara publik.</p>
+<div class="flex gap-4">
+<button class="flex-1 py-3 border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-colors">Batal</button>
+<button class="flex-1 py-3 bg-emerald-800 text-white rounded-xl font-bold hover:bg-emerald-900 shadow-lg shadow-emerald-900/20 transition-all">Ya, Setujui &amp; Terbitkan</button>
+</div>
+</div>
+</div>
+</body></html>

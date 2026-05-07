@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#dce2f3",
+                    "inverse-surface": "#2a313d",
+                    "on-primary-fixed-variant": "#00513b",
+                    "on-tertiary-fixed": "#131e19",
+                    "on-primary-container": "#8bd6b7",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#065f46",
+                    "surface-container": "#e7eefe",
+                    "surface-bright": "#f9f9ff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#333f39",
+                    "background": "#f9f9ff",
+                    "on-secondary-container": "#00714d",
+                    "tertiary-fixed-dim": "#bdcac1",
+                    "on-background": "#151c27",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-tertiary-container": "#becac2",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#6f7973",
+                    "on-surface-variant": "#3f4944",
+                    "outline-variant": "#bec9c2",
+                    "primary": "#004532",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-container-low": "#f0f3ff",
+                    "primary-fixed": "#a6f2d1",
+                    "secondary-container": "#6cf8bb",
+                    "surface-dim": "#d3daea",
+                    "tertiary-fixed": "#d9e6dd",
+                    "surface-variant": "#dce2f3",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#3e4943",
+                    "primary-fixed-dim": "#8bd6b6",
+                    "on-primary-fixed": "#002116",
+                    "surface-container-high": "#e2e8f8",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-container": "#4a564f",
+                    "surface": "#f9f9ff",
+                    "secondary": "#006c49",
+                    "surface-tint": "#1b6b51",
+                    "on-secondary-fixed-variant": "#005236",
+                    "secondary-fixed-dim": "#4edea3",
+                    "inverse-primary": "#8bd6b6",
+                    "on-surface": "#151c27"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sm": "1rem",
+                    "xs": "0.5rem",
+                    "container-max": "1280px",
+                    "xl": "3rem",
+                    "gutter": "1.5rem",
+                    "base": "4px",
+                    "md": "1.5rem",
+                    "lg": "2rem"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "h2": ["Inter"],
+                    "h3": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "h1": ["Inter"],
+                    "button": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .hero-pattern {
+            background-color: #f9f9ff;
+            background-image: radial-gradient(#065f46 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar Shell -->
+<nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-200">
+<div class="flex justify-between items-center h-16 px-6 max-w-[1280px] mx-auto">
+<div class="text-xl font-bold tracking-tight text-emerald-900">MFTC</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-inter text-sm font-medium text-gray-600 hover:text-[#065f46] transition-colors" href="#">Home</a>
+<a class="font-inter text-sm font-medium text-gray-600 hover:text-[#065f46] transition-colors" href="#">Standards</a>
+<a class="font-inter text-sm font-medium text-[#065f46] border-b-2 border-[#065f46] pb-1" href="#">Pricing</a>
+<a class="font-inter text-sm font-medium text-gray-600 hover:text-[#065f46] transition-colors" href="#">About</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="font-inter text-sm font-medium text-gray-600 px-4 py-2">Login</button>
+<button class="bg-[#065f46] text-white px-5 py-2 rounded-lg font-inter text-sm font-medium hover:bg-[#044a37] transition-all active:opacity-80">Daftar</button>
+</div>
+</div>
+</nav>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative py-24 overflow-hidden mt-16">
+<div class="absolute inset-0 hero-pattern"></div>
+<div class="relative max-w-[1280px] mx-auto px-6 text-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/20 text-on-secondary-container rounded-full mb-6">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-label-caps text-label-caps">Global Excellence Standard</span>
+</div>
+<h1 class="font-h1 text-h1 text-primary mb-6">Paket &amp; Investasi Sertifikasi</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                    Wujudkan standar pariwisata ramah Muslim yang diakui dunia melalui proses sertifikasi yang transparan, akuntabel, dan profesional.
+                </p>
+</div>
+</section>
+<!-- Pricing Cards Section -->
+<section class="pb-24 px-6">
+<div class="max-w-[1280px] mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- One Star: Foundational -->
+<div class="bg-surface-container-lowest border border-outline-variant p-8 flex flex-col h-full rounded-xl transition-all duration-300 hover:border-primary">
+<div class="mb-8">
+<div class="flex items-center gap-1 mb-4 text-secondary">
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+</div>
+<h3 class="font-h3 text-h3 mb-2">One Star</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Foundational Compliance</p>
+<div class="flex items-baseline gap-1">
+<span class="text-h2 font-h2 text-primary">IDR 5jt</span>
+<span class="text-on-surface-variant text-body-sm">/ audit</span>
+</div>
+</div>
+<div class="flex-grow space-y-4 mb-8">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Audit Kepatuhan Dasar</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Verifikasi Dokumen Digital</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Sertifikat Digital MFTC</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline text-[20px]">block</span>
+<span class="font-body-sm text-body-sm text-outline">Marketing Media Kit</span>
+</div>
+</div>
+<button class="w-full border border-primary text-primary py-3 rounded-lg font-button hover:bg-primary-fixed transition-colors">
+                            Pilih Paket
+                        </button>
+</div>
+<!-- Two Star: Recommended -->
+<div class="bg-surface-container-lowest border-2 border-primary p-8 flex flex-col h-full rounded-xl relative shadow-lg">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-4 py-1 rounded-full text-label-caps font-label-caps">
+                            RECOMMENDED
+                        </div>
+<div class="mb-8">
+<div class="flex items-center gap-1 mb-4 text-secondary">
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+</div>
+<h3 class="font-h3 text-h3 mb-2">Two Star</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Enhanced Experience</p>
+<div class="flex items-baseline gap-1">
+<span class="text-h2 font-h2 text-primary">IDR 10jt</span>
+<span class="text-on-surface-variant text-body-sm">/ audit</span>
+</div>
+</div>
+<div class="flex-grow space-y-4 mb-8">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm font-semibold">1x Site Visit Auditor</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Penjadwalan Prioritas</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Digital &amp; Physical Certificate</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Standard Marketing Kit</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-button hover:bg-primary-container transition-colors">
+                            Pilih Paket
+                        </button>
+</div>
+<!-- Three Star: Premium -->
+<div class="bg-surface-container-lowest border border-outline-variant p-8 flex flex-col h-full rounded-xl transition-all duration-300 hover:border-primary">
+<div class="mb-8">
+<div class="flex items-center gap-1 mb-4 text-secondary">
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+<span class="material-symbols-outlined" data-weight="fill">star</span>
+</div>
+<h3 class="font-h3 text-h3 mb-2">Three Star</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Elite Excellence</p>
+<div class="flex items-baseline gap-1">
+<span class="text-h2 font-h2 text-primary">IDR 15jt</span>
+<span class="text-on-surface-variant text-body-sm">/ audit</span>
+</div>
+</div>
+<div class="flex-grow space-y-4 mb-8">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm font-semibold">2x Site Visit &amp; Coaching</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Audit On-Demand</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Premium Plaque &amp; Signage</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm">Full PR &amp; Marketing Support</span>
+</div>
+</div>
+<button class="w-full border border-primary text-primary py-3 rounded-lg font-button hover:bg-primary-fixed transition-colors">
+                            Pilih Paket
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Biaya Tambahan Section (Bento Style) -->
+<section class="py-24 bg-surface-container-low px-6">
+<div class="max-w-[1280px] mx-auto">
+<h2 class="font-h2 text-h2 text-primary mb-12 text-center">Biaya Tambahan</h2>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Travel Auditor -->
+<div class="md:col-span-8 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant flex flex-col md:flex-row items-center gap-8">
+<div class="w-full md:w-1/3">
+<img class="rounded-lg object-cover h-48 w-full" data-alt="professional modern airplane tail in clear blue sky with sleek metal finish and professional travel mood" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl0IFLNpje7EPeeu3joNpwE0FBUH2UN1i_rbgPAdiNEh-H213gmcQVG5U8M5aXZKirauzLT7-qa7jYBFbIocNk4zA2efJpZDS367Vf20jbHT216lQ6KIBc0BTh6mQNnV4xq4-mrBW90E4vyPupdt8jJ1oV_mxamcvNIKawAu6h5jq-i_iUZMxZVdZupLFyab7tjc8k_c3hOVOxYZuHnH0nVfpZGRyOm53rAvfR8MquN_Ypqza6JlpiWUOvlmj-Txm2G3bZ_IAChw"/>
+</div>
+<div class="flex-grow">
+<span class="font-label-caps text-label-caps text-secondary mb-2 block">Travel &amp; Logistics</span>
+<h3 class="font-h3 text-h3 mb-4">Akomodasi &amp; Transportasi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
+                                Untuk lokasi di luar area operasional utama (Jabodetabek), biaya perjalanan dan akomodasi auditor akan dibebankan sesuai dengan tarif standar perjalanan dinas.
+                            </p>
+<p class="text-primary font-bold">Mulai dari IDR 1.5jt / kunjungan</p>
+</div>
+</div>
+<!-- Extra Sites -->
+<div class="md:col-span-4 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-secondary mb-2 block">Expansion</span>
+<h3 class="font-h3 text-h3 mb-4">Multi-Site</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                                Penambahan lokasi atau cabang tambahan dalam satu grup perusahaan yang sama.
+                            </p>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant">
+<p class="text-primary font-bold">Diskon 30% untuk site ke-2+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-24 px-6 max-w-[1280px] mx-auto">
+<h2 class="font-h2 text-h2 text-primary mb-12 text-center">Pertanyaan Umum (FAQ)</h2>
+<div class="max-w-3xl mx-auto divide-y divide-outline-variant">
+<div class="py-6">
+<button class="flex justify-between items-center w-full text-left group">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Berapa lama masa berlaku sertifikasi?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+</button>
+<div class="mt-4 text-on-surface-variant font-body-sm">
+                        Sertifikasi MFTC berlaku selama 2 (dua) tahun kalender. Re-audit disarankan dilakukan 3 bulan sebelum masa berlaku berakhir untuk memastikan kontinuitas status "Certified".
+                    </div>
+</div>
+<div class="py-6">
+<button class="flex justify-between items-center w-full text-left group">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Apakah ada biaya tahunan (Maintenance Fee)?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+</button>
+<div class="mt-4 text-on-surface-variant font-body-sm">
+                        Tidak ada biaya maintenance tahunan. Investasi yang Anda bayarkan sudah mencakup seluruh proses audit dan penggunaan logo selama masa berlaku sertifikat.
+                    </div>
+</div>
+<div class="py-6">
+<button class="flex justify-between items-center w-full text-left group">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Bagaimana jika audit kami dinyatakan belum memenuhi syarat?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+</button>
+<div class="mt-4 text-on-surface-variant font-body-sm">
+                        Kami akan memberikan laporan detil "Corrective Action" (CAPA). Anda memiliki waktu 30 hari untuk melakukan perbaikan tanpa biaya audit tambahan untuk verifikasi kedua.
+                    </div>
+</div>
+<div class="py-6">
+<button class="flex justify-between items-center w-full text-left group">
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Apa perbedaan utama antara One Star dan Three Star?</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+</button>
+<div class="mt-4 text-on-surface-variant font-body-sm">
+                        Perbedaan utama terletak pada kedalaman audit lapangan, intensitas pendampingan (coaching), serta dukungan pemasaran premium yang didapatkan setelah tersertifikasi.
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full mt-auto bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 px-6 py-12 max-w-[1280px] mx-auto">
+<div class="flex flex-col gap-4">
+<div class="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-widest">MFTC</div>
+<div class="text-slate-500 dark:text-slate-400 font-inter text-xs uppercase tracking-widest">
+                    © 2024 Muslim-Friendly Tourism Certification. All rights reserved.
+                </div>
+</div>
+<nav class="flex flex-wrap justify-center gap-8">
+<a class="font-inter text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Privacy Policy</a>
+<a class="font-inter text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Terms of Service</a>
+<a class="font-inter text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Certification Standards</a>
+<a class="font-inter text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 underline decoration-emerald-500/30 transition-all duration-300" href="#">Global Registry</a>
+</nav>
+</div>
+</footer>
+</body></html>

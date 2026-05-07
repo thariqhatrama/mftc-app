@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#6cf8bb",
+                        "on-primary-fixed": "#002116",
+                        "on-surface": "#151c27",
+                        "on-background": "#151c27",
+                        "tertiary-container": "#4a564f",
+                        "on-secondary-container": "#00714d",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9ff",
+                        "on-primary-fixed-variant": "#00513b",
+                        "on-tertiary-container": "#becac2",
+                        "surface-container": "#e7eefe",
+                        "surface-tint": "#1b6b51",
+                        "outline": "#6f7973",
+                        "inverse-primary": "#8bd6b6",
+                        "tertiary-fixed": "#d9e6dd",
+                        "secondary": "#006c49",
+                        "on-surface-variant": "#3f4944",
+                        "surface-bright": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#a6f2d1",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-container-low": "#f0f3ff",
+                        "outline-variant": "#bec9c2",
+                        "on-secondary-fixed-variant": "#005236",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "on-primary-container": "#8bd6b7",
+                        "inverse-on-surface": "#ebf1ff",
+                        "inverse-surface": "#2a313d",
+                        "tertiary": "#333f39",
+                        "surface-container-highest": "#dce2f3",
+                        "on-primary": "#ffffff",
+                        "primary": "#004532",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed": "#131e19",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#065f46",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e2e8f8",
+                        "surface-variant": "#dce2f3",
+                        "surface-dim": "#d3daea",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "gutter": "1.5rem",
+                        "sm": "1rem",
+                        "md": "1.5rem",
+                        "xs": "0.5rem",
+                        "base": "4px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "button": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"]
+                    },
+                    "fontSize": {
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-gray-200 bg-gray-50 flex flex-col py-6 px-4 gap-4 z-40">
+<div class="mb-8 px-2">
+<h1 class="text-lg font-black text-emerald-900 tracking-wide">HalalCertify</h1>
+<p class="font-sans text-sm tracking-wide text-gray-500">Management Portal</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 font-bold border-r-4 border-emerald-700 font-sans text-sm tracking-wide transition-all translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-500 font-sans text-sm tracking-wide hover:bg-gray-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                    Applications
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-500 font-sans text-sm tracking-wide hover:bg-gray-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+                    Audits
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-500 font-sans text-sm tracking-wide hover:bg-gray-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+                    Invoices
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-500 font-sans text-sm tracking-wide hover:bg-gray-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+                    Reports
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-500 font-sans text-sm tracking-wide hover:bg-gray-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</nav>
+<div class="mt-auto border-t border-gray-200 pt-4 space-y-1">
+<button class="w-full text-left flex items-center gap-3 px-3 py-2 text-gray-500 font-sans text-sm tracking-wide hover:bg-gray-100 transition-all">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                    Help Center
+                </button>
+<button class="w-full text-left flex items-center gap-3 px-3 py-2 text-gray-500 font-sans text-sm tracking-wide hover:bg-gray-100 transition-all">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                    Logout
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1">
+<!-- TopBar (Simulated shell context) -->
+<header class="h-16 flex items-center justify-between px-md bg-white border-b border-outline-variant sticky top-0 z-30">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary" data-icon="business_center">business_center</span>
+<span class="font-h3 text-body-md text-primary">Profil Usaha</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface">ID: PU-882910</span>
+<span class="font-body-sm text-xs text-secondary font-medium">Drafting Phase</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed-variant font-bold">
+                        JD
+                    </div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="max-w-[1280px] mx-auto p-lg">
+<div class="mb-xl">
+<h1 class="font-h1 text-h1 text-primary mb-xs">Lengkapi Profil Usaha</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                        Pastikan data perusahaan Anda akurat untuk mempermudah proses verifikasi sertifikasi Pariwisata Ramah Muslim.
+                    </p>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Progress Sidebar (Wizard) -->
+<div class="col-span-12 lg:col-span-4">
+<div class="bg-white border border-outline-variant rounded-xl p-md sticky top-24">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-md">TAHAPAN PENDAFTARAN</h3>
+<div class="space-y-sm">
+<!-- Step 1: Active -->
+<div class="flex items-start gap-md">
+<div class="relative flex items-center justify-center">
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-white z-10 flex items-center justify-center">
+<span class="text-primary font-bold text-sm">1</span>
+</div>
+<div class="absolute top-8 w-0.5 h-12 bg-outline-variant"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-primary">Biodata Usaha</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Informasi dasar entitas</span>
+</div>
+</div>
+<!-- Step 2: Pending -->
+<div class="flex items-start gap-md">
+<div class="relative flex items-center justify-center">
+<div class="w-8 h-8 rounded-full border border-outline-variant bg-surface-container-low z-10 flex items-center justify-center">
+<span class="text-on-surface-variant font-medium text-sm">2</span>
+</div>
+<div class="absolute top-8 w-0.5 h-12 bg-outline-variant"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface-variant">NIB &amp; Legalitas</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Nomor Induk Berusaha</span>
+</div>
+</div>
+<!-- Step 3: Pending -->
+<div class="flex items-start gap-md">
+<div class="relative flex items-center justify-center">
+<div class="w-8 h-8 rounded-full border border-outline-variant bg-surface-container-low z-10 flex items-center justify-center">
+<span class="text-on-surface-variant font-medium text-sm">3</span>
+</div>
+<div class="absolute top-8 w-0.5 h-12 bg-outline-variant"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface-variant">Alamat Lengkap</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Lokasi operasional utama</span>
+</div>
+</div>
+<!-- Step 4: Pending -->
+<div class="flex items-start gap-md">
+<div class="relative flex items-center justify-center">
+<div class="w-8 h-8 rounded-full border border-outline-variant bg-surface-container-low z-10 flex items-center justify-center">
+<span class="text-on-surface-variant font-medium text-sm">4</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface-variant">Personil Penghubung</span>
+<span class="font-body-sm text-xs text-on-surface-variant">Kontak penanggung jawab</span>
+</div>
+</div>
+</div>
+<div class="mt-xl p-sm bg-tertiary-fixed rounded-lg border border-tertiary-container/10">
+<p class="text-[11px] font-medium text-tertiary uppercase tracking-widest mb-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="info">info</span>
+                                    Bantuan
+                                </p>
+<p class="font-body-sm text-xs text-tertiary leading-relaxed">
+                                    Pastikan nama perusahaan sesuai dengan dokumen Akta Pendirian atau NIB yang berlaku.
+                                </p>
+</div>
+</div>
+</div>
+<!-- Form Area -->
+<div class="col-span-12 lg:col-span-8">
+<div class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
+<div>
+<h2 class="font-h3 text-h3 text-on-surface">Biodata Usaha</h2>
+<p class="font-body-sm text-on-surface-variant">Langkah 1 dari 4</p>
+</div>
+<span class="bg-primary-container text-on-primary-container text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Wajib Diisi</span>
+</div>
+<div class="p-md space-y-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface">NAMA PERUSAHAAN</label>
+<input class="w-full px-md py-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary-container focus:border-secondary transition-all outline-none" placeholder="Contoh: PT. Wisata Halal Indonesia" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface">MEREK DAGANG / BRAND</label>
+<input class="w-full px-md py-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary-container focus:border-secondary transition-all outline-none" placeholder="Contoh: HalalGo Travels" type="text"/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface">JENIS BADAN USAHA</label>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-xs">
+<button class="px-md py-sm border border-secondary text-secondary font-medium rounded-lg text-sm bg-secondary/5">PT</button>
+<button class="px-md py-sm border border-outline text-on-surface-variant font-medium rounded-lg text-sm hover:bg-surface-container transition-colors">CV</button>
+<button class="px-md py-sm border border-outline text-on-surface-variant font-medium rounded-lg text-sm hover:bg-surface-container transition-colors">Koperasi</button>
+<button class="px-md py-sm border border-outline text-on-surface-variant font-medium rounded-lg text-sm hover:bg-surface-container transition-colors">Lainnya</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface">NOMOR INDUK BERUSAHA (NIB)</label>
+<div class="relative">
+<input class="w-full px-md py-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary-container focus:border-secondary transition-all outline-none pl-10" placeholder="13 Digit Nomor NIB" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant" data-icon="pin">pin</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface">SKALA USAHA</label>
+<select class="w-full px-md py-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary-container focus:border-secondary transition-all outline-none appearance-none">
+<option>Mikro</option>
+<option>Kecil</option>
+<option>Menengah</option>
+<option>Besar</option>
+</select>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface">DESKRIPSI SINGKAT OPERASIONAL</label>
+<textarea class="w-full px-md py-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary-container focus:border-secondary transition-all outline-none" placeholder="Jelaskan mengenai fokus bisnis pariwisata Anda..." rows="4"></textarea>
+</div>
+<div class="p-md bg-tertiary-fixed/30 rounded-xl border border-dashed border-outline-variant flex flex-col items-center justify-center text-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<div>
+<p class="font-body-md font-semibold text-primary">Upload Dokumen NIB (PDF)</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Maksimal ukuran file 5MB</p>
+</div>
+<button class="font-button text-button px-md py-xs bg-white border border-primary text-primary rounded-full hover:bg-primary-fixed transition-colors">Pilih File</button>
+</div>
+</div>
+<div class="p-md bg-gray-50 flex justify-between items-center border-t border-outline-variant">
+<button class="font-button text-button px-lg py-sm border border-outline text-on-surface-variant rounded-lg hover:bg-white transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_back">arrow_back</span>
+                                    Kembali
+                                </button>
+<button class="font-button text-button px-xl py-sm bg-primary text-white rounded-lg hover:opacity-90 transition-all flex items-center gap-2 shadow-md">
+                                    Simpan &amp; Lanjutkan
+                                    <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Info Card -->
+<div class="mt-md p-md bg-white border-l-4 border-secondary rounded-lg shadow-sm flex gap-md">
+<span class="material-symbols-outlined text-secondary" data-icon="verified_user">verified_user</span>
+<div>
+<h4 class="font-body-md font-bold text-on-surface">Data Terenkripsi</h4>
+<p class="font-body-sm text-xs text-on-surface-variant">Seluruh informasi yang Anda masukkan dilindungi oleh enkripsi standar industri dan hanya akan digunakan untuk keperluan verifikasi sertifikasi.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto mt-xl border-t border-gray-100">
+<div class="mb-4 md:mb-0">
+<h2 class="text-base font-bold text-emerald-900 tracking-tight">HalalCertify Tourism</h2>
+</div>
+<div class="flex flex-wrap justify-center gap-6 mb-4 md:mb-0">
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 hover:text-emerald-600 transition-opacity duration-300" href="#">Privacy Policy</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 hover:text-emerald-600 transition-opacity duration-300" href="#">Terms of Service</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 hover:text-emerald-600 transition-opacity duration-300" href="#">Contact Support</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 hover:text-emerald-600 transition-opacity duration-300" href="#">Certification Body</a>
+</div>
+<p class="font-sans text-xs uppercase tracking-widest text-gray-400">© 2024 Muslim Friendly Tourism Certification. All rights reserved.</p>
+</footer>
+</main>
+</div>
+</body></html>

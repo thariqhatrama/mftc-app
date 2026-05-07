@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#dce2f3",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-fixed": "#002116",
+                        "surface-variant": "#dce2f3",
+                        "primary-fixed": "#a6f2d1",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#d9e6dd",
+                        "surface-container-low": "#f0f3ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-surface": "#151c27",
+                        "primary": "#004532",
+                        "on-background": "#151c27",
+                        "on-tertiary-container": "#becac2",
+                        "on-surface-variant": "#3f4944",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#6cf8bb",
+                        "secondary": "#006c49",
+                        "inverse-on-surface": "#ebf1ff",
+                        "surface-container-high": "#e2e8f8",
+                        "background": "#f9f9ff",
+                        "surface-dim": "#d3daea",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary": "#333f39",
+                        "on-primary-fixed-variant": "#00513b",
+                        "surface": "#f9f9ff",
+                        "on-secondary-container": "#00714d",
+                        "primary-container": "#065f46",
+                        "surface-tint": "#1b6b51",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#e7eefe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f9f9ff",
+                        "outline": "#6f7973",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "inverse-surface": "#2a313d",
+                        "inverse-primary": "#8bd6b6",
+                        "tertiary-container": "#4a564f",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#bec9c2",
+                        "on-tertiary-fixed": "#131e19",
+                        "on-primary-container": "#8bd6b7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "0.5rem",
+                        "lg": "2rem",
+                        "gutter": "1.5rem",
+                        "xl": "3rem",
+                        "sm": "1rem",
+                        "container-max": "1280px",
+                        "base": "4px",
+                        "md": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "button": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f9f9ff;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-8 h-16 sticky top-0 z-40 bg-white border-b border-gray-200">
+<div class="flex items-center gap-8">
+<span class="text-lg font-black text-emerald-900">MFTC Portal</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-gray-500 font-medium hover:text-emerald-700 transition-colors font-inter text-sm" href="#">Overview</a>
+<a class="text-gray-500 font-medium hover:text-emerald-700 transition-colors font-inter text-sm" href="#">Schedule</a>
+<a class="text-gray-500 font-medium hover:text-emerald-700 transition-colors font-inter text-sm" href="#">Guidelines</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gray-600 cursor-pointer p-2">notifications</span>
+<span class="material-symbols-outlined text-gray-600 cursor-pointer p-2">settings</span>
+<span class="material-symbols-outlined text-gray-600 cursor-pointer p-2">help_outline</span>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-gray-200">
+<img alt="User profile" data-alt="professional portrait of a business owner in corporate attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSx65fJfHE_3oiqgLYxNoEyDx3u9fQF_4-FfmcsgdKQcmesq0va3kKGSBqWEP7cHF7kpA4bmVw3ELV94JGDnM-af7z2At9mXZU6Oq2RSnAsMx4B8Guj313ugBrX9vJumEB7-BVjI5a-vgsEz6agjWrfLAb0erhXp337VAc3twOWPqWSPh3dLMws9XtWaEsRJIMwH6OxB42Pq7TOa6-d3J_WZq-uXwVaSVL7UAqtohyqN1UIUMx-rRCggVw6svj4Ot-Wv9wowQR-g"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col z-50 bg-gray-50 border-r border-gray-200 py-6">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-1">
+<span class="text-xl font-bold tracking-tight text-emerald-900">Pelaku Usaha</span>
+</div>
+<p class="text-xs text-gray-500">ID: MFTC-2024-089</p>
+</div>
+<nav class="flex-grow">
+<a class="flex items-center gap-3 text-gray-600 px-6 py-3 hover:bg-gray-100 transition-all font-medium text-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-3 text-gray-600 px-6 py-3 hover:bg-gray-100 transition-all font-medium text-sm" href="#">
+<span class="material-symbols-outlined">verified_user</span> Certification Hub
+                </a>
+<a class="flex items-center gap-3 bg-emerald-50 text-emerald-900 border-r-4 border-emerald-900 px-6 py-3 font-medium text-sm" href="#">
+<span class="material-symbols-outlined">edit_notifications</span> Revision Tasks
+                </a>
+<a class="flex items-center gap-3 text-gray-600 px-6 py-3 hover:bg-gray-100 transition-all font-medium text-sm" href="#">
+<span class="material-symbols-outlined">folder_open</span> Document Center
+                </a>
+<a class="flex items-center gap-3 text-gray-600 px-6 py-3 hover:bg-gray-100 transition-all font-medium text-sm" href="#">
+<span class="material-symbols-outlined">history</span> Audit History
+                </a>
+</nav></aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-grow p-8">
+<div class="max-w-[1200px] mx-auto">
+<!-- Breadcrumbs & Header -->
+<div class="mb-8">
+<nav class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+<span>Dashboard</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span>Pengajuan APP-2024-089</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-emerald-900 font-semibold">Perbaikan</span>
+</nav>
+<h1 class="font-h1 text-h1 text-on-surface">Tindakan Perbaikan Diperlukan</h1>
+</div>
+<!-- Status Banner -->
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-gutter mb-8 flex items-center justify-between">
+<div class="flex gap-4 items-start">
+<div class="bg-amber-100 p-3 rounded-lg">
+<span class="material-symbols-outlined text-amber-700" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-amber-900 mb-1">Pengajuan Anda Memerlukan Perbaikan</h3>
+<p class="text-amber-800 font-body-md">Auditor menemukan 3 ketidaksesuaian. Selesaikan semua perbaikan sebelum 24 Januari 2025 (87 hari tersisa).</p>
+<div class="mt-4 flex items-center gap-4">
+<div class="w-64 h-2 bg-amber-200 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full w-1/3"></div>
+</div>
+<span class="text-sm font-bold text-amber-900">0 dari 3 selesai</span>
+</div>
+</div>
+</div>
+<div class="hidden lg:flex items-center justify-center h-24 w-24 rounded-full border-4 border-amber-200 border-t-amber-500 rotate-45 relative">
+<div class="rotate-[-45deg] text-center">
+<span class="block text-xs font-bold text-amber-800 uppercase leading-none">87 Hari</span>
+<span class="block text-[10px] text-amber-600 uppercase mt-0.5">Tersisa</span>
+</div>
+</div>
+</div>
+<!-- NC Cards Section -->
+<div class="space-y-6 mb-12">
+<h2 class="font-h2 text-h2 text-emerald-900 mb-4">Daftar Non-Conformity</h2>
+<!-- NC CARD 1: BELUM DIPERBAIKI -->
+<div class="bg-white border-l-4 border-l-error border border-gray-200 rounded-xl overflow-hidden">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-gray-100 text-gray-800 text-label-caps px-3 py-1 rounded-full uppercase">NC-001</span>
+<span class="bg-red-100 text-red-700 text-label-caps px-3 py-1 rounded-full uppercase">MAJOR</span>
+<span class="bg-amber-100 text-amber-700 text-label-caps px-3 py-1 rounded-full uppercase">BELUM DIPERBAIKI</span>
+</div>
+<h4 class="font-h3 text-h3 mb-3">Sertifikat Halal Dapur Utama Belum Valid</h4>
+<div class="bg-gray-50 border border-gray-100 p-4 rounded-lg mb-6">
+<p class="text-sm font-semibold text-gray-500 uppercase mb-2">Catatan Auditor:</p>
+<p class="text-gray-700 italic">"Sertifikat yang dilampirkan sudah kadaluarsa. Diperlukan sertifikat halal aktif dari BPJPH atau MUI untuk seluruh area memasak."</p>
+</div>
+<div class="mb-4">
+<p class="text-xs font-bold text-gray-400 mb-2 uppercase">Batas Waktu: 24 Januari 2025</p>
+<label class="block text-sm font-bold text-emerald-900 mb-2">Tindakan Perbaikan</label>
+<textarea class="w-full border-gray-200 rounded-lg p-3 text-sm focus:ring-emerald-900 focus:border-emerald-900 h-32" placeholder="Jelaskan tindakan perbaikan..."></textarea>
+</div>
+<div class="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center mb-6 hover:bg-gray-50 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-gray-400 text-3xl mb-2">cloud_upload</span>
+<p class="text-sm font-medium text-gray-600">Upload Bukti Perbaikan (PDF/JPG/PNG, maks 10MB)</p>
+</div>
+<div class="flex justify-end gap-3">
+<button class="px-6 py-3 rounded-lg border border-emerald-900 text-emerald-900 font-button text-button hover:bg-emerald-50 transition-all">Simpan Draft</button>
+<button class="px-6 py-3 rounded-lg bg-primary-container text-on-primary font-button text-button hover:bg-emerald-800 transition-all shadow-sm">Submit Perbaikan</button>
+</div>
+</div>
+</div>
+<!-- NC CARD 2: DRAFT TERSIMPAN -->
+<div class="bg-white border-l-4 border-l-blue-500 border border-gray-200 rounded-xl overflow-hidden">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-gray-100 text-gray-800 text-label-caps px-3 py-1 rounded-full uppercase">NC-002</span>
+<span class="bg-yellow-100 text-yellow-700 text-label-caps px-3 py-1 rounded-full uppercase">MINOR</span>
+<span class="bg-blue-100 text-blue-700 text-label-caps px-3 py-1 rounded-full uppercase">DRAFT TERSIMPAN</span>
+</div>
+<h4 class="font-h3 text-h3 mb-3">Petunjuk Arah Kiblat di Kamar Belum Terpasang</h4>
+<div class="bg-gray-50 border border-gray-100 p-4 rounded-lg mb-6">
+<p class="text-sm font-semibold text-gray-500 uppercase mb-2">Catatan Auditor:</p>
+<p class="text-gray-700 italic">"4 dari 12 kamar tidak memiliki petunjuk arah kiblat. Wajib dipasang di semua kamar tamu."</p>
+</div>
+<div class="mb-4">
+<label class="block text-sm font-bold text-emerald-900 mb-2">Tindakan Perbaikan</label>
+<div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-600 h-24">
+                                    Pemasangan stiker penunjuk arah kiblat sudah dilakukan pada 4 kamar sisa (Kamar 201, 202, 204, 205).
+                                </div>
+</div>
+<div class="mb-6">
+<label class="block text-sm font-bold text-emerald-900 mb-2">Bukti Terlampir</label>
+<div class="flex items-center gap-3 bg-blue-50 border border-blue-100 p-2 px-4 rounded-lg w-fit">
+<span class="material-symbols-outlined text-blue-600">image</span>
+<span class="text-sm text-blue-800">foto_kiblat_kamar.jpg</span>
+<span class="material-symbols-outlined text-blue-400 text-lg cursor-pointer">close</span>
+</div>
+</div>
+<div class="flex justify-end gap-3">
+<button class="px-6 py-3 rounded-lg border border-blue-600 text-blue-600 font-button text-button hover:bg-blue-50 transition-all">Edit Draft</button>
+<button class="px-6 py-3 rounded-lg bg-primary-container text-on-primary font-button text-button hover:bg-emerald-800 transition-all shadow-sm">Submit Perbaikan</button>
+</div>
+</div>
+</div>
+<!-- NC CARD 3: SELESAI -->
+<div class="bg-emerald-50/50 border-l-4 border-l-emerald-500 border border-emerald-100 rounded-xl overflow-hidden opacity-80">
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<span class="bg-white/80 text-gray-800 text-label-caps px-2 py-1 rounded-full uppercase border border-emerald-100">NC-003</span>
+<span class="bg-emerald-100 text-emerald-700 text-label-caps px-2 py-1 rounded-full uppercase">SELESAI ✓</span>
+</div>
+<h4 class="font-body-lg font-semibold text-emerald-900">Signage Mushola Kurang Jelas</h4>
+</div>
+<button class="text-emerald-700 font-button text-button flex items-center gap-1">
+                                Lihat Detail <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Riwayat Komunikasi -->
+<div class="bg-white border border-gray-200 rounded-xl p-gutter">
+<h2 class="font-h3 text-h3 text-on-surface mb-8">Riwayat Komunikasi</h2>
+<div class="relative space-y-8 before:absolute before:left-[11px] before:top-2 before:h-[calc(100%-16px)] before:w-[2px] before:bg-gray-200">
+<!-- Entry 1 -->
+<div class="relative pl-10">
+<div class="absolute left-0 top-1 h-6 w-6 rounded-full bg-emerald-100 border-4 border-white flex items-center justify-center">
+<div class="h-2 w-2 rounded-full bg-emerald-600"></div>
+</div>
+<div>
+<p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">12 Oct 2024</p>
+<div class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+<p class="font-bold text-emerald-900 text-sm">Auditor</p>
+<p class="text-sm text-gray-600 mt-1">Temuan NC-001, NC-002, NC-003 diterbitkan</p>
+</div>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="relative pl-10">
+<div class="absolute left-0 top-1 h-6 w-6 rounded-full bg-blue-100 border-4 border-white flex items-center justify-center">
+<div class="h-2 w-2 rounded-full bg-blue-600"></div>
+</div>
+<div>
+<p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">15 Oct 2024</p>
+<div class="bg-blue-50/50 rounded-lg p-4 border border-blue-100">
+<p class="font-bold text-blue-900 text-sm">Pelaku Usaha</p>
+<p class="text-sm text-gray-600 mt-1">Submit perbaikan NC-003</p>
+</div>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="relative pl-10">
+<div class="absolute left-0 top-1 h-6 w-6 rounded-full bg-emerald-500 border-4 border-white flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[12px]" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+<div>
+<p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">16 Oct 2024</p>
+<div class="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
+<p class="font-bold text-emerald-900 text-sm">Auditor</p>
+<p class="text-sm text-gray-600 mt-1">NC-003 Terverifikasi &amp; Selesai</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Nav -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 flex justify-around py-3 px-2 z-50">
+<div class="flex flex-col items-center gap-1 text-emerald-900">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="text-[10px]">Sertifikasi</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">edit_notifications</span>
+<span class="text-[10px]">Tugas</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="text-[10px]">Dokumen</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-[10px]">Keluar</span>
+</div>
+</div>
+</body></html>

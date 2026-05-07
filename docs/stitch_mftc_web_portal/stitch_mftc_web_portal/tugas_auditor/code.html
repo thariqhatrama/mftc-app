@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Auditor Task List - MFT Certification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#00714d",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2a313d",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bec9c2",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#065f46",
+                        "surface-container-high": "#e2e8f8",
+                        "primary-fixed": "#a6f2d1",
+                        "primary": "#004532",
+                        "on-background": "#151c27",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-highest": "#dce2f3",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "on-tertiary-fixed": "#131e19",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#8bd6b6",
+                        "on-primary": "#ffffff",
+                        "secondary": "#006c49",
+                        "surface": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-low": "#f0f3ff",
+                        "background": "#f9f9ff",
+                        "on-primary-fixed": "#002116",
+                        "tertiary": "#333f39",
+                        "on-secondary-fixed": "#002113",
+                        "inverse-on-surface": "#ebf1ff",
+                        "secondary-container": "#6cf8bb",
+                        "on-surface": "#151c27",
+                        "tertiary-container": "#4a564f",
+                        "on-surface-variant": "#3f4944",
+                        "on-primary-fixed-variant": "#00513b",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#dce2f3",
+                        "tertiary-fixed": "#d9e6dd",
+                        "on-primary-container": "#8bd6b7",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-dim": "#d3daea",
+                        "on-tertiary-container": "#becac2",
+                        "surface-tint": "#1b6b51",
+                        "outline": "#6f7973",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "surface-container": "#e7eefe"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "1.5rem",
+                        "container-max": "1280px",
+                        "md": "1.5rem",
+                        "sm": "1rem",
+                        "base": "4px",
+                        "xs": "0.5rem",
+                        "xl": "3rem",
+                        "lg": "2rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h1": ["Inter"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "button": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9ff;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-slate-950 flex flex-col py-4 overflow-y-auto shrink-0 fixed left-0 top-0">
+<div class="px-6 mb-8">
+<div class="text-lg font-black text-emerald-900 dark:text-emerald-50 font-h3">MFT Portal</div>
+<div class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold mt-1">Certification Management</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<!-- Dashboard -->
+<a class="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span class="font-body-sm text-body-sm font-semibold">Dashboard</span>
+</a>
+<!-- My Tasks (Audits) - Active -->
+<a class="flex items-center px-3 py-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border-r-4 border-emerald-700 transition-all rounded-r-none rounded-l-lg group" href="#">
+<span class="material-symbols-outlined mr-3 text-emerald-700" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="font-body-sm text-body-sm font-semibold">Audits</span>
+</a>
+<!-- Applications -->
+<a class="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="description">description</span>
+<span class="font-body-sm text-body-sm font-semibold">Applications</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="analytics">analytics</span>
+<span class="font-body-sm text-body-sm font-semibold">Reports</span>
+</a>
+<!-- Certificates -->
+<a class="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="verified">verified</span>
+<span class="font-body-sm text-body-sm font-semibold">Certificates</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+<span class="font-body-sm text-body-sm font-semibold">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-3 pt-4 border-t border-gray-200">
+<a class="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="help">help</span>
+<span class="font-body-sm text-body-sm font-semibold">Help Center</span>
+</a>
+<a class="flex items-center px-3 py-2 text-gray-500 hover:bg-gray-100 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="logout">logout</span>
+<span class="font-body-sm text-body-sm font-semibold">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 p-gutter max-w-[1280px] mx-auto w-full">
+<!-- Top Header Area -->
+<header class="flex justify-between items-end mb-8">
+<div>
+<h1 class="font-h1 text-h1 text-primary">Auditor Task List</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Manage your assigned Muslim Friendly Tourism inspections and reports.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</span>
+<input class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-body-sm focus:ring-2 focus:ring-primary focus:border-primary bg-white outline-none w-64 transition-all" placeholder="Search audits..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-button text-button hover:opacity-90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                        New Application
+                    </button>
+</div>
+</header>
+<!-- Stats Overview - Bento Grid style -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-emerald-50 text-emerald-700 rounded-lg material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+<span class="text-emerald-700 font-bold text-h3">04</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-gray-500 uppercase tracking-wider">Pending Audits</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-amber-50 text-amber-600 rounded-lg material-symbols-outlined" data-icon="event">event</span>
+<span class="text-amber-600 font-bold text-h3">02</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-gray-500 uppercase tracking-wider">Scheduled Today</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-blue-50 text-blue-600 rounded-lg material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-blue-600 font-bold text-h3">18</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-gray-500 uppercase tracking-wider">Completed Reports</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-red-50 text-red-600 rounded-lg material-symbols-outlined" data-icon="report_problem">report_problem</span>
+<span class="text-red-600 font-bold text-h3">01</span>
+</div>
+<h3 class="font-label-caps text-label-caps text-gray-500 uppercase tracking-wider">Action Required</h3>
+</div>
+</section>
+<!-- Task List Table -->
+<div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+<h2 class="font-h3 text-h3 text-primary">Assigned Audits</h2>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-body-sm font-semibold border border-gray-200 rounded hover:bg-white transition-colors bg-white shadow-sm">All</button>
+<button class="px-3 py-1.5 text-body-sm font-semibold text-gray-500 border border-transparent rounded hover:bg-gray-100 transition-colors">Pending</button>
+<button class="px-3 py-1.5 text-body-sm font-semibold text-gray-500 border border-transparent rounded hover:bg-gray-100 transition-colors">Completed</button>
+</div>
+</div>
+<table class="w-full text-left">
+<thead class="bg-gray-50 text-gray-600">
+<tr>
+<th class="px-6 py-4 font-label-caps text-label-caps uppercase tracking-wider">Company &amp; Site</th>
+<th class="px-6 py-4 font-label-caps text-label-caps uppercase tracking-wider">Scheduled Date</th>
+<th class="px-6 py-4 font-label-caps text-label-caps uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-label-caps text-label-caps uppercase tracking-wider">Location</th>
+<th class="px-6 py-4 font-label-caps text-label-caps uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<!-- Task 1 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden mr-4">
+<img class="w-full h-full object-cover" data-alt="luxury hotel resort lobby with palm trees and modern architecture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOcNt5IdaUC5wwoZl6IcPFfROtLLKixstewRSYubNsMohsSr0D5bqyI8ks9ctNImGqrB3Saay48TKIESkfv1xYWmLV8WSJMU9eUg0roATnQQ4LPtKrUREIZmXM7YxIcL4PJLwAkJIrfiLqCFTKiAqal_eVrhPcVX-H4FHXoKWfAT0yROYoNZuaMkDg1KYITYV4WGr-C7p_3NDXblKn9Ku_tC6WrLmO9bcoo_VFXdSSMOOJ1ELX2ngWReJc0d9jInf3VV1a1t730w"/>
+</div>
+<div>
+<div class="font-body-md font-bold text-on-surface">The Grand Oasis Resort</div>
+<div class="text-body-sm text-on-surface-variant">Main Hotel Complex</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-body-md font-medium text-on-surface">Oct 24, 2024</span>
+<span class="text-xs text-gray-400">09:00 AM - 05:00 PM</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-tight bg-yellow-100 text-amber-700">Pending Audit</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] mr-1" data-icon="location_on">location_on</span>
+<span class="text-body-sm">Dubai, UAE</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-button text-button hover:bg-primary-container transition-all">
+                                    Start Audit
+                                </button>
+</td>
+</tr>
+<!-- Task 2 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-5 border-l-4 border-emerald-600">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden mr-4">
+<img class="w-full h-full object-cover" data-alt="upscale restaurant interior with warm ambient lighting and elegant dining setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe4A1OfOG-J_695i-dpAaXIEMicu-_zdw1bduidvqLeK1jzRfS2e8edFH5wVT9FNfViwnIRRhHaJ8z5wwREJSYNKvaDGX0pp7GgoS2PfHcpqqB4QE6sVxlWZLJBGDJKJCGABJxQi9jJgT-R8r0YqDijaQbLd8RPcj4_Ri3JG3e8Bjf-eVbN48UPqlMIChg0-lWNPVSgKeJiHssywGaIPGSSiEUmlxDy9h7K-1xh5A1o6Sc50YlEeWOoW4MGKRrx_sEAMsxk99H2A"/>
+</div>
+<div>
+<div class="font-body-md font-bold text-on-surface">Zaffron Fine Dining</div>
+<div class="text-body-sm text-on-surface-variant">Kitchen &amp; Service Areas</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-body-md font-medium text-on-surface">Oct 25, 2024</span>
+<span class="text-xs text-emerald-600 font-semibold">Tomorrow</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-tight bg-blue-100 text-blue-700">Scheduled</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] mr-1" data-icon="location_on">location_on</span>
+<span class="text-body-sm">Kuala Lumpur, MY</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-primary border border-primary px-4 py-2 rounded-lg font-button text-button hover:bg-emerald-50 transition-all">
+                                    View Details
+                                </button>
+</td>
+</tr>
+<!-- Task 3 -->
+<tr class="hover:bg-emerald-50/10 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden mr-4">
+<img class="w-full h-full object-cover" data-alt="modern airport terminal architecture with high ceilings and natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF5Ko5C0XRVD_ollk6cLo6YraoksMaWzf7hMF3mHlOarLnTGPxx1fvrYCa2nv0gS8zRHu-sEqyn60vil7KsZvZdglu14LdBDMi8aEcDoj19a2o7tt2tIl-hHCNOzZTNbcsY1qOhjTBj1yoUzsmjOPATz5YZfm9aaFmTKct4LZhgYaYH4S218BemABQgxq6W1RsRF59CM64InDVBI-QMy2cA6zNypveJIxxw7SDfRe1AUT-tiPzCP-y5G_C2Zfxe_WXfYlEZtTCFg"/>
+</div>
+<div>
+<div class="font-body-md font-bold text-on-surface">Al-Maktoum Int. Airport</div>
+<div class="text-body-sm text-on-surface-variant">Prayer Rooms &amp; Halal Lounges</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-body-md font-medium text-on-surface">Oct 28, 2024</span>
+<span class="text-xs text-gray-400">Next Week</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-tight bg-gray-100 text-gray-600">Upcoming</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] mr-1" data-icon="location_on">location_on</span>
+<span class="text-body-sm">Dubai, UAE</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-gray-400 border border-gray-200 px-4 py-2 rounded-lg font-button text-button cursor-not-allowed">
+                                    Locked
+                                </button>
+</td>
+</tr>
+<!-- Task 4 (Issue Status) -->
+<tr class="hover:bg-red-50/10 transition-colors bg-red-50/5">
+<td class="px-6 py-5">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden mr-4">
+<img class="w-full h-full object-cover" data-alt="contemporary office building facade with glass windows and geometric design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3Tx0csRqNjC4kh7IbfwnxHlZuRmKqec7BzGHTE3bbTPO9ZVpcUf7rWS1kY1KNA96pSAEeyq-MI14nc_GdLHvjII0oWufiEPRhQCfKkBM5USaiQr7-J0948kUc8HEjrcdjd7V--33LiaLWNGW3pNEBW21wxkNCj8C6m9bifUbJSCwBdjmTYfIPrl6Fz-zhGYaQG6R9eoDfWAQk_c7lVqLhM6QyPs44n0oyDO6m9lUjmzpXk7LpdeuNcrW9ZKFvuwvzYzDOfq6DeQ"/>
+</div>
+<div>
+<div class="font-body-md font-bold text-on-surface">Crescent Tours &amp; Travels</div>
+<div class="text-body-sm text-on-surface-variant">Headquarters Audit</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-body-md font-medium text-on-surface">Oct 15, 2024</span>
+<span class="text-xs text-red-600 font-bold">Overdue</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-tight bg-pink-100 text-red-700">Action Required</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] mr-1" data-icon="location_on">location_on</span>
+<span class="text-body-sm">Istanbul, TR</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="bg-red-600 text-white px-4 py-2 rounded-lg font-button text-button hover:bg-red-700 transition-all">
+                                    Resume
+                                </button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+<p class="text-body-sm text-gray-500">Showing 1 to 4 of 24 audits</p>
+<div class="flex gap-2">
+<button class="p-2 border border-gray-200 rounded-lg hover:bg-white text-gray-400">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3.5 py-1.5 bg-primary text-on-primary rounded-lg text-body-sm font-bold">1</button>
+<button class="px-3.5 py-1.5 hover:bg-gray-200 rounded-lg text-body-sm font-medium">2</button>
+<button class="px-3.5 py-1.5 hover:bg-gray-200 rounded-lg text-body-sm font-medium">3</button>
+<button class="p-2 border border-gray-200 rounded-lg hover:bg-white text-gray-600">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Recently Updated Reports Grid -->
+<section class="mt-12">
+<h2 class="font-h3 text-h3 text-primary mb-6">Recent Reports</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-50 text-emerald-700 rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="task">task</span>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded uppercase">Submitted</span>
+</div>
+<h4 class="font-body-md font-bold mb-1">Elite Halal Catering</h4>
+<p class="text-body-sm text-gray-500 mb-4 line-clamp-2">Audit report for Q4 certification renewal completed and signed off.</p>
+<div class="flex items-center justify-between text-xs text-gray-400 border-t pt-4">
+<span>Updated 2 hours ago</span>
+<span class="flex items-center gap-1 font-bold text-primary">View <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span></span>
+</div>
+</div>
+<div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-50 text-amber-700 rounded-lg group-hover:bg-amber-600 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+</div>
+<span class="px-2 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold rounded uppercase">Draft</span>
+</div>
+<h4 class="font-body-md font-bold mb-1">Medina Spa &amp; Wellness</h4>
+<p class="text-body-sm text-gray-500 mb-4 line-clamp-2">Initial compliance check for prayer facility privacy standards.</p>
+<div class="flex items-center justify-between text-xs text-gray-400 border-t pt-4">
+<span>Last edited 5 hours ago</span>
+<span class="flex items-center gap-1 font-bold text-amber-600">Continue <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span></span>
+</div>
+</div>
+<div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer group border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-50 text-emerald-700 rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</div>
+<span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded uppercase">Certified</span>
+</div>
+<h4 class="font-body-md font-bold mb-1">Haramain Logistics</h4>
+<p class="text-body-sm text-gray-500 mb-4 line-clamp-2">Cold chain integrity for halal certified food transportation.</p>
+<div class="flex items-center justify-between text-xs text-gray-400 border-t pt-4">
+<span>Completed yesterday</span>
+<span class="flex items-center gap-1 font-bold text-primary">Certificate <span class="material-symbols-outlined text-[14px]" data-icon="download">download</span></span>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="mt-16 border-t border-gray-100 py-8 flex flex-col md:flex-row justify-between items-center text-gray-500 font-inter text-xs">
+<p>© 2024 Muslim Friendly Tourism Certification. All rights reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="hover:text-emerald-600 transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-emerald-600 transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-emerald-600 transition-colors" href="#">Contact Support</a>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

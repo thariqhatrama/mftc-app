@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#6cf8bb",
+                        "on-primary-fixed": "#002116",
+                        "on-surface": "#151c27",
+                        "on-background": "#151c27",
+                        "tertiary-container": "#4a564f",
+                        "on-secondary-container": "#00714d",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9ff",
+                        "on-primary-fixed-variant": "#00513b",
+                        "on-tertiary-container": "#becac2",
+                        "surface-container": "#e7eefe",
+                        "surface-tint": "#1b6b51",
+                        "outline": "#6f7973",
+                        "inverse-primary": "#8bd6b6",
+                        "tertiary-fixed": "#d9e6dd",
+                        "secondary": "#006c49",
+                        "on-surface-variant": "#3f4944",
+                        "surface-bright": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#a6f2d1",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-container-low": "#f0f3ff",
+                        "outline-variant": "#bec9c2",
+                        "on-secondary-fixed-variant": "#005236",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "on-primary-container": "#8bd6b7",
+                        "inverse-on-surface": "#ebf1ff",
+                        "inverse-surface": "#2a313d",
+                        "tertiary": "#333f39",
+                        "surface-container-highest": "#dce2f3",
+                        "on-primary": "#ffffff",
+                        "primary": "#004532",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary-fixed": "#131e19",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#065f46",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e2e8f8",
+                        "surface-variant": "#dce2f3",
+                        "surface-dim": "#d3daea",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "gutter": "1.5rem",
+                        "sm": "1rem",
+                        "md": "1.5rem",
+                        "xs": "0.5rem",
+                        "base": "4px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "button": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"]
+                    },
+                    "fontSize": {
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-texture {
+            background-image: radial-gradient(circle at 2px 2px, rgba(0,0,0,0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col">
+<main class="flex-grow flex items-center justify-center p-gutter">
+<div class="w-full max-w-[1100px] grid grid-cols-1 lg:grid-cols-12 bg-white rounded-xl shadow-lg overflow-hidden border border-outline-variant">
+<div class="hidden lg:flex lg:col-span-7 bg-primary relative p-xl flex-col justify-between overflow-hidden">
+<div class="absolute inset-0 opacity-10 bento-texture"></div>
+<div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-secondary-container rounded-full blur-[120px] opacity-20"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-xs mb-lg">
+<div class="w-10 h-10 bg-secondary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+</div>
+<span class="font-h3 text-h3 text-white tracking-tight">HalalCertify</span>
+</div>
+<h1 class="font-h1 text-h1 text-white mb-md leading-tight">Membangun Kepercayaan Melalui Sertifikasi Halal Global.</h1>
+<p class="font-body-lg text-body-lg text-primary-fixed tracking-wide max-w-md">
+                        Akses portal manajemen untuk memantau standar, aplikasi, dan kepatuhan pariwisata ramah Muslim Anda.
+                    </p>
+</div>
+<div class="relative z-10 grid grid-cols-2 gap-md mt-xl">
+<div class="p-md bg-white/5 backdrop-blur-md rounded-lg border border-white/10">
+<span class="material-symbols-outlined text-secondary-container mb-xs" data-icon="language">language</span>
+<div class="text-white font-button text-button uppercase opacity-60 mb-1">Global Reach</div>
+<div class="text-white font-h3 text-h3">120+</div>
+<div class="text-white/70 font-body-sm text-body-sm">Certified Regions</div>
+</div>
+<div class="p-md bg-white/5 backdrop-blur-md rounded-lg border border-white/10">
+<span class="material-symbols-outlined text-secondary-container mb-xs" data-icon="shield_check">shield</span>
+<div class="text-white font-button text-button uppercase opacity-60 mb-1">Reliability</div>
+<div class="text-white font-h3 text-h3">99.9%</div>
+<div class="text-white/70 font-body-sm text-body-sm">Compliance Rate</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1/2 opacity-20 pointer-events-none">
+<img class="w-full h-full object-cover mix-blend-overlay" data-alt="Modern architectural geometry with clean lines and soft shadows representing structural integrity and certification standards" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6VvHV4njOsP9_p_ibVACNEER7v99dNNfYV-oHRJvnzgNz9xKhftoRZ7Jo4oj4nNcWXtdlbzfuKZxABQiSv7dpw4CrNfM31Ej6nZCg2PQDGWHCdKLVRpapzZYCAgPbKWsm5uiXaZDVj-NmGkXT9twx-QfZURY6uaNRxaI8QaJAdzh4ub2gPpcejaK5jfsbsphpWlB-FrX3U4AHplctXOlGrxNdI68_uzjvcFw9riQZ-meuTMCm2zX2m2VY9xerdizvGEgnftkJig"/>
+</div>
+</div>
+<div class="lg:col-span-5 p-lg md:p-xl flex flex-col justify-center bg-white">
+<div class="mb-lg">
+<h2 class="font-h2 text-h2 text-on-surface mb-xs">Masuk ke MFT Portal</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Kelola sertifikasi Muslim Friendly Tourism Anda dengan aman.</p>
+</div>
+<form class="space-y-md">
+<div class="space-y-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="email">Alamat Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="mail">mail</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-body-md text-on-surface" id="email" name="email" placeholder="nama@perusahaan.com" type="email"/>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase" for="password">Kata Sandi</label>
+<a class="font-label-caps text-label-caps text-secondary hover:text-on-secondary-container transition-colors" href="#">Lupa sandi?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="lock">lock</span>
+<input class="w-full pl-10 pr-10 py-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-body-md text-on-surface" id="password" name="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-xs">
+<input class="w-4 h-4 rounded text-primary border-outline focus:ring-primary" id="remember" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface-variant" for="remember">Tetap masuk selama 30 hari</label>
+</div>
+<button class="w-full bg-primary text-white font-button text-button py-4 rounded-lg hover:bg-on-primary-fixed-variant active:scale-[0.98] transition-all shadow-md" type="submit">
+                        Masuk Sekarang
+                    </button>
+</form>
+<div class="relative my-lg">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant"></div>
+</div>
+<div class="relative flex justify-center">
+<span class="px-4 bg-white font-label-caps text-label-caps text-outline uppercase">Atau masuk dengan</span>
+</div>
+</div>
+<div class="space-y-sm">
+<button class="w-full flex items-center justify-center gap-sm px-4 py-3 border border-outline-variant rounded-lg bg-white hover:bg-surface-container-lowest transition-colors active:scale-[0.98]">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-button text-button text-on-surface">Masuk dengan Google</span>
+</button>
+</div>
+<div class="mt-xl text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Belum punya akun? 
+                        <a class="text-secondary font-button hover:underline" href="#">Daftar Sertifikasi</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto border-t border-gray-100 dark:border-gray-900">
+<div class="mb-4 md:mb-0">
+<span class="font-sans text-base font-bold text-emerald-900 dark:text-emerald-50">HalalCertify Tourism</span>
+<p class="font-sans text-xs uppercase tracking-widest text-gray-400 dark:text-gray-600 mt-1">
+                © 2024 Muslim Friendly Tourism Certification. All rights reserved.
+            </p>
+</div>
+<div class="flex flex-wrap justify-center gap-md">
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 dark:text-gray-600 hover:text-emerald-600 dark:hover:text-emerald-300 transition-opacity duration-300" href="#">Privacy Policy</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 dark:text-gray-600 hover:text-emerald-600 dark:hover:text-emerald-300 transition-opacity duration-300" href="#">Terms of Service</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 dark:text-gray-600 hover:text-emerald-600 dark:hover:text-emerald-300 transition-opacity duration-300" href="#">Contact Support</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 dark:text-gray-600 hover:text-emerald-600 dark:hover:text-emerald-300 transition-opacity duration-300" href="#">Certification Body</a>
+</div>
+</footer>
+</body></html>

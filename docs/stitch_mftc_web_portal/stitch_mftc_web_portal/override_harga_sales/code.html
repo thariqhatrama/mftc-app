@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#dce2f3",
+                        "primary-container": "#065f46",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "tertiary-container": "#4a564f",
+                        "on-tertiary-container": "#becac2",
+                        "tertiary": "#333f39",
+                        "surface-container-low": "#f0f3ff",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-primary-fixed-variant": "#00513b",
+                        "surface-container-high": "#e2e8f8",
+                        "background": "#f9f9ff",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d3daea",
+                        "inverse-primary": "#8bd6b6",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dce2f3",
+                        "primary-fixed": "#a6f2d1",
+                        "outline-variant": "#bec9c2",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#151c27",
+                        "inverse-on-surface": "#ebf1ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "secondary-container": "#6cf8bb",
+                        "secondary": "#006c49",
+                        "on-primary-container": "#8bd6b7",
+                        "error": "#ba1a1a",
+                        "on-surface": "#151c27",
+                        "on-tertiary-fixed": "#131e19",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#1b6b51",
+                        "on-surface-variant": "#3f4944",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#e7eefe",
+                        "primary": "#004532",
+                        "outline": "#6f7973",
+                        "on-secondary-fixed-variant": "#005236",
+                        "inverse-surface": "#2a313d",
+                        "tertiary-fixed-dim": "#bdcac1",
+                        "surface-bright": "#f9f9ff",
+                        "surface": "#f9f9ff",
+                        "on-primary-fixed": "#002116",
+                        "tertiary-fixed": "#d9e6dd",
+                        "on-tertiary-fixed-variant": "#3e4943",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "on-secondary-fixed": "#002113"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "1rem",
+                        "container-max": "1280px",
+                        "lg": "2rem",
+                        "base": "4px",
+                        "md": "1.5rem",
+                        "xl": "3rem",
+                        "xs": "0.5rem",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "button": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h3": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f9f9ff;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="bg-white dark:bg-gray-950 text-emerald-900 dark:text-emerald-400 font-inter antialiased docked full-width top-0 border-b border-gray-200 dark:border-gray-800 flat no shadows flex justify-between items-center h-16 px-6 w-full sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold text-emerald-900 dark:text-emerald-50">MFTC Sales Portal</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-6">
+<a class="text-emerald-700 dark:text-emerald-400 font-semibold transition-colors duration-200" href="#">Invoices</a>
+<a class="text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 px-3 py-2 rounded transition-colors duration-200" href="#">Applications</a>
+<a class="text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 px-3 py-2 rounded transition-colors duration-200" href="#">Dashboard</a>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined cursor-pointer hover:bg-gray-50 p-2 rounded-full transition-colors duration-200">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-gray-50 p-2 rounded-full transition-colors duration-200">settings</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-gray-50 p-2 rounded-full transition-colors duration-200">help_outline</span>
+<div class="w-8 h-8 rounded-full bg-emerald-100 overflow-hidden border border-emerald-200">
+<img alt="User profile" data-alt="professional portrait of a sales manager in a clean corporate attire with a soft blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv0dAQuRx3toiJ9HEWZLxVYkC58fq2qIiuvUP2HrmQYI9fPh5RnCxNvbd1XxMDpv5PXb5Q89yFSKZ6x5dKsszkXX5qnKIDrOa1WLPOQeuXATCdL4H0Q_zdBqKdllTQeAEMVi7cWXMY9WBQxvLDow4vBfkKbp1BgXrifzIdn1ukA1VQ05E_73dNJA8-ljqMiNUwBP5HeB_G9I-CWXIpskmKm-wDGuYiyZq1qz9DQrLCUetBryZGP8vQn-uje6QfbWX2PPYRtQUVhQ"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-64px)]">
+<!-- Side Navigation Bar -->
+<nav class="bg-gray-50 dark:bg-gray-900 text-emerald-800 dark:text-emerald-500 font-inter text-sm font-medium h-screen w-64 border-r border-gray-200 dark:border-gray-800 flat no shadows flex flex-col fixed left-0 top-16 h-full py-4 z-40 hidden md:flex">
+<div class="px-6 mb-8">
+<h1 class="text-xl font-black tracking-tight text-emerald-900 dark:text-emerald-50">MFTC</h1>
+<p class="text-[10px] uppercase tracking-widest text-gray-400">Management Console</p>
+</div>
+<div class="flex flex-col flex-1 gap-1">
+<a class="flex items-center gap-3 px-6 py-3 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Applications</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">rate_review</span>
+<span>Review Queue</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-gray-600 dark:text-gray-400 hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">engineering</span>
+<span>Auditors</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-emerald-900 dark:text-emerald-400 border-r-4 border-emerald-800 dark:border-emerald-500 bg-emerald-50/50 dark:bg-emerald-900/20 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span>Invoices</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-1 border-t border-gray-200 pt-4">
+<a class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-gray-100 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-gray-600 hover:bg-gray-100 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-gutter max-w-screen-xl mx-auto w-full">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-6 text-body-sm font-body-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Invoices</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">INV-2023-9021</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Override Request</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Form Section (Left) -->
+<div class="lg:col-span-8 space-y-gutter">
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-sm">
+<header class="mb-8 border-b border-gray-100 pb-4">
+<h2 class="font-h2 text-h2 text-primary mb-1">Pengajuan Override Invoice</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Silakan lengkapi rincian perubahan nilai tagihan untuk tinjauan manajemen.</p>
+</header>
+<form class="space-y-6">
+<!-- Invoice Summary Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-surface-container-lowest p-sm rounded-lg border border-gray-100">
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-2 block uppercase">Invoice Saat Ini</label>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-emerald-50 rounded flex items-center justify-center text-emerald-700">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-h3 text-h3 text-on-surface">Rp 12.500.000</p>
+<p class="text-body-sm text-on-surface-variant">Total Terhitung</p>
+</div>
+</div>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-2 block uppercase">ID Invoice</label>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold">#INV-2023-9021</p>
+<p class="text-body-sm text-on-surface-variant">Sertifikasi Halal Batch 4</p>
+</div>
+</div>
+<!-- Input Fields -->
+<div class="space-y-4">
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-2 block uppercase" for="requested_amount">Jumlah Permintaan Baru (IDR)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 font-semibold text-on-surface-variant">Rp</span>
+<input class="w-full pl-12 pr-4 py-3 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-h3 text-h3 text-primary" id="requested_amount" placeholder="0" type="text"/>
+</div>
+<p class="mt-2 text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">info</span>
+                                        Masukkan nilai bersih tanpa titik atau koma.
+                                    </p>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-2 block uppercase" for="override_reason">Alasan Override</label>
+<textarea class="w-full px-4 py-3 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all font-body-md text-body-md" id="override_reason" placeholder="Jelaskan secara detail mengapa perubahan harga ini diperlukan..." rows="4"></textarea>
+</div>
+</div>
+<!-- Alert Box -->
+<div class="bg-amber-50 border border-amber-200 p-4 rounded-lg flex gap-4 items-start">
+<span class="material-symbols-outlined text-amber-700">report</span>
+<div>
+<h4 class="font-semibold text-amber-900 text-body-md">Ketentuan Persetujuan</h4>
+<p class="text-amber-800 text-body-sm mt-1">Override dengan perubahan nominal lebih dari 20% memerlukan approval khusus dari <span class="font-bold">Super Admin</span>. Pastikan alasan yang diberikan cukup kuat untuk proses review.</p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-100">
+<button class="px-6 py-2.5 rounded-lg font-button text-button border border-outline text-on-surface hover:bg-gray-50 transition-colors" type="button">
+                                    Batal
+                                </button>
+<button class="px-8 py-2.5 rounded-lg font-button text-button bg-primary text-on-primary hover:bg-primary-container transition-all shadow-md shadow-emerald-900/10 flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                                    Ajukan Override
+                                </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Info Sidebar (Right) -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Progress Card -->
+<div class="bg-white p-sm rounded-xl border border-outline-variant shadow-sm border-l-4 border-l-primary">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 uppercase">Status Pengajuan</h3>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 bg-surface-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Draft</p>
+<p class="text-body-sm text-on-surface-variant">Menunggu Pengajuan</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[20px]" data-weight="fill">check_circle</span>
+<span>Input Data Nilai Baru</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[20px]" data-weight="fill">radio_button_checked</span>
+<span>Lampirkan Alasan Detail</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-gray-300">
+<span class="material-symbols-outlined text-[20px]">radio_button_unchecked</span>
+<span>Verifikasi Keuangan</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-gray-300">
+<span class="material-symbols-outlined text-[20px]">radio_button_unchecked</span>
+<span>Approval Akhir</span>
+</div>
+</div>
+</div>
+<!-- Client Detail Card -->
+<div class="bg-surface-container-low p-sm rounded-xl border border-outline-variant">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 uppercase">Informasi Klien</h3>
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 bg-white rounded-lg border border-outline-variant flex items-center justify-center font-bold text-primary">
+                                PT
+                            </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">PT Maju Jaya Bersama</p>
+<p class="text-body-sm text-on-surface-variant">ID: CL-99281</p>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Kategori:</span>
+<span class="text-on-surface font-medium">Enterprise</span>
+</div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Lokasi:</span>
+<span class="text-on-surface font-medium">Jakarta, ID</span>
+</div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Sisa Plafon:</span>
+<span class="text-on-surface font-medium text-secondary">Rp 45.000.000</span>
+</div>
+</div>
+</div>
+<!-- Guidelines -->
+<div class="bg-white p-sm rounded-xl border border-outline-variant">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Tips Pengajuan</h3>
+</div>
+<ul class="space-y-3 list-disc list-inside text-body-sm text-on-surface-variant">
+<li>Lampirkan bukti komunikasi dengan klien jika ada kesepakatan khusus.</li>
+<li>Pastikan nominal baru sudah termasuk PPN 11% jika berlaku.</li>
+<li>Waktu review rata-rata adalah 1-2 jam kerja.</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Background Decoration -->
+<div class="fixed bottom-0 right-0 w-96 h-96 opacity-[0.03] pointer-events-none z-0 overflow-hidden">
+<svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.7,-76.4C58.1,-69.2,69.2,-58.1,76.4,-44.7C83.6,-31.3,86.9,-15.7,85.2,-0.9C83.6,13.8,77,27.7,68.3,39.6C59.6,51.5,48.8,61.4,36.4,68.8C23.9,76.2,9.8,81.1,-4.2,88.4C-18.2,95.7,-32.1,105.4,-44.1,102.5C-56.1,99.6,-66.2,84.1,-74.6,70.1C-83,56.1,-89.7,43.5,-93.2,29.9C-96.7,16.3,-97,1.7,-93.9,-12.3C-90.8,-26.3,-84.3,-39.7,-74.8,-51.2C-65.3,-62.7,-52.8,-72.3,-39.4,-79.5C-26,-86.7,-11.7,-91.5,2,-94.9C15.7,-98.3,28.7,-100.3,41.3,-95.7L44.7,-76.4Z" fill="#065f46" transform="translate(100 100)"></path>
+</svg>
+</div>
+</body></html>

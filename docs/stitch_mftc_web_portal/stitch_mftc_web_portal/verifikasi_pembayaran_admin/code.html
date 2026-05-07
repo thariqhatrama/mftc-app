@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#6cf8bb",
+                    "on-primary-fixed": "#002116",
+                    "on-surface": "#151c27",
+                    "on-background": "#151c27",
+                    "tertiary-container": "#4a564f",
+                    "on-secondary-container": "#00714d",
+                    "on-error-container": "#93000a",
+                    "background": "#f9f9ff",
+                    "on-primary-fixed-variant": "#00513b",
+                    "on-tertiary-container": "#becac2",
+                    "surface-container": "#e7eefe",
+                    "surface-tint": "#1b6b51",
+                    "outline": "#6f7973",
+                    "inverse-primary": "#8bd6b6",
+                    "tertiary-fixed": "#d9e6dd",
+                    "secondary": "#006c49",
+                    "on-surface-variant": "#3f4944",
+                    "surface-bright": "#f9f9ff",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#a6f2d1",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-container-low": "#f0f3ff",
+                    "outline-variant": "#bec9c2",
+                    "on-secondary-fixed-variant": "#005236",
+                    "primary-fixed-dim": "#8bd6b6",
+                    "on-primary-container": "#8bd6b7",
+                    "inverse-on-surface": "#ebf1ff",
+                    "inverse-surface": "#2a313d",
+                    "tertiary": "#333f39",
+                    "surface-container-highest": "#dce2f3",
+                    "on-primary": "#ffffff",
+                    "primary": "#004532",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-tertiary-fixed": "#131e19",
+                    "on-tertiary-fixed-variant": "#3e4943",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#065f46",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e2e8f8",
+                    "surface-variant": "#dce2f3",
+                    "surface-dim": "#d3daea",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#bdcac1",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f9f9ff",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "gutter": "1.5rem",
+                    "sm": "1rem",
+                    "md": "1.5rem",
+                    "xs": "0.5rem",
+                    "base": "4px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "button": ["Inter"],
+                    "h2": ["Inter"],
+                    "h1": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "h3": ["Inter"]
+            },
+            "fontSize": {
+                    "button": ["14px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "h2": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h1": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                    "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bec9c2; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-background min-h-screen flex">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-gray-200 bg-gray-50 flex flex-col py-6 px-4 gap-4 z-50">
+<div class="mb-8 px-2">
+<h1 class="text-lg font-black text-emerald-900 tracking-tight">HalalCertify</h1>
+<p class="text-xs text-gray-500 uppercase tracking-widest mt-1">Management Portal</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 transition-all font-sans text-sm tracking-wide rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-900" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 transition-all font-sans text-sm tracking-wide rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-900" data-icon="description">description</span>
+<span>Applications</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 transition-all font-sans text-sm tracking-wide rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-900" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span>Audits</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-emerald-50 text-emerald-700 font-bold border-r-4 border-emerald-700 transition-all font-sans text-sm tracking-wide translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Invoices</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 transition-all font-sans text-sm tracking-wide rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-900" data-icon="assessment">assessment</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 transition-all font-sans text-sm tracking-wide rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-900" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 border-t border-gray-200 pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 transition-all font-sans text-sm tracking-wide rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-red-600 hover:bg-red-50 transition-all font-sans text-sm tracking-wide rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 flex flex-col">
+<!-- TopAppBar Contextual Header -->
+<header class="w-full bg-white/95 backdrop-blur-sm sticky top-0 z-40 px-xl py-md border-b border-gray-100 flex justify-between items-center">
+<div class="flex flex-col">
+<h2 class="font-h2 text-h2 text-primary">Verifikasi Pembayaran</h2>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-caps text-label-caps text-gray-400">ADMINISTRASI</span>
+<span class="material-symbols-outlined text-[10px] text-gray-300" data-icon="chevron_right">chevron_right</span>
+<span class="font-label-caps text-label-caps text-emerald-600">MENUNGGU VERIFIKASI</span>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="relative group">
+<span class="material-symbols-outlined text-outline p-2 hover:bg-surface-container-low rounded-full cursor-pointer" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</div>
+<div class="flex items-center gap-3 pl-gutter border-l border-gray-100">
+<div class="text-right">
+<p class="font-button text-button text-on-surface">Super Admin</p>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest">Regional Office</p>
+</div>
+<img alt="Admin Profile" class="w-10 h-10 rounded-full border border-emerald-100" data-alt="Close-up studio portrait of a professional man in a business suit with a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcp9cV1suC9QHZM26QKx3z6mHX3m9-xD2AXhMiu1-lFJZHuQ41qKo-gAA3X2Jayadssgpw5ktFRE_jvrI6ZREQVIHJY8_xActOQZqSLKQi3FENO7q3FlIv8zBjB7twrRYODa3GrfQ1LYGYnFmRAsPxaOK8oqxAvdYAxa73UyWADdhRdppgw7azTDwJR8PNrXE7E0dXJVUxrUW3g_qfugx6XaCh9FxAksHBkHlDfJfSjAJO-aLPBQ5-8nmXnMHnUBqi0J-Ev4tSfg"/>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<section class="p-xl max-w-[1280px] w-full mx-auto">
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mb-xl">
+<div class="bg-white p-md border border-outline-variant rounded-xl flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-700">
+<span class="material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-gray-500">PENDING PROOFS</p>
+<p class="font-h3 text-h3 text-on-surface">24</p>
+</div>
+</div>
+<div class="bg-white p-md border border-outline-variant rounded-xl flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-blue-700">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-gray-500">TOTAL VOLUME</p>
+<p class="font-h3 text-h3 text-on-surface">Rp 128.5M</p>
+</div>
+</div>
+<div class="bg-white p-md border border-outline-variant rounded-xl flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-orange-700">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-gray-500">AVG RESPONSE</p>
+<p class="font-h3 text-h3 text-on-surface">4.2h</p>
+</div>
+</div>
+</div>
+<!-- Verification Queue Section -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-md py-md border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+<h3 class="font-h3 text-[18px] text-primary">Antrian Verifikasi</h3>
+<div class="flex gap-xs">
+<button class="flex items-center gap-xs px-sm py-xs bg-white border border-outline-variant rounded-lg text-button hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                            Filter
+                        </button>
+<button class="flex items-center gap-xs px-sm py-xs bg-white border border-outline-variant rounded-lg text-button hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                            Export
+                        </button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-md py-sm font-label-caps text-label-caps text-gray-500 border-b border-gray-100">PELAKU USAHA (PU)</th>
+<th class="px-md py-sm font-label-caps text-label-caps text-gray-500 border-b border-gray-100">PRODUK/LAYANAN</th>
+<th class="px-md py-sm font-label-caps text-label-caps text-gray-500 border-b border-gray-100">NOMINAL</th>
+<th class="px-md py-sm font-label-caps text-label-caps text-gray-500 border-b border-gray-100">TANGGAL BAYAR</th>
+<th class="px-md py-sm font-label-caps text-label-caps text-gray-500 border-b border-gray-100">BUKTI</th>
+<th class="px-md py-sm font-label-caps text-label-caps text-gray-500 border-b border-gray-100">AKSI</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100">
+<!-- Row 1 -->
+<tr class="hover:bg-emerald-50/5 transition-colors group">
+<td class="px-md py-md">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">PT</div>
+<div>
+<p class="font-button text-on-surface">PT. Halal Food Jaya</p>
+<p class="text-[12px] text-gray-500">ID: 8829102-JKT</p>
+</div>
+</div>
+</td>
+<td class="px-md py-md">
+<p class="font-body-sm text-on-surface-variant">Sertifikasi RPH-U</p>
+</td>
+<td class="px-md py-md">
+<p class="font-button text-primary">Rp 4.500.000</p>
+</td>
+<td class="px-md py-md">
+<div class="flex flex-col">
+<p class="font-body-sm text-on-surface">12 Okt 2023</p>
+<p class="text-[12px] text-gray-400">14:20 WIB</p>
+</div>
+</td>
+<td class="px-md py-md">
+<button class="text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group/btn">
+<span class="material-symbols-outlined text-[18px]" data-icon="image">image</span>
+<span class="underline font-button">Lihat Bukti</span>
+</button>
+</td>
+<td class="px-md py-md">
+<button class="bg-primary text-white font-button px-sm py-2 rounded-lg hover:bg-primary-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified">verified</span>
+                                        Verifikasi
+                                    </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-emerald-50/5 transition-colors">
+<td class="px-md py-md">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold">KM</div>
+<div>
+<p class="font-button text-on-surface">Katering Muslimah</p>
+<p class="text-[12px] text-gray-500">ID: 7712391-BDG</p>
+</div>
+</div>
+</td>
+<td class="px-md py-md">
+<p class="font-body-sm text-on-surface-variant">Self-Declare Reguler</p>
+</td>
+<td class="px-md py-md">
+<p class="font-button text-primary">Rp 650.000</p>
+</td>
+<td class="px-md py-md">
+<div class="flex flex-col">
+<p class="font-body-sm text-on-surface">11 Okt 2023</p>
+<p class="text-[12px] text-gray-400">09:15 WIB</p>
+</div>
+</td>
+<td class="px-md py-md">
+<button class="text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" data-icon="image">image</span>
+<span class="underline font-button">Lihat Bukti</span>
+</button>
+</td>
+<td class="px-md py-md">
+<button class="bg-primary text-white font-button px-sm py-2 rounded-lg hover:bg-primary-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified">verified</span>
+                                        Verifikasi
+                                    </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-emerald-50/5 transition-colors">
+<td class="px-md py-md">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed font-bold">BT</div>
+<div>
+<p class="font-button text-on-surface">Bento Toyo Group</p>
+<p class="text-[12px] text-gray-500">ID: 9920182-SRB</p>
+</div>
+</div>
+</td>
+<td class="px-md py-md">
+<p class="font-body-sm text-on-surface-variant">Sertifikasi Luar Negeri</p>
+</td>
+<td class="px-md py-md">
+<p class="font-button text-primary">Rp 22.100.000</p>
+</td>
+<td class="px-md py-md">
+<div class="flex flex-col">
+<p class="font-body-sm text-on-surface">11 Okt 2023</p>
+<p class="text-[12px] text-gray-400">16:45 WIB</p>
+</div>
+</td>
+<td class="px-md py-md">
+<button class="text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" data-icon="image">image</span>
+<span class="underline font-button">Lihat Bukti</span>
+</button>
+</td>
+<td class="px-md py-md">
+<button class="bg-primary text-white font-button px-sm py-2 rounded-lg hover:bg-primary-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified">verified</span>
+                                        Verifikasi
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-md py-sm bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+<p class="text-body-sm text-gray-500">Showing 1 to 3 of 24 entries</p>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-white transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3 py-1 bg-primary text-white rounded-lg text-button">1</button>
+<button class="px-3 py-1 border border-outline-variant rounded-lg text-button hover:bg-white transition-colors">2</button>
+<button class="px-3 py-1 border border-outline-variant rounded-lg text-button hover:bg-white transition-colors">3</button>
+<button class="p-2 border border-outline-variant rounded-lg hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Focus Detail Panel (Active/Preview state mockup) -->
+<div class="mt-xl grid grid-cols-1 lg:grid-cols-2 gap-xl">
+<div class="bg-white border-l-4 border-emerald-700 border-y border-r border-outline-variant rounded-xl overflow-hidden shadow-md">
+<div class="p-md bg-emerald-50/30 border-b border-gray-100">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-h3 text-on-surface">Pratinjau Bukti Bayar</h4>
+<p class="text-body-sm text-gray-500">PT. Halal Food Jaya - INV/2023/1029</p>
+</div>
+<span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-label-caps text-[10px]">PENDING REVIEW</span>
+</div>
+</div>
+<div class="p-md">
+<div class="aspect-[3/4] bg-gray-100 rounded-lg relative overflow-hidden flex items-center justify-center border border-dashed border-gray-300">
+<img alt="Payment Proof Receipt" class="w-full h-full object-contain mix-blend-multiply" data-alt="Professional high-resolution photo of a bank transfer receipt on a clean gray surface with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvGOZZXH7yz3LNOvLNLbqSBM7lRwcUekuY9-StycdVp47IHduY8hA-_LMpAydPKat40BAX6v_3cUqGTjhdpUYSD568WUkPnerUW6XMxjkxU7ya7f9qeu3xfcT-Fd1RsIvxIBTLiG_HuB2NJV4ir0j52C8gg4-n95dhYoSy0RQRZW0pBEL7HnF2s0zbTRclPINE4gQeXcgpGt2cm5Yk9NgIKJGrxJ7C-qwIkmIZ3gP2MUpfh4IwNj1PNbVII1iUJ9fAAJKgjzWvUA"/>
+<div class="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-zoom-in">
+<span class="bg-white p-3 rounded-full shadow-lg material-symbols-outlined text-primary" data-icon="zoom_in">zoom_in</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-md">
+<div class="bg-white p-xl border border-outline-variant rounded-xl shadow-sm flex-1">
+<h4 class="font-h3 text-on-surface mb-md">Konfirmasi Data</h4>
+<div class="space-y-gutter">
+<div class="flex justify-between items-center py-sm border-b border-gray-50">
+<span class="text-body-sm text-gray-500">Nomor Tagihan</span>
+<span class="font-button text-on-surface">INV-HLC-20230012</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-gray-50">
+<span class="text-body-sm text-gray-500">Bank Pengirim</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance">account_balance</span>
+<span class="font-button text-on-surface">Bank Syariah Indonesia</span>
+</div>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-gray-50">
+<span class="text-body-sm text-gray-500">Nama Pemilik Rekening</span>
+<span class="font-button text-on-surface uppercase">HIDAYATULLAH</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-gray-50">
+<span class="text-body-sm text-gray-500">Jumlah di Bukti</span>
+<span class="font-h2 text-[24px] text-emerald-900">Rp 4.500.000</span>
+</div>
+<div class="flex justify-between items-center py-sm">
+<span class="text-body-sm text-gray-500">Tanggal Transaksi</span>
+<span class="font-button text-on-surface">12 Oktober 2023</span>
+</div>
+</div>
+<div class="mt-xl flex flex-col gap-sm">
+<label class="font-label-caps text-gray-500">CATATAN VERIFIKATOR (OPSIONAL)</label>
+<textarea class="w-full h-24 p-md rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-body-sm" placeholder="Tambahkan catatan jika diperlukan..."></textarea>
+</div>
+<div class="mt-xl grid grid-cols-2 gap-md">
+<button class="border border-error text-error font-button py-md rounded-lg hover:bg-error-container/10 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+                                Tolak Bukti
+                            </button>
+<button class="bg-primary text-white font-button py-md rounded-lg hover:bg-primary-container shadow-md transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                                Verifikasi Sekarang
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Component -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center max-w-[1280px] mx-auto border-t border-gray-100 bg-white">
+<div class="mb-4 md:mb-0">
+<p class="font-sans text-base font-bold text-emerald-900">Muslim Friendly Tourism Certification</p>
+<p class="font-sans text-xs uppercase tracking-widest text-gray-400 mt-1">© 2024 HalalCertify. All rights reserved.</p>
+</div>
+<div class="flex gap-xl">
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 hover:text-emerald-600 transition-opacity duration-300" href="#">Privacy Policy</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 hover:text-emerald-600 transition-opacity duration-300" href="#">Terms of Service</a>
+<a class="font-sans text-xs uppercase tracking-widest text-gray-400 hover:text-emerald-600 transition-opacity duration-300" href="#">Contact Support</a>
+</div>
+</footer>
+</main>
+</body></html>
