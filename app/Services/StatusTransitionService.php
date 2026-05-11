@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Enums\ApplicationStatus;
 use App\Exceptions\InvalidStatusTransitionException;
 use App\Models\Application;
+use App\Models\AuditChecklist;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class StatusTransitionService
@@ -50,6 +52,17 @@ class StatusTransitionService
             );
         }
 
+        if ($newStatus === ApplicationStatus::REPORT_SUBMITTED->value) {
+            $assignment = $application->auditAssignment;
+            $uncompleted = $assignment
+                ? AuditChecklist::where('audit_assignment_id', $assignment->id)->whereNull('result')->count()
+                : 0;
+
+            if ($uncompleted > 0) {
+                throw new Exception("Masih ada {$uncompleted} item checklist yang belum diisi.");
+            }
+        }
+
         DB::transaction(function () use ($application, $newStatus, $oldStatus, $actor): void {
             $application->update([
                 'status' => $newStatus,
@@ -65,5 +78,23 @@ class StatusTransitionService
                 actor: $actor,
             );
         });
+
+        // Auto-transition dari payment_verified ke audit_ready sesuai PRD
+        if ($newStatus === ApplicationStatus::PAYMENT_VERIFIED->value) {
+            $this->transition($application->fresh(), ApplicationStatus::AUDIT_READY->value, $actor);
+        }
+
+        if ($newStatus === ApplicationStatus::AUDIT_IN_PROGRESS->value) {
+            $assignment = $application->fresh('auditAssignment')->auditAssignment;
+
+            if ($assignment && AuditChecklist::where('audit_assignment_id', $assignment->id)->count() === 0) {
+                app(AuditChecklistService::class)->generateForAssignment($assignment);
+            }
+        }
+
+        // Auto-generate certificate jika disetujui (F21 -> F22)
+        if ($newStatus === ApplicationStatus::APPROVED->value) {
+            app(CertificateService::class)->generate($application->fresh(), $actor);
+        }
     }
 }

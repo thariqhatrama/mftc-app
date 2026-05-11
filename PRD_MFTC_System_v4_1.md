@@ -186,8 +186,8 @@ draft → submitted → invoiced → payment_uploaded → payment_verified
 
 | Layer | Teknologi |
 |---|---|
-| Backend | Laravel 11 (PHP 8.3) |
-| Admin Panel | Filament v3 (Super Admin, Sales, Auditor) |
+| Backend | Laravel 12 (PHP 8.3) |
+| Admin Panel | Filament v5 (Super Admin, Sales, Auditor) |
 | Frontend PU | React 18 + Vite + TypeScript + TailwindCSS |
 | Database | PostgreSQL 15+ via Laragon |
 | Cache & Queue | Redis via Laragon |

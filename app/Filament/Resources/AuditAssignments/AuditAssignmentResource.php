@@ -2,22 +2,22 @@
 
 namespace App\Filament\Resources\AuditAssignments;
 
+use App\Enums\ApplicationStatus;
 use App\Enums\UserRole;
-use App\Filament\Resources\AuditAssignments\Pages\CreateAuditAssignment;
-use App\Filament\Resources\AuditAssignments\Pages\EditAuditAssignment;
 use App\Filament\Resources\AuditAssignments\Pages\ListAuditAssignments;
 use App\Filament\Resources\AuditAssignments\Schemas\AuditAssignmentForm;
 use App\Filament\Resources\AuditAssignments\Tables\AuditAssignmentsTable;
-use App\Models\AuditAssignment;
+use App\Models\Application;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class AuditAssignmentResource extends Resource
 {
-    protected static ?string $model = AuditAssignment::class;
+    protected static ?string $model = Application::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
 
@@ -25,9 +25,19 @@ class AuditAssignmentResource extends Resource
 
     protected static ?int $navigationSort = 40;
 
+    protected static ?string $recordTitleAttribute = 'id';
+
     public static function canAccess(): bool
     {
-        return auth()->check() && auth()->user()->role === UserRole::SUPER_ADMIN;
+        return auth()->check() && in_array(auth()->user()->role, [
+            UserRole::SUPER_ADMIN,
+            UserRole::AUDITOR,
+        ], true);
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 
     public static function form(Schema $schema): Schema
@@ -40,6 +50,39 @@ class AuditAssignmentResource extends Resource
         return AuditAssignmentsTable::configure($table);
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery()
+            ->with([
+                'puUser.businessProfile',
+                'auditAssignment.auditor',
+                'auditAssignment.checklists',
+                'auditAssignment.nonConformities',
+            ]);
+
+        if (auth()->user()?->role === UserRole::AUDITOR) {
+            return $query
+                ->whereHas('auditAssignment', fn (Builder $q) => $q->where('auditor_user_id', auth()->id()))
+                ->whereIn('status', [
+                    ApplicationStatus::SCHEDULE_CONFIRMED,
+                    ApplicationStatus::AUDIT_IN_PROGRESS,
+                    ApplicationStatus::REVISION,
+                    ApplicationStatus::REPORT_SUBMITTED,
+                    ApplicationStatus::REPORT_REJECTED,
+                ]);
+        }
+
+        return $query->whereIn('status', [
+            ApplicationStatus::AUDIT_READY,
+            ApplicationStatus::AUDITOR_ASSIGNED,
+            ApplicationStatus::SCHEDULE_CONFIRMED,
+            ApplicationStatus::AUDIT_IN_PROGRESS,
+            ApplicationStatus::REVISION,
+            ApplicationStatus::REPORT_SUBMITTED,
+            ApplicationStatus::REPORT_REJECTED,
+        ]);
+    }
+
     public static function getRelations(): array
     {
         return [];
@@ -49,8 +92,6 @@ class AuditAssignmentResource extends Resource
     {
         return [
             'index' => ListAuditAssignments::route('/'),
-            'create' => CreateAuditAssignment::route('/create'),
-            'edit' => EditAuditAssignment::route('/{record}/edit'),
         ];
     }
 }

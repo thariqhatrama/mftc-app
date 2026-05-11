@@ -302,6 +302,7 @@ export default function ApplicationDetailPage() {
   const [revisionStats, setRevisionStats] = useState<{
     open: number
     nearestDeadline: string | null
+    items: RevisionItem[]
   } | null>(null)
   const [loading, setLoading] = useState(true)
   const [refreshKey, setRefreshKey] = useState(0)
@@ -350,6 +351,7 @@ export default function ApplicationDetailPage() {
               setRevisionStats({
                 open: open.length,
                 nearestDeadline: deadlines[0] ?? null,
+                items: list,
               })
             }
           } catch {
@@ -586,14 +588,16 @@ export default function ApplicationDetailPage() {
       ) : null}
 
       {application.status === 'revision' ? (
-        <div className="bg-white border border-amber-200 rounded-2xl p-6">
+        <div className="bg-pink-50 border border-pink-200 rounded-2xl p-6">
           <div className="flex items-start gap-4">
-            <span className="material-symbols-outlined text-amber-600 text-3xl">priority_high</span>
+            <span className="material-symbols-outlined text-pink-600 text-3xl">priority_high</span>
             <div className="flex-1">
-              <p className="text-h3 font-bold text-amber-800">Tindakan Perbaikan Diperlukan</p>
-              <p className="text-sm text-amber-700 mt-1">
-                Auditor menemukan {revisionStats?.open ?? 0} non-conformity yang perlu Anda
-                perbaiki.
+              <div className="flex flex-wrap items-center gap-3">
+                <p className="text-h3 font-bold text-pink-900">Terdapat Ketidaksesuaian</p>
+                <StatusBadge status="REVISION" />
+              </div>
+              <p className="text-sm text-pink-800 mt-2">
+                Auditor menemukan ketidaksesuaian. Perbaiki sebelum batas waktu.
                 {revisionStats?.nearestDeadline ? (
                   <>
                     {' '}
@@ -605,11 +609,43 @@ export default function ApplicationDetailPage() {
                   </>
                 ) : null}
               </p>
+
+              {revisionStats?.items?.length ? (
+                <div className="mt-4 space-y-2">
+                  {revisionStats.items.slice(0, 3).map((nc) => (
+                    <div
+                      key={nc.id}
+                      className="rounded-lg border border-pink-100 bg-white/80 px-4 py-3 text-sm"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="font-semibold text-neutral-900">
+                          {nc.severity.toUpperCase()} — {nc.description}
+                        </span>
+                        <span
+                          className={`rounded-full px-2.5 py-1 text-xs font-bold ${
+                            nc.closed_at || nc.verified_by_auditor
+                              ? 'bg-green-100 text-green-700'
+                              : 'bg-pink-100 text-pink-700'
+                          }`}
+                        >
+                          {nc.closed_at || nc.verified_by_auditor ? 'Closed' : 'Open'}
+                        </span>
+                      </div>
+                      {nc.corrective_action_deadline ? (
+                        <p className="mt-1 text-xs text-gray-500">
+                          Deadline: {formatDateID(nc.corrective_action_deadline)}
+                        </p>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+
               <Link
                 to={`/dashboard/applications/${application.id}/revisions`}
-                className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold uppercase bg-primary text-on-primary hover:bg-primary-container"
+                className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold uppercase bg-pink-700 text-white hover:bg-pink-800"
               >
-                Lihat & Perbaiki
+                Lihat & Perbaiki Non-Conformity
                 <span className="material-symbols-outlined text-base">arrow_forward</span>
               </Link>
             </div>

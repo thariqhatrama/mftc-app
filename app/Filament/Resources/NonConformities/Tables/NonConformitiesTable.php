@@ -61,18 +61,25 @@ class NonConformitiesTable
                 EditAction::make(),
                 Action::make('verifyNc')
                     ->label('Verify NC')
-                    ->icon(Heroicon::CheckBadge)
+                    ->icon(Heroicon::OutlinedCheckBadge)
                     ->color('success')
                     ->requiresConfirmation()
-                    ->visible(fn (NonConformity $record): bool => ! $record->verified_by_auditor)
+                    ->visible(fn (NonConformity $record): bool => filled($record->pu_correction) && ! $record->verified_by_auditor)
                     ->action(function (NonConformity $record): void {
                         $record->update([
                             'verified_by_auditor' => true,
                             'closed_at' => now(),
                         ]);
 
+                        $openCount = $record->auditAssignment
+                            ->nonConformities()
+                            ->whereNull('closed_at')
+                            ->count();
+
                         Notification::make()
-                            ->title('NC verified and closed')
+                            ->title($openCount === 0
+                                ? 'Semua NC sudah diverifikasi. Anda sekarang dapat submit laporan.'
+                                : 'NC verified and closed')
                             ->success()
                             ->send();
                     }),

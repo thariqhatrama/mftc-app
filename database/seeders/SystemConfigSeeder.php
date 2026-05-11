@@ -47,6 +47,12 @@ class SystemConfigSeeder extends Seeder
 
             // Audit log retention
             ['audit_log.retention_years', '7', 'Retensi audit_logs dalam tahun (UU PDP)'],
+
+            // Certificate PDF metadata
+            ['director_name', 'Jobi Triananda', 'Nama direktur untuk tanda tangan sertifikat'],
+            ['director_title', 'Direktur Utama', 'Jabatan direktur untuk tanda tangan sertifikat'],
+            ['certificate_doc_code', '01-Rev.00', 'Kode revisi dokumen sertifikat'],
+            ['certificate_serial_code', 'SCI-2023A', 'Kode serial dokumen sertifikat'],
         ];
 
         foreach ($configs as [$key, $value, $description]) {

@@ -31,7 +31,10 @@
       "PowerShell($headers = @{ Origin = 'http://localhost:5173' }; try { Invoke-WebRequest -Uri \"http://127.0.0.1:8000/sanctum/csrf-cookie\" -Headers $headers -UseBasicParsing | Select-Object StatusCode,Headers } catch { $_.Exception.Response.StatusCode.value__; $_.Exception.Message })",
       "PowerShell(Get-Service *)",
       "PowerShell(Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/v1/public/health\" -UseBasicParsing | Select-Object StatusCode,Content)",
-      "PowerShell(try { $response = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/v1/public/health\" -UseBasicParsing -TimeoutSec 10; \"StatusCode: $\\($response.StatusCode\\)\"; \"Content:\"; $response.Content } catch { \"ERROR\"; $_.Exception.Message; if \\($_.Exception.Response\\) { \"StatusCode: $\\($_.Exception.Response.StatusCode.value__\\)\" } })"
+      "PowerShell(try { $response = Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/v1/public/health\" -UseBasicParsing -TimeoutSec 10; \"StatusCode: $\\($response.StatusCode\\)\"; \"Content:\"; $response.Content } catch { \"ERROR\"; $_.Exception.Message; if \\($_.Exception.Response\\) { \"StatusCode: $\\($_.Exception.Response.StatusCode.value__\\)\" } })",
+      "mcp__laravel-boost__database-schema",
+      "Bash(composer require *)",
+      "PowerShell(npm *)"
     ]
   },
   "enableAllProjectMcpServers": true,

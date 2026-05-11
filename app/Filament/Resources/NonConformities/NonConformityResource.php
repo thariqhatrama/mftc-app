@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class NonConformityResource extends Resource
 {
@@ -38,6 +39,14 @@ class NonConformityResource extends Resource
     public static function table(Table $table): Table
     {
         return NonConformitiesTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with('auditAssignment.application.puUser.businessProfile')
+            ->whereHas('auditAssignment', fn (Builder $query) => $query->where('auditor_user_id', auth()->id()))
+            ->when(request()->query('assignment_id'), fn (Builder $query, string $assignmentId) => $query->where('audit_assignment_id', $assignmentId));
     }
 
     public static function getRelations(): array

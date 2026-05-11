@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\AuditLogs\Tables;
 
+use App\Models\AuditLog;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -47,10 +48,29 @@ class AuditLogsTable
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('entity_type')
-                    ->options(fn () => \App\Models\AuditLog::query()
+                    ->options(fn () => AuditLog::query()
                         ->distinct()
                         ->pluck('entity_type', 'entity_type')
                         ->toArray())
+                    ->searchable(),
+                SelectFilter::make('action')
+                    ->options([
+                        'impersonation_start' => 'Impersonasi Mulai',
+                        'impersonation_end' => 'Impersonasi Selesai',
+                        'pu_action_via_admin' => 'Aksi PU via Super Admin',
+                        'status_transition' => 'Perubahan Status',
+                        'payment_verified' => 'Verifikasi Pembayaran',
+                        'invoice_override' => 'Override Invoice',
+                        'report_approved' => 'Laporan Disetujui',
+                        'account_deleted' => 'Akun Dihapus',
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        if (! ($data['value'] ?? null)) {
+                            return $query;
+                        }
+
+                        return $query->where('action', 'like', $data['value'].'%');
+                    })
                     ->searchable(),
                 Filter::make('date_range')
                     ->schema([

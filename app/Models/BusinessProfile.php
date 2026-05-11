@@ -21,6 +21,11 @@ class BusinessProfile extends BaseModel
     {
         return [
             'completed' => 'boolean',
+            'company_name' => 'encrypted',
+            'address' => 'encrypted',
+            'contact_person' => 'encrypted',
+            'contact_phone' => 'encrypted',
+            'nib' => 'encrypted',
         ];
     }
 

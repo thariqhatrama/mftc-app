@@ -9,8 +9,9 @@ use App\Models\AuditLog;
 use App\Models\User;
 use App\Services\StatusTransitionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-uses(Tests\TestCase::class, RefreshDatabase::class);
+uses(TestCase::class, RefreshDatabase::class);
 
 function makeStatusTransitionApplication(ApplicationStatus $status): Application
 {
@@ -31,8 +32,16 @@ test('valid PRD transition: :dataset', function (ApplicationStatus $from, Applic
 
     $application->refresh();
 
-    expect($application->status)->toBe($to)
-        ->and($application->version)->toBe(2);
+    if ($to === ApplicationStatus::PAYMENT_VERIFIED) {
+        expect($application->status)->toBe(ApplicationStatus::AUDIT_READY)
+            ->and($application->version)->toBe(3);
+    } elseif ($to === ApplicationStatus::APPROVED) {
+        expect($application->status)->toBe(ApplicationStatus::CERTIFIED)
+            ->and($application->version)->toBe(3);
+    } else {
+        expect($application->status)->toBe($to)
+            ->and($application->version)->toBe(2);
+    }
 
     $auditLog = AuditLog::query()
         ->where('entity_type', 'application')

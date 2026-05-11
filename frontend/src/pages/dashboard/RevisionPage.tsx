@@ -68,7 +68,7 @@ function RevisionCard({
   const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const closed = Boolean(nc.verified_by_auditor)
+  const closed = Boolean(nc.closed_at || nc.verified_by_auditor)
   const daysLeft = daysUntil(nc.corrective_action_deadline)
   const urgent = daysLeft !== null && daysLeft <= 14 && !closed
 
@@ -124,13 +124,14 @@ function RevisionCard({
       setError(null)
       setSubmitting(true)
 
-      await api.post(`/revisions/${nc.id}/submit`, {
+      await api.post(`/revisions/${applicationId}/submit`, {
         nc_id: nc.id,
         pu_correction: correction.trim(),
         attachment_url: attachmentPath || null,
       })
 
       setOpen(false)
+      setError('Perbaikan berhasil dikirim. Menunggu verifikasi auditor.')
       onSubmitted()
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Gagal mengirim perbaikan.')
@@ -155,7 +156,7 @@ function RevisionCard({
           </span>
           {closed ? (
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase bg-emerald-100 text-emerald-800">
-              Diverifikasi
+              Selesai ✓
             </span>
           ) : nc.pu_correction ? (
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase bg-blue-50 text-blue-700">
@@ -268,7 +269,13 @@ function RevisionCard({
           </div>
 
           {error ? (
-            <div className="p-3 border border-red-200 bg-red-50 rounded-lg text-sm text-red-700">
+            <div
+              className={`p-3 rounded-lg text-sm ${
+                error.startsWith('Perbaikan berhasil')
+                  ? 'border border-emerald-200 bg-emerald-50 text-emerald-700'
+                  : 'border border-red-200 bg-red-50 text-red-700'
+              }`}
+            >
               {error}
             </div>
           ) : null}
@@ -331,7 +338,7 @@ export default function RevisionPage() {
     }
   }, [id, refreshKey])
 
-  const openCount = revisions.filter((nc) => !nc.verified_by_auditor).length
+  const openCount = revisions.filter((nc) => !nc.closed_at && !nc.verified_by_auditor).length
   const closedCount = revisions.length - openCount
 
   return (

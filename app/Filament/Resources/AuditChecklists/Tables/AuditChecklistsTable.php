@@ -11,7 +11,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
@@ -24,40 +26,34 @@ class AuditChecklistsTable
     {
         return $table
             ->columns([
-                TextColumn::make('site.site_name')
-                    ->label('Site')
-                    ->searchable(),
                 TextColumn::make('criteria_id')
+                    ->label('Criteria')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('criteria_description')
-                    ->limit(60)
-                    ->tooltip(fn (AuditChecklist $record): ?string => $record->criteria_description)
-                    ->wrap(),
-                TextColumn::make('result')
-                    ->badge()
-                    ->colors([
-                        'success' => ChecklistResult::COMPLIANT,
-                        'danger' => ChecklistResult::NON_COMPLIANT,
-                        'gray' => ChecklistResult::NA,
+                    ->label('Description')
+                    ->wrap()
+                    ->searchable(),
+                SelectColumn::make('result')
+                    ->options([
+                        'compliant' => '✓ Compliant',
+                        'non_compliant' => '✗ Non-Compliant',
+                        'na' => '— N/A',
                     ])
-                    ->sortable(),
-                TextColumn::make('auditor_note')
-                    ->limit(40)
-                    ->tooltip(fn (AuditChecklist $record): ?string => $record->auditor_note),
+                    ->selectablePlaceholder(false),
+                TextInputColumn::make('auditor_note')
+                    ->label('Note'),
+                TextColumn::make('corrective_action_required')
+                    ->label('Corrective Action')
+                    ->wrap()
+                    ->placeholder('-'),
             ])
             ->groups([
                 Group::make('site.site_name')
                     ->label('Site')
                     ->collapsible(),
-                Group::make('auditAssignment.id')
-                    ->label('Assignment'),
             ])
-            ->defaultGroup('site.site_name')
             ->filters([
-                SelectFilter::make('audit_assignment_id')
-                    ->label('Assignment')
-                    ->relationship('auditAssignment', 'id'),
                 SelectFilter::make('result')
                     ->options(ChecklistResult::class),
             ])
@@ -68,7 +64,7 @@ class AuditChecklistsTable
                 BulkActionGroup::make([
                     BulkAction::make('saveAll')
                         ->label('Save All Selected')
-                        ->icon(Heroicon::CheckCircle)
+                        ->icon(Heroicon::OutlinedCheckCircle)
                         ->color('success')
                         ->schema([
                             Select::make('result')
@@ -105,7 +101,7 @@ class AuditChecklistsTable
                             if ($conflicts > 0) {
                                 Notification::make()
                                     ->title("Conflict on {$conflicts} item(s)")
-                                    ->body('Beberapa item telah diubah oleh pengguna lain (HTTP 409). Refresh dan coba lagi.')
+                                    ->body('Beberapa item telah diubah oleh pengguna lain. Refresh dan coba lagi.')
                                     ->danger()
                                     ->send();
                             }

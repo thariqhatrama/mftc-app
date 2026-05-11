@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\ApplicationStatus;
+use App\Mail\RevisionRequestedMail;
+use App\Services\StatusTransitionService;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Mail;
 
 class NonConformity extends BaseModel
 {
@@ -24,6 +28,28 @@ class NonConformity extends BaseModel
             'verified_by_auditor' => 'boolean',
             'closed_at' => 'datetime',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (NonConformity $nonConformity): void {
+            $assignment = $nonConformity->auditAssignment()->with('application.puUser')->first();
+            $application = $assignment?->application;
+
+            if (! $application || $application->status !== ApplicationStatus::AUDIT_IN_PROGRESS) {
+                return;
+            }
+
+            app(StatusTransitionService::class)->transition(
+                $application,
+                ApplicationStatus::REVISION->value,
+                auth()->user(),
+            );
+
+            if ($application->puUser?->email) {
+                Mail::to($application->puUser->email)->queue(new RevisionRequestedMail($application));
+            }
+        });
     }
 
     public function auditAssignment(): BelongsTo

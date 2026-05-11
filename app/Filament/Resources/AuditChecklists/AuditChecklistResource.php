@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class AuditChecklistResource extends Resource
 {
@@ -42,6 +43,14 @@ class AuditChecklistResource extends Resource
     public static function table(Table $table): Table
     {
         return AuditChecklistsTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['auditAssignment.application.puUser.businessProfile', 'site'])
+            ->when(request()->query('assignment_id'), fn (Builder $query, string $assignmentId) => $query->where('audit_assignment_id', $assignmentId))
+            ->whereHas('auditAssignment', fn (Builder $query) => $query->where('auditor_user_id', auth()->id()));
     }
 
     public static function getRelations(): array

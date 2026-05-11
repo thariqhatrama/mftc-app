@@ -14,6 +14,8 @@ class AuditAssignment extends BaseModel
         'scheduled_time',
         'location',
         'confirmed_by_pu',
+        'auditor_notes',
+        'recommendation',
     ];
 
     protected function casts(): array

@@ -5,7 +5,6 @@ namespace App\Filament\Pages;
 use App\Enums\ApplicationStatus;
 use App\Enums\UserRole;
 use App\Models\Application;
-use App\Models\Certificate;
 use App\Services\AuditLogService;
 use App\Services\StatusTransitionService;
 use BackedEnum;
@@ -16,7 +15,6 @@ use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class ReportReviewPage extends Page
 {
@@ -88,7 +86,7 @@ class ReportReviewPage extends Page
     {
         return Action::make('approve')
             ->label('Approve Report')
-            ->icon(Heroicon::CheckCircle)
+            ->icon(Heroicon::OutlinedCheckCircle)
             ->color('success')
             ->requiresConfirmation()
             ->modalHeading('Setujui Laporan Audit')
@@ -100,40 +98,10 @@ class ReportReviewPage extends Page
 
                 $application = Application::findOrFail($this->selectedApplicationId);
 
-                $transition = app(StatusTransitionService::class);
-                $transition->transition($application, 'approved', auth()->user());
-
-                $certNumber = 'MFTC/' . date('Y') . '/' . strtoupper(Str::random(6));
-
-                Certificate::create([
-                    'application_id' => $application->id,
-                    'certificate_number' => $certNumber,
-                    'level' => $application->level?->value,
-                    'issued_at' => now(),
-                    'valid_until' => now()->addYears(2),
-                    'certificate_pdf_url' => null, // PDF generation deferred to Phase 4
-                ]);
-
-                $application->refresh();
-                $transition->transition($application, 'certified', auth()->user());
-
-                $application->update([
-                    'certified_at' => now(),
-                    'certificate_number' => $certNumber,
-                    'valid_until' => now()->addYears(2),
-                ]);
-
-                app(AuditLogService::class)->log(
-                    action: 'report_approved',
-                    entityType: 'application',
-                    entityId: $application->id,
-                    oldStatus: 'report_submitted',
-                    newStatus: 'certified',
-                );
+                app(StatusTransitionService::class)->transition($application, 'approved', auth()->user());
 
                 Notification::make()
                     ->title('Laporan disetujui — Sertifikat dibuat')
-                    ->body("Nomor: {$certNumber}")
                     ->success()
                     ->send();
 
@@ -147,7 +115,7 @@ class ReportReviewPage extends Page
     {
         return Action::make('reject')
             ->label('Reject Report')
-            ->icon(Heroicon::XCircle)
+            ->icon(Heroicon::OutlinedXCircle)
             ->color('danger')
             ->requiresConfirmation()
             ->modalHeading('Tolak Laporan Audit')

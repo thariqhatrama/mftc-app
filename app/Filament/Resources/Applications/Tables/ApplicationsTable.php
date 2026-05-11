@@ -13,6 +13,7 @@ use Filament\Actions\Action;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -29,9 +30,7 @@ class ApplicationsTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('puUser.businessProfile.company_name')
-                    ->label('Company')
-                    ->searchable()
-                    ->sortable(),
+                    ->label('Company'),
                 TextColumn::make('scope')
                     ->badge()
                     ->sortable(),
@@ -90,7 +89,7 @@ class ApplicationsTable
                 // Verify Payment — super_admin only, status=payment_uploaded
                 Action::make('verifyPayment')
                     ->label('Verify Payment')
-                    ->icon(\Filament\Support\Icons\Heroicon::CheckCircle)
+                    ->icon(Heroicon::OutlinedCheckCircle)
                     ->color('success')
                     ->requiresConfirmation()
                     ->visible(fn (Application $record): bool => $record->status === ApplicationStatus::PAYMENT_UPLOADED
@@ -117,16 +116,16 @@ class ApplicationsTable
                 // Assign Auditor — super_admin only, status=audit_ready
                 Action::make('assignAuditor')
                     ->label('Assign Auditor')
-                    ->icon(\Filament\Support\Icons\Heroicon::UserPlus)
+                    ->icon(Heroicon::OutlinedUserPlus)
                     ->color('primary')
                     ->visible(fn (Application $record): bool => $record->status === ApplicationStatus::AUDIT_READY
                         && auth()->user()->role === UserRole::SUPER_ADMIN)
-                    ->url(fn (Application $record): string => route('filament.admin.pages.assign-auditor', ['application' => $record->id])),
+                    ->url(fn (Application $record): string => '/admin/audit-assignments'),
 
                 // Approve Report — super_admin only, status=report_submitted
                 Action::make('approveReport')
                     ->label('Approve Report')
-                    ->icon(\Filament\Support\Icons\Heroicon::HandThumbUp)
+                    ->icon(Heroicon::OutlinedHandThumbUp)
                     ->color('success')
                     ->requiresConfirmation()
                     ->visible(fn (Application $record): bool => $record->status === ApplicationStatus::REPORT_SUBMITTED
@@ -136,7 +135,7 @@ class ApplicationsTable
                         $service->transition($record, ApplicationStatus::APPROVED->value, auth()->user());
 
                         Notification::make()
-                            ->title('Report approved')
+                            ->title('Report approved — Sertifikat dibuat')
                             ->success()
                             ->send();
                     }),
@@ -144,7 +143,7 @@ class ApplicationsTable
                 // Reject Report — super_admin only, status=report_submitted
                 Action::make('rejectReport')
                     ->label('Reject Report')
-                    ->icon(\Filament\Support\Icons\Heroicon::HandThumbDown)
+                    ->icon(Heroicon::OutlinedHandThumbDown)
                     ->color('danger')
                     ->visible(fn (Application $record): bool => $record->status === ApplicationStatus::REPORT_SUBMITTED
                         && auth()->user()->role === UserRole::SUPER_ADMIN)
@@ -168,7 +167,7 @@ class ApplicationsTable
 
                         Notification::make()
                             ->title('Report rejected')
-                            ->body('Reason: ' . $data['rejection_reason'])
+                            ->body('Reason: '.$data['rejection_reason'])
                             ->danger()
                             ->send();
                     }),

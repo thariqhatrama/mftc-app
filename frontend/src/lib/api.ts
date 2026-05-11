@@ -68,6 +68,12 @@ export async function ensureCsrfCookie(): Promise<void> {
 }
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  if (typeof window !== 'undefined') {
+    const impersonateToken = localStorage.getItem('impersonate_token')
+    if (impersonateToken) {
+      config.headers.set('Authorization', `Bearer ${impersonateToken}`)
+    }
+  }
   return config
 })
 

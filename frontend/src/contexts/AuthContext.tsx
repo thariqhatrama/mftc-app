@@ -22,6 +22,8 @@ export interface AuthUser {
   phone?: string | null
   role: 'pu' | 'super_admin' | 'sales' | 'auditor'
   business_profile?: BusinessProfileSummary | null
+  is_impersonated?: boolean
+  impersonating_name?: string | null
 }
 
 interface LoginPayload {
@@ -44,6 +46,8 @@ interface AuthContextValue {
   register: (payload: RegisterPayload) => Promise<AuthUser>
   logout: () => Promise<void>
   fetchUser: () => Promise<AuthUser | null>
+  isImpersonated: boolean
+  leaveImpersonate: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -98,6 +102,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const isImpersonated =
+    typeof window !== 'undefined' && !!localStorage.getItem('impersonate_token')
+
+  const leaveImpersonate = useCallback(async (): Promise<void> => {
+    const returnUrl =
+      (typeof window !== 'undefined' &&
+        localStorage.getItem('impersonate_return_url')) ||
+      '/admin'
+
+    try {
+      await api.delete('/auth/impersonate-leave')
+    } catch {
+      // ignore — token mungkin sudah kadaluarsa
+    } finally {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('impersonate_token')
+        localStorage.removeItem('impersonate_return_url')
+        window.location.href = returnUrl
+      }
+    }
+  }, [])
+
   useEffect(() => {
     let mounted = true
     ;(async () => {
@@ -114,8 +140,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [fetchUser])
 
   const value = useMemo<AuthContextValue>(
-    () => ({ user, loading, login, register, logout, fetchUser }),
-    [user, loading, login, register, logout, fetchUser],
+    () => ({
+      user,
+      loading,
+      login,
+      register,
+      logout,
+      fetchUser,
+      isImpersonated,
+      leaveImpersonate,
+    }),
+    [user, loading, login, register, logout, fetchUser, isImpersonated, leaveImpersonate],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

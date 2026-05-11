@@ -10,8 +10,8 @@ use BackedEnum;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -44,10 +44,10 @@ class SelfAssessmentPreviewPage extends Page implements HasForms
         $this->questions = new Collection;
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Select::make('filterScope')
                     ->label('Scope')
                     ->options(collect(ScopeObject::cases())

@@ -17,6 +17,8 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\URL;
+use STS\FilamentImpersonate\Actions\Impersonate;
 
 class UsersTable
 {
@@ -25,9 +27,7 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('full_name')
-                    ->label('Name')
-                    ->searchable()
-                    ->sortable(),
+                    ->label('Name'),
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
@@ -53,16 +53,71 @@ class UsersTable
                 TernaryFilter::make('is_active'),
             ])
             ->recordActions([
+                Impersonate::make()
+                    ->label(fn (User $record): string => match (
+                        $record->role instanceof UserRole
+                            ? $record->role->value
+                            : $record->role
+                    ) {
+                        UserRole::AUDITOR->value => 'Akses sebagai Auditor',
+                        UserRole::SALES->value => 'Akses sebagai Sales',
+                        default => 'Impersonate',
+                    })
+                    ->color(fn (User $record): string => match (
+                        $record->role instanceof UserRole
+                            ? $record->role->value
+                            : $record->role
+                    ) {
+                        UserRole::AUDITOR->value => 'warning',
+                        UserRole::SALES->value => 'success',
+                        default => 'gray',
+                    })
+                    ->visible(fn (User $record): bool => $record->canBeImpersonated()
+                        && $record->is_active
+                        && auth()->id() !== $record->id
+                        && ($record->role instanceof UserRole ? $record->role->value : $record->role) !== UserRole::PU->value)
+                    ->redirectTo(function (User $record): string {
+                        $role = $record->role instanceof UserRole
+                            ? $record->role->value
+                            : $record->role;
+
+                        return match ($role) {
+                            UserRole::AUDITOR->value => '/admin',
+                            UserRole::SALES->value => '/admin',
+                            default => '/admin',
+                        };
+                    }),
+
+                Action::make('impersonate_pu')
+                    ->label('Akses Dashboard PU')
+                    ->icon(Heroicon::OutlinedComputerDesktop)
+                    ->color('info')
+                    ->visible(fn (User $record): bool => auth()->user()?->canImpersonate()
+                        && (($record->role instanceof UserRole ? $record->role->value : $record->role) === UserRole::PU->value)
+                        && $record->is_active)
+                    ->action(function (User $record) {
+                        $token = $record->createToken(
+                            'impersonate-'.auth()->id(),
+                            ['*'],
+                            now()->addHours(2)
+                        )->plainTextToken;
+
+                        $returnUrl = urlencode(URL::to('/admin/users'));
+                        $frontendUrl = config('app.frontend_url', 'http://localhost:5173');
+
+                        return redirect()->away("{$frontendUrl}/impersonate?token={$token}&return_url={$returnUrl}");
+                    }),
+
                 EditAction::make(),
                 Action::make('deactivate')
                     ->label('Delete')
-                    ->icon(Heroicon::Trash)
+                    ->icon(Heroicon::OutlinedTrash)
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (User $record) => $record->update(['is_active' => false])),
                 Action::make('resetPassword')
                     ->label('Reset Password')
-                    ->icon(Heroicon::Envelope)
+                    ->icon(Heroicon::OutlinedEnvelope)
                     ->requiresConfirmation()
                     ->action(function (User $record): void {
                         Password::sendResetLink(['email' => $record->email]);
@@ -77,7 +132,7 @@ class UsersTable
                 BulkActionGroup::make([
                     BulkAction::make('deactivate')
                         ->label('Deactivate')
-                        ->icon(Heroicon::XCircle)
+                        ->icon(Heroicon::OutlinedXCircle)
                         ->color('danger')
                         ->requiresConfirmation()
                         ->action(fn (Collection $records) => $records->each->update(['is_active' => false])),

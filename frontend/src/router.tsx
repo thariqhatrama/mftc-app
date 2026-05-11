@@ -17,6 +17,7 @@ import RevisionPage from './pages/dashboard/RevisionPage'
 import CertificatePage from './pages/dashboard/CertificatePage'
 import ProfilePage from './pages/dashboard/ProfilePage'
 import CertificatesPage from './pages/dashboard/CertificatesPage'
+import ImpersonatePage from './pages/ImpersonatePage'
 import NotFoundPage from './pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -28,10 +29,10 @@ export const router = createBrowserRouter([
       { path: '/pricing', element: <PricingPage /> },
       { path: '/about', element: <AboutPage /> },
       { path: '/login', element: <LoginPage /> },
-      { path: '/register', element: <RegisterPage /> },
       { path: '/verify', element: <VerifyPage /> },
     ],
   },
+  { path: '/register', element: <RegisterPage /> },
   {
     element: <ProtectedRoute />,
     children: [
@@ -56,5 +57,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  { path: '/impersonate', element: <ImpersonatePage /> },
   { path: '*', element: <NotFoundPage /> },
 ])

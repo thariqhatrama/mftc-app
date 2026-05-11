@@ -2,10 +2,15 @@
 
 namespace App\Filament\Resources\Certificates\Tables;
 
+use App\Enums\ApplicationStatus;
 use App\Enums\CertificationLevel;
+use App\Enums\ScopeObject;
 use App\Models\Certificate;
+use App\Services\AuditLogService;
+use App\Services\StatusTransitionService;
 use App\Services\UploadService;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -26,8 +31,11 @@ class CertificatesTable
                     ->sortable(),
                 TextColumn::make('application.puUser.businessProfile.company_name')
                     ->label('Company')
-                    ->searchable()
                     ->placeholder('-'),
+                TextColumn::make('application.scope')
+                    ->label('Scope')
+                    ->badge()
+                    ->formatStateUsing(fn ($state): string => ucwords(str_replace('_', ' ', $state instanceof ScopeObject ? $state->value : (string) $state))),
                 TextColumn::make('level')
                     ->badge()
                     ->formatStateUsing(fn ($state): string => ucwords(str_replace('_', ' ', $state instanceof CertificationLevel ? $state->value : (string) $state))),
@@ -52,7 +60,7 @@ class CertificatesTable
             ->recordActions([
                 Action::make('downloadPdf')
                     ->label('Download PDF')
-                    ->icon(Heroicon::ArrowDownTray)
+                    ->icon(Heroicon::OutlinedArrowDownTray)
                     ->color('primary')
                     ->action(function (Certificate $record) {
                         if (! $record->certificate_pdf_url) {
@@ -67,6 +75,54 @@ class CertificatesTable
                         return response()->redirectTo(
                             app(UploadService::class)->signedUrl($record->certificate_pdf_url, 300)
                         );
+                    }),
+                Action::make('failSurveillance')
+                    ->label('Gagal Surveilans')
+                    ->icon(Heroicon::OutlinedExclamationTriangle)
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalHeading('Batalkan Sertifikat (Gagal Surveilans)')
+                    ->modalDescription('Sertifikat ini akan dicabut dan status aplikasinya menjadi Gagal Surveilans. Aksi ini tidak dapat dibatalkan.')
+                    ->visible(fn (Certificate $record): bool => $record->level === CertificationLevel::THREE_STAR
+                        && $record->application
+                        && $record->application->status->value === ApplicationStatus::CERTIFIED->value)
+                    ->schema([
+                        Textarea::make('reason')
+                            ->label('Alasan Kegagalan')
+                            ->required(),
+                    ])
+                    ->action(function (Certificate $record, array $data) {
+                        $application = $record->application;
+
+                        if (! $application) {
+                            return;
+                        }
+
+                        app(StatusTransitionService::class)->transition(
+                            $application,
+                            ApplicationStatus::SURVEILLANCE_FAILED->value,
+                            auth()->user()
+                        );
+
+                        // Update certificate validation
+                        $record->update([
+                            'valid_until' => now()->subDay(), // Expire the certificate immediately
+                        ]);
+
+                        app(AuditLogService::class)->log(
+                            action: 'surveillance_failed',
+                            entityType: 'certificate',
+                            entityId: $record->id,
+                            oldStatus: 'certified',
+                            newStatus: 'surveillance_failed',
+                            actor: auth()->user(),
+                        );
+
+                        Notification::make()
+                            ->title('Sertifikat dicabut')
+                            ->body('Status aplikasi telah diubah menjadi Gagal Surveilans.')
+                            ->success()
+                            ->send();
                     }),
             ])
             ->toolbarActions([]);

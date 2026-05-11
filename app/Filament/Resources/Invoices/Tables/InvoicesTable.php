@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Invoices\Tables;
 
-use App\Enums\ApplicationStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\UserRole;
 use App\Models\Invoice;
@@ -28,8 +27,7 @@ class InvoicesTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('application.puUser.businessProfile.company_name')
-                    ->label('Company')
-                    ->searchable(),
+                    ->label('Company'),
                 TextColumn::make('amount')
                     ->money('IDR')
                     ->sortable(),
@@ -57,7 +55,7 @@ class InvoicesTable
                 // Override action — Sales only, status=pending
                 Action::make('overrideAmount')
                     ->label('Override Amount')
-                    ->icon(Heroicon::CurrencyDollar)
+                    ->icon(Heroicon::OutlinedCurrencyDollar)
                     ->color('warning')
                     ->visible(fn (Invoice $record): bool => $record->status === PaymentStatus::PENDING
                         && in_array(auth()->user()->role, [UserRole::SALES, UserRole::SUPER_ADMIN], true))
@@ -113,7 +111,7 @@ class InvoicesTable
                 // Mark as Paid — super_admin only, status=pending
                 Action::make('markAsPaid')
                     ->label('Mark as Paid')
-                    ->icon(Heroicon::CheckBadge)
+                    ->icon(Heroicon::OutlinedCheckBadge)
                     ->color('success')
                     ->requiresConfirmation()
                     ->visible(fn (Invoice $record): bool => $record->status === PaymentStatus::PENDING
@@ -124,6 +122,14 @@ class InvoicesTable
                             'verified_by' => auth()->id(),
                             'verified_at' => now(),
                         ]);
+
+                        if ($record->application && in_array($record->application->status->value, [
+                            ApplicationStatus::INVOICED->value,
+                            ApplicationStatus::PAYMENT_UPLOADED->value,
+                        ], true)) {
+                            $transition = app(StatusTransitionService::class);
+                            $transition->transition($record->application, ApplicationStatus::PAYMENT_VERIFIED->value, auth()->user());
+                        }
 
                         app(AuditLogService::class)->log(
                             action: 'invoice_marked_paid',

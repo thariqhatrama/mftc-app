@@ -87,17 +87,21 @@ export default function DashboardPage() {
   const { data: latestActiveResponse } = useApiQuery<ApplicationsResponse | ApplicationSummary[]>({
     key: ['applications', 'latest-active'],
     url: '/applications',
-    params: { per_page: 1, status: activeStatuses[0] },
+    params: { per_page: 50 },
   })
 
   const recentApplications = applications.slice(0, 5)
   const revisionApplications = applications.filter((app) => normalizeStatus(app.status) === 'revision')
   const activeApplications = applications.filter((app) => activeStatuses.includes(normalizeStatus(app.status)))
   const certifiedApplications = applications.filter((app) => normalizeStatus(app.status) === 'certified')
-  const latestActive = Array.isArray(latestActiveResponse)
-    ? latestActiveResponse[0]
-    : activeApplications[0] ?? recentApplications[0]
   const revisionTarget = revisionApplications[0]
+  const latestActiveCandidates = Array.isArray(latestActiveResponse)
+    ? latestActiveResponse
+    : latestActiveResponse?.data ?? []
+  const latestActive = revisionTarget
+    ?? latestActiveCandidates.find((app) => activeStatuses.includes(normalizeStatus(app.status)))
+    ?? activeApplications[0]
+    ?? recentApplications[0]
 
   return (
     <div className="space-y-gutter">
@@ -132,22 +136,26 @@ export default function DashboardPage() {
       </div>
 
       {revisionTarget ? (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="bg-pink-50 border border-pink-200 rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex gap-3">
-            <span className="material-symbols-outlined text-amber-700">warning</span>
+            <span className="material-symbols-outlined text-pink-700">warning</span>
             <div>
-              <h3 className="font-body-md font-bold text-amber-900">Tindakan Perbaikan Diperlukan</h3>
-              <p className="font-body-sm text-amber-800">
-                Pengajuan {revisionTarget.id} memerlukan revisi non-conformity dari auditor.
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-body-md font-bold text-pink-900">Terdapat Ketidaksesuaian</h3>
+                <StatusBadge status="REVISION" />
+              </div>
+              <p className="font-body-sm text-pink-800 mt-1">
+                Auditor menemukan ketidaksesuaian yang perlu Anda perbaiki. Periksa daftar
+                Non-Conformity dan submit perbaikan sebelum batas waktu.
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => navigate(`/dashboard/applications/${revisionTarget.id}/revisions`)}
-            className="px-5 py-2 bg-amber-600 text-white rounded-lg font-button text-button hover:bg-amber-700"
+            className="px-5 py-2 bg-pink-700 text-white rounded-lg font-button text-button hover:bg-pink-800"
           >
-            Lihat Detail
+            Perbaiki Non-Conformity
           </button>
         </div>
       ) : null}

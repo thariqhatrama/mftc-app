@@ -68,7 +68,7 @@ class PaymentVerificationPage extends Page
     {
         return Action::make('verify')
             ->label('Approve Payment')
-            ->icon(Heroicon::CheckCircle)
+            ->icon(Heroicon::OutlinedCheckCircle)
             ->color('success')
             ->requiresConfirmation()
             ->modalHeading('Verifikasi Pembayaran')
@@ -93,7 +93,6 @@ class PaymentVerificationPage extends Page
 
                 $transition = app(StatusTransitionService::class);
                 $transition->transition($application, 'payment_verified', auth()->user());
-                $transition->transition($application->fresh(), 'audit_ready', auth()->user());
 
                 app(AuditLogService::class)->log(
                     action: 'payment_verified',
@@ -118,7 +117,7 @@ class PaymentVerificationPage extends Page
     {
         return Action::make('reject')
             ->label('Reject Payment')
-            ->icon(Heroicon::XCircle)
+            ->icon(Heroicon::OutlinedXCircle)
             ->color('danger')
             ->requiresConfirmation()
             ->modalHeading('Tolak Bukti Pembayaran')

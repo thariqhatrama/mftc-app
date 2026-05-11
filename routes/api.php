@@ -27,6 +27,8 @@ Route::prefix('v1')->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout']);
         Route::get('auth/me', [AuthController::class, 'me']);
         Route::post('auth/change-password', [AuthController::class, 'changePassword']);
+        Route::delete('auth/account', [AuthController::class, 'deleteAccount']);
+        Route::delete('auth/impersonate-leave', [AuthController::class, 'impersonateLeave']);
 
         // Profile
         Route::get('profile', [ProfileController::class, 'show']);
@@ -63,7 +65,7 @@ Route::prefix('v1')->group(function () {
         Route::post('revisions/{id}/submit', [RevisionController::class, 'submit']);
 
         // Certificate
+        Route::get('certificates', [CertificateController::class, 'index']);
         Route::get('applications/{id}/certificate', [CertificateController::class, 'show']);
-        Route::get('certificates/download/{id}', [CertificateController::class, 'download']);
     });
 });

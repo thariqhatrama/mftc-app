@@ -72,7 +72,7 @@ class SelfAssessmentQuestionsTable
                 EditAction::make(),
                 Action::make('deactivate')
                     ->label('Deactivate')
-                    ->icon(Heroicon::EyeSlash)
+                    ->icon(Heroicon::OutlinedEyeSlash)
                     ->color('warning')
                     ->requiresConfirmation()
                     ->visible(fn (SelfAssessmentQuestion $record): bool => $record->is_active)
@@ -86,7 +86,7 @@ class SelfAssessmentQuestionsTable
                     }),
                 Action::make('activate')
                     ->label('Activate')
-                    ->icon(Heroicon::CheckCircle)
+                    ->icon(Heroicon::OutlinedCheckCircle)
                     ->color('success')
                     ->requiresConfirmation()
                     ->visible(fn (SelfAssessmentQuestion $record): bool => ! $record->is_active)
@@ -102,7 +102,7 @@ class SelfAssessmentQuestionsTable
             ->headerActions([
                 Action::make('importJson')
                     ->label('Import JSON')
-                    ->icon(Heroicon::ArrowUpTray)
+                    ->icon(Heroicon::OutlinedArrowUpTray)
                     ->color('info')
                     ->schema([
                         FileUpload::make('file')
@@ -158,7 +158,7 @@ class SelfAssessmentQuestionsTable
                 BulkActionGroup::make([
                     BulkAction::make('bulkDeactivate')
                         ->label('Deactivate')
-                        ->icon(Heroicon::EyeSlash)
+                        ->icon(Heroicon::OutlinedEyeSlash)
                         ->color('warning')
                         ->requiresConfirmation()
                         ->action(function ($records): void {
@@ -175,7 +175,7 @@ class SelfAssessmentQuestionsTable
                         }),
                     BulkAction::make('bulkActivate')
                         ->label('Activate')
-                        ->icon(Heroicon::CheckCircle)
+                        ->icon(Heroicon::OutlinedCheckCircle)
                         ->color('success')
                         ->requiresConfirmation()
                         ->action(function ($records): void {

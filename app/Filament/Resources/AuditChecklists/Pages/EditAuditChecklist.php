@@ -6,6 +6,7 @@ use App\Filament\Resources\AuditChecklists\AuditChecklistResource;
 use App\Models\AuditChecklist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class EditAuditChecklist extends EditRecord
@@ -17,7 +18,7 @@ class EditAuditChecklist extends EditRecord
         return [];
     }
 
-    protected function handleRecordUpdate($record, array $data): \Illuminate\Database\Eloquent\Model
+    protected function handleRecordUpdate($record, array $data): Model
     {
         $version = $record->version;
 
@@ -33,8 +34,8 @@ class EditAuditChecklist extends EditRecord
         if ($rows === 0) {
             Notification::make()
                 ->title('Conflict')
-                ->body('Item telah diubah oleh pengguna lain (HTTP 409). Refresh dan coba lagi.')
-                ->danger()
+                ->body('Data diubah oleh pengguna lain, silakan refresh.')
+                ->warning()
                 ->persistent()
                 ->send();
 

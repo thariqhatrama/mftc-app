@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\DeleteAccountAction;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ChangePasswordRequest;
+use App\Http\Requests\Api\DeleteAccountRequest;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Models\User;
@@ -13,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use STS\FilamentImpersonate\Facades\Impersonation;
 
 class AuthController extends Controller
 {
@@ -100,8 +103,49 @@ class AuthController extends Controller
         return $this->success(null, 204);
     }
 
+    public function impersonateLeave(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        if ($user) {
+            $user->tokens()
+                ->where('name', 'like', 'impersonate-%')
+                ->delete();
+        }
+
+        $request->session()?->forget(['impersonated_by', 'impersonating_token']);
+
+        return $this->success(['success' => true]);
+    }
+
+    public function deleteAccount(DeleteAccountRequest $request, DeleteAccountAction $action): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        if (! Hash::check($request->string('password'), $user->password)) {
+            return $this->error('INVALID_PASSWORD', 'Password salah.', 422);
+        }
+
+        $action->execute($user);
+
+        Auth::guard('web')->logout();
+
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
+        return $this->success(null);
+    }
+
     private function presentUser(User $user): array
     {
+        $isImpersonated = Impersonation::isImpersonating();
+        $impersonator = $isImpersonated
+            ? Impersonation::getImpersonator()
+            : null;
+
         return [
             'id' => $user->id,
             'full_name' => $user->full_name,
@@ -111,6 +155,8 @@ class AuthController extends Controller
             'is_active' => $user->is_active,
             'business_profile' => $user->businessProfile,
             'created_at' => $user->created_at,
+            'is_impersonated' => $isImpersonated,
+            'impersonating_name' => $impersonator?->full_name,
         ];
     }
 }

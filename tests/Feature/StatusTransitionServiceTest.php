@@ -28,9 +28,18 @@ test('it allows every valid status transition', function (ApplicationStatus $fro
 
     $application->refresh();
 
-    expect($application->status)->toBe($to)
-        ->and($application->version)->toBe(2)
-        ->and(AuditLog::query()->where('entity_id', $application->id)->exists())->toBeTrue();
+    if ($to === ApplicationStatus::PAYMENT_VERIFIED) {
+        expect($application->status)->toBe(ApplicationStatus::AUDIT_READY)
+            ->and($application->version)->toBe(3);
+    } elseif ($to === ApplicationStatus::APPROVED) {
+        expect($application->status)->toBe(ApplicationStatus::CERTIFIED)
+            ->and($application->version)->toBe(3);
+    } else {
+        expect($application->status)->toBe($to)
+            ->and($application->version)->toBe(2);
+    }
+
+    expect(AuditLog::query()->where('entity_id', $application->id)->exists())->toBeTrue();
 })->with([
     [ApplicationStatus::DRAFT, ApplicationStatus::SUBMITTED],
     [ApplicationStatus::DRAFT, ApplicationStatus::CANCELLED],

@@ -5,22 +5,45 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Certificate;
+use App\Models\User;
 use App\Services\UploadService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CertificateController extends Controller
 {
     use ApiResponse;
 
-    public function __construct(private readonly UploadService $uploadService) {}
+    public function index(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        $certificates = Certificate::with('application')
+            ->whereHas('application', fn ($q) => $q->where('pu_user_id', $user->id))
+            ->latest('issued_at')
+            ->get()
+            ->map(fn (Certificate $cert) => [
+                'id' => $cert->id,
+                'application_id' => $cert->application_id,
+                'certificate_number' => $cert->certificate_number,
+                'scope' => $cert->application->scope?->value,
+                'level' => $cert->level?->value,
+                'issued_at' => $cert->issued_at,
+                'valid_until' => $cert->valid_until?->toDateString(),
+                'valid' => $cert->valid_until && $cert->valid_until->isFuture(),
+                'download_url' => $cert->certificate_pdf_url
+                    ? app(UploadService::class)->signedUrl($cert->certificate_pdf_url, 300)
+                    : null,
+            ]);
+
+        return $this->success(['certificates' => $certificates]);
+    }
 
     public function show(Request $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::with('certificate')
@@ -44,44 +67,10 @@ class CertificateController extends Controller
             'issued_at' => $cert->issued_at,
             'valid_until' => $cert->valid_until?->toDateString(),
             'download_url' => $cert->certificate_pdf_url
-                ? $this->uploadService->signedUrl($cert->certificate_pdf_url)
+                ? app(UploadService::class)->signedUrl($cert->certificate_pdf_url, 300)
                 : null,
         ];
 
         return $this->success($data);
-    }
-
-    public function download(Request $request, string $certId): StreamedResponse|JsonResponse
-    {
-        $certificate = Certificate::findOrFail($certId);
-
-        // Verify ownership — certificate's application must belong to the PU user
-        /** @var \App\Models\User $user */
-        $user = $request->user();
-
-        $application = Application::where('id', $certificate->application_id)
-            ->where('pu_user_id', $user->id)
-            ->firstOrFail();
-
-        if (! $certificate->certificate_pdf_url) {
-            return $this->error(
-                'PDF_NOT_AVAILABLE',
-                'File PDF sertifikat belum tersedia.',
-                404
-            );
-        }
-
-        if (! Storage::disk('local')->exists($certificate->certificate_pdf_url)) {
-            return $this->error(
-                'FILE_NOT_FOUND',
-                'File sertifikat tidak ditemukan.',
-                404
-            );
-        }
-
-        return Storage::disk('local')->download(
-            $certificate->certificate_pdf_url,
-            "sertifikat-{$certificate->certificate_number}.pdf"
-        );
     }
 }

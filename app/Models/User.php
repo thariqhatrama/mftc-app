@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -15,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements FilamentUser
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, HasUuids, Notifiable;
 
     protected $keyType = 'string';
@@ -42,6 +43,8 @@ class User extends Authenticatable implements FilamentUser
             'role' => UserRole::class,
             'is_active' => 'boolean',
             'password' => 'hashed',
+            'full_name' => 'encrypted',
+            'phone' => 'encrypted',
         ];
     }
 
@@ -81,5 +84,23 @@ class User extends Authenticatable implements FilamentUser
             UserRole::SALES,
             UserRole::AUDITOR,
         ], true);
+    }
+
+    public function canImpersonate(): bool
+    {
+        $role = $this->role instanceof UserRole
+            ? $this->role->value
+            : $this->role;
+
+        return $role === UserRole::SUPER_ADMIN->value;
+    }
+
+    public function canBeImpersonated(): bool
+    {
+        $role = $this->role instanceof UserRole
+            ? $this->role->value
+            : $this->role;
+
+        return $role !== UserRole::SUPER_ADMIN->value;
     }
 }

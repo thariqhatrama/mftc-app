@@ -10,9 +10,10 @@ const SIDEBAR_LINKS = [
 ]
 
 export function PULayout() {
-  const { user, logout } = useAuth()
+  const { user, logout, isImpersonated, leaveImpersonate } = useAuth()
   const navigate = useNavigate()
   const [signingOut, setSigningOut] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleLogout = async () => {
     setSigningOut(true)
@@ -26,16 +27,61 @@ export function PULayout() {
 
   const company = user?.business_profile?.company_name ?? 'Pelaku Usaha'
 
+  const showImpersonationBanner = isImpersonated || user?.is_impersonated
+
   return (
     <div className="flex min-h-screen bg-surface text-on-surface">
-      <aside className="hidden md:flex flex-col h-screen w-64 border-r border-gray-200 bg-gray-50 fixed left-0 top-0 z-40">
-        <div className="px-6 py-8">
-          <Link to="/dashboard" className="block">
+      {showImpersonationBanner && (
+        <>
+          <div className="fixed top-0 left-0 right-0 z-[9999] bg-red-600 text-white px-4 py-2 flex items-center justify-between text-sm font-medium shadow-lg">
+            <span>
+              ⚠ Mode Impersonasi — Anda melihat tampilan PU:{' '}
+              <strong>{user?.full_name}</strong>
+              {user?.impersonating_name && (
+                <>
+                  {' '}(diakses oleh <strong>{user.impersonating_name}</strong>)
+                </>
+              )}
+            </span>
+            <button
+              type="button"
+              onClick={() => void leaveImpersonate()}
+              className="ml-4 bg-white text-red-600 px-3 py-1 rounded font-semibold hover:bg-gray-100 whitespace-nowrap"
+            >
+              ← Kembali ke Admin
+            </button>
+          </div>
+          <div className="h-10" />
+        </>
+      )}
+
+      {/* Mobile Backdrop */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`fixed left-0 top-0 z-40 h-screen w-64 flex-col border-r border-gray-200 bg-gray-50 transition-transform duration-300 ease-in-out md:flex md:translate-x-0 ${
+          mobileMenuOpen ? 'flex translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="px-6 py-8 flex items-center justify-between">
+          <Link to="/dashboard" className="block" onClick={() => setMobileMenuOpen(false)}>
             <div className="text-lg font-black text-emerald-900 mb-1">MFT Portal</div>
             <div className="font-inter text-xs font-semibold text-gray-500 uppercase tracking-wider">
               Certification Management
             </div>
           </Link>
+          <button
+            type="button"
+            className="md:hidden text-gray-500 hover:text-gray-900"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
         </div>
 
         <nav className="flex-1 px-4 space-y-1">
@@ -51,6 +97,7 @@ export function PULayout() {
                     : 'text-gray-500 hover:bg-gray-100'
                 }`
               }
+              onClick={() => setMobileMenuOpen(false)}
             >
               <span className="material-symbols-outlined mr-3">{link.icon}</span>
               {link.label}
@@ -81,6 +128,13 @@ export function PULayout() {
       <main className="flex-1 md:ml-64 min-h-screen">
         <header className="h-16 px-gutter flex items-center justify-between bg-white/95 backdrop-blur-sm sticky top-0 z-30 border-b border-gray-200">
           <div className="flex items-center">
+            <button
+              type="button"
+              className="md:hidden mr-3 text-gray-500 hover:text-gray-900"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <span className="material-symbols-outlined text-2xl">menu</span>
+            </button>
             <h1 className="font-h3 text-h3 text-primary">Dashboard PU</h1>
           </div>
           <div className="flex items-center gap-4">

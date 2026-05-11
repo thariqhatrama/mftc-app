@@ -1,9 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { ApiError } from '../../lib/api'
 import api, { type ApiSuccess } from '../../lib/api'
+import { useAuth } from '../../contexts/AuthContext'
 import type { BusinessProfile } from '../../types/api'
 
 const profileSchema = z.object({
@@ -20,12 +22,32 @@ const fieldClass =
   'w-full px-md py-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary-container focus:border-secondary transition-all outline-none'
 
 export default function ProfilePage() {
+  const { logout } = useAuth()
+  const navigate = useNavigate()
   const [profile, setProfile] = useState<BusinessProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [deletePassword, setDeletePassword] = useState('')
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+
+  const handleDeleteAccount = async () => {
+    setDeleting(true)
+    setDeleteError(null)
+    try {
+      await api.delete('/auth/account', { data: { password: deletePassword } })
+      await logout()
+      navigate('/', { replace: true })
+    } catch (err) {
+      setDeleteError(err instanceof ApiError ? err.message : 'Gagal menghapus akun.')
+    } finally {
+      setDeleting(false)
+    }
+  }
 
   const {
     register,
@@ -288,8 +310,68 @@ export default function ProfilePage() {
               </p>
             </div>
           </div>
+
+          <div className="mt-lg p-md bg-white border border-red-200 rounded-xl shadow-sm">
+            <h3 className="font-h3 text-h3 text-red-700 mb-2">Hapus Akun</h3>
+            <p className="font-body-sm text-sm text-on-surface-variant mb-4">
+              Akun Anda akan dianonimkan secara permanen sesuai UU PDP. Data transaksi tetap tersimpan untuk keperluan audit.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowDeleteModal(true)}
+              className="font-button text-button px-md py-sm border border-red-600 text-red-700 rounded-lg hover:bg-red-50 transition-colors"
+            >
+              Hapus Akun
+            </button>
+          </div>
         </div>
       </div>
+
+      {showDeleteModal ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
+            <h2 className="text-xl font-bold text-red-700 mb-3">Konfirmasi Hapus Akun</h2>
+            <p className="text-sm text-gray-700 mb-4">
+              Akun Anda akan dianonimkan secara permanen sesuai UU PDP. Data transaksi tetap tersimpan untuk keperluan audit.
+            </p>
+            <label className="block text-xs font-semibold uppercase tracking-widest text-gray-700 mb-2">
+              Konfirmasi Password
+            </label>
+            <input
+              type="password"
+              className={fieldClass}
+              value={deletePassword}
+              onChange={(event) => setDeletePassword(event.target.value)}
+              placeholder="Masukkan password Anda"
+            />
+            {deleteError ? (
+              <p className="mt-2 text-sm text-red-700">{deleteError}</p>
+            ) : null}
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowDeleteModal(false)
+                  setDeletePassword('')
+                  setDeleteError(null)
+                }}
+                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50"
+                disabled={deleting}
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteAccount}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
+                disabled={deleting || deletePassword.length === 0}
+              >
+                {deleting ? 'Memproses…' : 'Ya, Hapus Akun Saya'}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
