@@ -30,7 +30,7 @@ export function PULayout() {
   const showImpersonationBanner = isImpersonated || user?.is_impersonated
 
   return (
-    <div className="flex min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface md:flex">
       {showImpersonationBanner && (
         <>
           <div className="fixed top-0 left-0 right-0 z-[9999] bg-red-600 text-white px-4 py-2 flex items-center justify-between text-sm font-medium shadow-lg">
@@ -64,7 +64,7 @@ export function PULayout() {
       )}
 
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen w-64 flex-col border-r border-gray-200 bg-gray-50 transition-transform duration-300 ease-in-out md:flex md:translate-x-0 ${
+        className={`fixed left-0 top-0 z-40 h-screen w-60 shrink-0 flex-col border-r border-gray-200 bg-gray-50 transition-transform duration-300 ease-in-out md:flex md:translate-x-0 ${
           mobileMenuOpen ? 'flex translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -125,9 +125,9 @@ export function PULayout() {
         </div>
       </aside>
 
-      <main className="flex-1 md:ml-64 min-h-screen">
-        <header className="h-16 px-gutter flex items-center justify-between bg-white/95 backdrop-blur-sm sticky top-0 z-30 border-b border-gray-200">
-          <div className="flex items-center">
+      <main className="min-h-screen min-w-0 flex-1 md:ml-60">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-gray-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
+          <div className="flex min-w-0 items-center">
             <button
               type="button"
               className="md:hidden mr-3 text-gray-500 hover:text-gray-900"
@@ -135,9 +135,9 @@ export function PULayout() {
             >
               <span className="material-symbols-outlined text-2xl">menu</span>
             </button>
-            <h1 className="font-h3 text-h3 text-primary">Dashboard PU</h1>
+            <h1 className="truncate font-h3 text-h3 text-primary">Dashboard PU</h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
             <div className="relative">
               <span className="material-symbols-outlined text-outline p-2 hover:bg-surface-container rounded-full cursor-pointer">
                 notifications
@@ -160,7 +160,7 @@ export function PULayout() {
           </div>
         </header>
 
-        <div className="p-gutter max-w-screen-xl mx-auto">
+        <div className="mx-auto w-full max-w-7xl min-w-0 p-4 sm:p-6">
           <Outlet />
         </div>
       </main>

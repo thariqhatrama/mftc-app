@@ -50,16 +50,16 @@ const stats = [
 export default function LandingPage() {
   return (
     <>
-      <section className="pt-32 pb-20 px-6 certification-bg">
-        <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+      <section className="pt-32 pb-20 certification-bg">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
+          <div className="min-w-0 space-y-8">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/10 border border-primary-container/20 text-primary-container font-label-caps text-label-caps">
               Global Standard for Excellence
             </div>
             <h1 className="font-h1 text-h1 text-on-primary-fixed leading-tight">
               Elevating Muslim Friendly Tourism to Global Standards
             </h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
               The Muslim Friendly Tourism Certification (MFTC) provides a comprehensive framework to
               ensure integrity, quality, and hospitality for the global Muslim travel market.
             </p>
@@ -78,7 +78,7 @@ export default function LandingPage() {
               </Link>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative min-w-0">
             <img
               alt="Modern luxury mosque architecture"
               className="rounded-2xl shadow-2xl w-full object-cover aspect-[4/3]"
@@ -97,8 +97,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-[1280px] mx-auto">
+      <section className="py-24 bg-white">
+        <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-h2 text-h2 text-primary mb-4">Certification Levels</h2>
             <p className="font-body-md text-body-md text-gray-500 max-w-2xl mx-auto">
@@ -136,8 +136,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-[1280px] mx-auto">
+      <section className="py-24 bg-gray-50">
+        <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
               <h2 className="font-h2 text-h2 text-primary mb-4">Certification Scope</h2>
@@ -169,8 +169,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-primary text-white">
-        <div className="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <section className="py-16 bg-primary text-white">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-8 px-6 text-center md:grid-cols-4 lg:px-8">
           {stats.map(([value, label]) => (
             <div key={label}>
               <div className="text-[48px] font-bold">{value}</div>

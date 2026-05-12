@@ -7,3 +7,40 @@ body,
   margin: 0;
   min-height: 100vh;
 }
+
+.PhoneInput {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: white;
+}
+
+.PhoneInput:focus-within {
+  outline: none;
+  border-color: #004532;
+  box-shadow: 0 0 0 2px rgba(0, 69, 50, 0.2);
+}
+
+.PhoneInputCountry {
+  padding: 0 0.75rem;
+  border-right: 1px solid #d1d5db;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.PhoneInputCountrySelect {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+}
+
+.PhoneInputInput {
+  flex: 1;
+}

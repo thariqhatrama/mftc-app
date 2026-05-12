@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import api, { type ApiSuccess } from '../lib/api'
 
 export interface AssessmentQuestion {
@@ -20,6 +20,14 @@ export interface QuestionAnswer {
 interface UploadResponse {
   path: string
   url?: string
+}
+
+interface UploadedPreview {
+  path: string
+  url?: string
+  name: string
+  size: number
+  type: string
 }
 
 interface QuestionFieldProps {
@@ -44,9 +52,27 @@ function getOptions(question: AssessmentQuestion) {
   })
 }
 
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
+}
+
+function isPdfFile(file: UploadedPreview): boolean {
+  return file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
+}
+
 export function QuestionField({ question, value, error, onChange, onBlur }: QuestionFieldProps) {
   const [uploading, setUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
+  const [previews, setPreviews] = useState<UploadedPreview[]>([])
+  const localPreviewUrls = useRef<string[]>([])
+
+  useEffect(() => {
+    return () => {
+      localPreviewUrls.current.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [])
 
   const answered = Boolean(value.answer_value) || Boolean(value.answer_files?.length)
 
@@ -62,7 +88,38 @@ export function QuestionField({ question, value, error, onChange, onBlur }: Ques
     updateValue(nextValues.join('|'))
   }
 
+  const removeUploadedFile = (filePath: string) => {
+    const nextFiles = (value.answer_files ?? []).filter((path) => path !== filePath)
+    const removedPreview = previews.find((preview) => preview.path === filePath)
+
+    if (removedPreview?.url && localPreviewUrls.current.includes(removedPreview.url)) {
+      URL.revokeObjectURL(removedPreview.url)
+      localPreviewUrls.current = localPreviewUrls.current.filter((url) => url !== removedPreview.url)
+    }
+
+    setPreviews((current) => current.filter((preview) => preview.path !== filePath))
+    onChange(question.id, {
+      ...value,
+      answer_files: nextFiles,
+    })
+    onBlur()
+  }
+
   const uploadFile = async (file: File) => {
+    const localUrl = URL.createObjectURL(file)
+    localPreviewUrls.current.push(localUrl)
+    const previewId = `${file.name}-${file.lastModified}`
+
+    setPreviews((current) => [
+      ...current,
+      {
+        path: previewId,
+        url: localUrl,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      },
+    ])
     setUploading(true)
     setUploadProgress(0)
 
@@ -78,6 +135,14 @@ export function QuestionField({ question, value, error, onChange, onBlur }: Ques
           }
         },
       })
+
+      setPreviews((current) =>
+        current.map((preview) =>
+          preview.path === previewId
+            ? { ...preview, path: res.data.data.path, url: res.data.data.url }
+            : preview,
+        ),
+      )
 
       onChange(question.id, {
         ...value,
@@ -197,35 +262,76 @@ export function QuestionField({ question, value, error, onChange, onBlur }: Ques
 
     return (
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-4">
-          {(value.answer_files ?? []).map((file) => (
-            <div key={file} className="relative w-40 h-28 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 flex items-center justify-center p-3">
-              <div className="text-center">
-                <span className="material-symbols-outlined text-emerald-700 mb-2">description</span>
-                <p className="text-[10px] text-gray-600 break-all line-clamp-2">{file}</p>
+        {previews.length ? (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {previews.map((file) => (
+              <div key={file.path} className="min-w-0 overflow-hidden rounded-xl border border-gray-200 bg-white">
+                <div className="flex items-center gap-3 border-b border-gray-100 p-3">
+                  <span className="material-symbols-outlined shrink-0 text-emerald-700">description</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold text-neutral-800">{file.name}</p>
+                    <p className="text-xs text-gray-500">{formatBytes(file.size)}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50"
+                    disabled={uploading}
+                    aria-label={`Hapus ${file.name}`}
+                    onClick={() => removeUploadedFile(file.path)}
+                  >
+                    <span className="material-symbols-outlined text-[20px]">delete</span>
+                  </button>
+                </div>
+                {file.url ? (
+                  isPdfFile(file) ? (
+                    <iframe title={`Preview ${file.name}`} src={file.url} className="h-72 w-full" />
+                  ) : (
+                    <img src={file.url} alt={`Preview ${file.name}`} className="h-72 w-full object-contain bg-gray-50" />
+                  )
+                ) : null}
               </div>
-            </div>
-          ))}
-          <label className="border-2 border-dashed border-gray-300 rounded-lg w-40 h-28 flex flex-col items-center justify-center text-gray-400 hover:border-emerald-600 hover:text-emerald-600 transition-all bg-gray-50/50 cursor-pointer">
-            <span className="material-symbols-outlined">add_a_photo</span>
-            <span className="text-[10px] font-bold mt-1 uppercase">
-              {uploading ? `${uploadProgress}%` : 'Tambah File'}
-            </span>
-            <input
-              className="hidden"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              disabled={uploading}
-              onChange={(event) => {
-                const file = event.target.files?.[0]
-                if (file) {
-                  void uploadFile(file)
-                }
-                event.target.value = ''
-              }}
-            />
-          </label>
-        </div>
+            ))}
+          </div>
+        ) : (value.answer_files ?? []).length ? (
+          <div className="flex flex-wrap items-center gap-4">
+            {(value.answer_files ?? []).map((file) => (
+              <div key={file} className="relative flex h-28 w-40 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 p-3 pr-9">
+                <button
+                  type="button"
+                  className="absolute right-2 top-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-400 shadow-sm transition-colors hover:bg-red-50 hover:text-red-600"
+                  aria-label={`Hapus ${file}`}
+                  onClick={() => removeUploadedFile(file)}
+                >
+                  <span className="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+                <div className="text-center">
+                  <span className="material-symbols-outlined mb-2 text-emerald-700">description</span>
+                  <p className="line-clamp-2 text-[10px] text-gray-600 break-all">{file}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        <label className="flex h-28 w-40 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50/50 text-gray-400 transition-all hover:border-emerald-600 hover:text-emerald-600">
+          <span className="material-symbols-outlined">add_a_photo</span>
+          <span className="mt-1 text-[10px] font-bold uppercase">
+            {uploading ? `${uploadProgress}%` : 'Tambah File'}
+          </span>
+          <input
+            className="hidden"
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+            disabled={uploading}
+            onChange={(event) => {
+              const file = event.target.files?.[0]
+              if (file) {
+                void uploadFile(file)
+              }
+              event.target.value = ''
+            }}
+          />
+        </label>
       </div>
     )
   }

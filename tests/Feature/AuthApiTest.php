@@ -34,7 +34,7 @@ it('rejects register with weak password', function () {
 });
 
 it('logs in pu user with valid credentials', function () {
-    User::factory()->create([
+    $user = User::factory()->create([
         'email' => 'pu@example.com',
         'password' => Hash::make('rahasia123'),
         'role' => UserRole::PU,
@@ -47,6 +47,12 @@ it('logs in pu user with valid credentials', function () {
     ])->assertOk()
         ->assertJsonPath('success', true)
         ->assertJsonPath('data.role', 'pu');
+
+    $this->assertAuthenticatedAs($user, 'web');
+
+    $this->getJson('/api/v1/auth/me')
+        ->assertOk()
+        ->assertJsonPath('data.id', $user->id);
 });
 
 it('rejects login from internal role on api', function () {

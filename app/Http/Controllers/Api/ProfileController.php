@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UploadLegalDocRequest;
 use App\Http\Requests\Api\UpsertProfileRequest;
 use App\Models\BusinessProfile;
+use App\Models\User;
 use App\Services\UploadService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +20,7 @@ class ProfileController extends Controller
 
     public function show(Request $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $profile = BusinessProfile::firstOrCreate(
@@ -34,12 +35,12 @@ class ProfileController extends Controller
             ]
         );
 
-        return $this->success($profile);
+        return $this->success($this->profilePayload($profile));
     }
 
     public function upsert(UpsertProfileRequest $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $data = $request->validated();
@@ -59,12 +60,12 @@ class ProfileController extends Controller
             $profile->update(['completed' => true]);
         }
 
-        return $this->success($profile->fresh());
+        return $this->success($this->profilePayload($profile->fresh()));
     }
 
     public function uploadLegalDoc(UploadLegalDocRequest $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $profile = BusinessProfile::firstOrCreate(
@@ -91,8 +92,20 @@ class ProfileController extends Controller
         $profile->update(['legal_document_url' => $path]);
 
         return $this->success([
-            'legal_document_url' => $path,
-            'profile' => $profile->fresh(),
+            'legal_document_path' => $path,
+            'legal_document_url' => $this->uploadService->signedUrl($path, 60),
+            'profile' => $this->profilePayload($profile->fresh()),
         ]);
+    }
+
+    private function profilePayload(BusinessProfile $profile): array
+    {
+        $data = $profile->toArray();
+        $path = $profile->legal_document_url;
+
+        $data['legal_document_path'] = $path;
+        $data['legal_document_url'] = $path ? $this->uploadService->signedUrl($path, 60) : null;
+
+        return $data;
     }
 }

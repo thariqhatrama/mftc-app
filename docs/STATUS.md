@@ -2,7 +2,7 @@
 
 > Update file ini setiap kali selesai satu sesi Claude Code.
 > File ini dibaca Claude Code di awal setiap sesi baru untuk orientasi cepat.
-> Last update: 2026-05-10 (Fix redirect to localhost:8000 when impersonating PU)
+> Last update: 2026-05-11 (Phase D Auditor checklist, assignment tabs, NC modal, report flow)
 
 ---
 
@@ -160,6 +160,10 @@ Phase 7 — Infra & Test   [x] Selesai
 
 ---
 ### Fitur Tambahan Post-Phase 7
+- [x] Phase A: PU phone input country code
+- [x] Phase B: Super Admin modal CRUD, grouping, invoice proof preview
+- [x] Phase C: Sales InvoiceResource modal CRUD restrictions
+- [x] Phase D: Auditor checklist, assignment tabs, NC modal, report flow
 - [x] P8-A: Blade template sertifikat (sesuai PDF asli)
 - [x] P8-B: CertificateService + generate & simpan PDF
 - [x] P8-C: Unit test CertificateService
@@ -176,6 +180,44 @@ Phase 7 — Infra & Test   [x] Selesai
 > Format: [tanggal] - apa yang selesai - apa yang belum - error yang tersisa
 
 ```
+[2026-05-11]
+- Selesai: Phase D Auditor. AuditChecklistResource memiliki default filter item
+  belum diaudit, progress action, row styling item selesai, modal audit item
+  dengan optimistic locking, serta edit modal untuk koreksi item selesai.
+  AuditAssignmentResource memiliki tab auditor Tugas Aktif/Laporan Submitted dan
+  submit laporan berbasis recommendation approve/revision. NonConformityResource
+  create/edit via modal, preview attachment PU via modal, dan verify NC dengan
+  notifikasi sisa NC terbuka.
+- Ditambahkan: route `nc.attachment.download` dan Blade modal
+  `resources/views/filament/modals/nc-attachment.blade.php`.
+- Phase A-D ditandai selesai. Verifikasi: `vendor/bin/pint --dirty --format agent`,
+  route NC attachment ada, dan `php artisan test` sukses (89 passed, 308 assertions).
+
+[2026-05-11]
+- Selesai: Phase C Sales InvoiceResource. Resource invoice tetap shared,
+  create/edit tetap via modal, Sales bisa create invoice dan edit invoice pending,
+  Sales tidak melihat action verifikasi, dan CreateAction memfilter pengajuan
+  status submitted/invoiced untuk role Sales.
+- Verifikasi: `vendor/bin/pint --dirty --format agent` dan `php artisan test`
+  sukses (89 passed, 308 assertions).
+
+[2026-05-11]
+- Selesai: Phase B Super Admin. UserResource dan InvoiceResource create/edit
+  via modal, Delete user menjadi nonaktifkan akun, navigation Resource digroup
+  (Manajemen User, Pengajuan, Audit, Konfigurasi, Sertifikasi, Monitoring),
+  dan InvoiceResource punya thumbnail serta modal preview bukti bayar.
+- Ditambahkan: route `invoice.proof.view` untuk stream bukti bayar private dan
+  Blade modal `resources/views/filament/modals/payment-proof.blade.php`.
+- Verifikasi: `vendor/bin/pint --dirty --format agent`, route invoice proof ada,
+  dan `php artisan test` sukses (89 passed, 308 assertions).
+
+[2026-05-11]
+- Selesai: Phase A PU phone input country code. Package `react-phone-number-input`
+  terinstall di frontend, komponen reusable `PhoneInputField` dibuat, dan field
+  telepon di register PU, profil usaha, serta form lokasi pengajuan memakai
+  country code default Indonesia (+62) dengan validasi 9–15 digit.
+- Verifikasi: `npm --prefix frontend run build` sukses.
+
 [2026-05-05]
 - Selesai: 6 enum (ApplicationStatus dgn displayLabel, UserRole, CertificationLevel,
   ScopeObject, PaymentStatus, ChecklistResult), BaseModel (HasUuids),

@@ -10,16 +10,19 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class CertificateResource extends Resource
 {
     protected static ?string $model = Certificate::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentCheck;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedAcademicCap;
 
     protected static ?string $navigationLabel = 'Certificates';
 
-    protected static ?int $navigationSort = 70;
+    protected static string|UnitEnum|null $navigationGroup = 'Sertifikasi';
+
+    protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
     {

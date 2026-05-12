@@ -47,6 +47,12 @@ function severityClass(severity: 'minor' | 'major'): string {
     : 'bg-amber-50 text-amber-700 border border-amber-200'
 }
 
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
+}
+
 function RevisionCard({
   nc,
   applicationId,
@@ -62,11 +68,23 @@ function RevisionCard({
   const [attachmentName, setAttachmentName] = useState(
     nc.pu_correction_attachment_url ? nc.pu_correction_attachment_url.split('/').pop() ?? '' : '',
   )
+  const [attachmentPreviewUrl, setAttachmentPreviewUrl] = useState<string | null>(null)
+  const [attachmentType, setAttachmentType] = useState('')
+  const [attachmentSize, setAttachmentSize] = useState<number | null>(null)
+  const localPreviewUrls = useRef<string[]>([])
   const [uploading, setUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    const urls = localPreviewUrls.current
+
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [])
 
   const closed = Boolean(nc.closed_at || nc.verified_by_auditor)
   const daysLeft = daysUntil(nc.corrective_action_deadline)
@@ -84,6 +102,13 @@ function RevisionCard({
       setError('Ukuran file melebihi batas 10MB.')
       return
     }
+
+    const localUrl = URL.createObjectURL(file)
+    localPreviewUrls.current.push(localUrl)
+    setAttachmentPreviewUrl(localUrl)
+    setAttachmentName(file.name)
+    setAttachmentType(file.type)
+    setAttachmentSize(file.size)
 
     try {
       setError(null)
@@ -105,6 +130,7 @@ function RevisionCard({
 
       setAttachmentPath(res.data.data.path)
       setAttachmentName(file.name)
+      setAttachmentPreviewUrl(res.data.data.url ?? localUrl)
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Gagal mengunggah lampiran.')
     } finally {
@@ -248,17 +274,21 @@ function RevisionCard({
                 />
               </label>
               {attachmentName ? (
-                <div className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm">
-                  <span className="material-symbols-outlined text-emerald-700 text-base">
-                    description
-                  </span>
-                  <span className="text-gray-700 truncate max-w-xs">{attachmentName}</span>
+                <div className="flex min-w-0 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm">
+                  <span className="material-symbols-outlined text-base text-emerald-700">description</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-gray-700">{attachmentName}</p>
+                    {attachmentSize ? <p className="text-xs text-gray-500">{formatBytes(attachmentSize)}</p> : null}
+                  </div>
                   <button
                     type="button"
-                    className="text-xs font-bold text-gray-400 hover:text-red-600 uppercase"
+                    className="text-xs font-bold uppercase text-gray-400 hover:text-red-600"
                     onClick={() => {
                       setAttachmentPath('')
                       setAttachmentName('')
+                      setAttachmentPreviewUrl(null)
+                      setAttachmentType('')
+                      setAttachmentSize(null)
                     }}
                   >
                     Hapus
@@ -266,6 +296,16 @@ function RevisionCard({
                 </div>
               ) : null}
             </div>
+
+            {attachmentPreviewUrl ? (
+              <div className="mt-4 overflow-hidden rounded-xl border border-gray-200 bg-white">
+                {attachmentType === 'application/pdf' || attachmentName.toLowerCase().endsWith('.pdf') ? (
+                  <iframe title="Preview lampiran perbaikan" src={attachmentPreviewUrl} className="h-[420px] w-full" />
+                ) : (
+                  <img src={attachmentPreviewUrl} alt="Preview lampiran perbaikan" className="max-h-[420px] w-full bg-gray-50 object-contain" />
+                )}
+              </div>
+            ) : null}
           </div>
 
           {error ? (

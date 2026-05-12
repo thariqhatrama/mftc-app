@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
+import { PhoneInputField } from '../../components/PhoneInputField'
 import { useAuth } from '../../contexts/AuthContext'
 import { ApiError } from '../../lib/api'
 
@@ -45,6 +46,7 @@ export default function RegisterPage() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
@@ -57,7 +59,10 @@ export default function RegisterPage() {
     },
   })
 
-  const onSubmit = async ({ terms: _terms, ...payload }: RegisterForm) => {
+  const onSubmit = async (data: RegisterForm) => {
+    const { terms, ...payload } = data
+    void terms
+
     setApiError(null)
     setIsLoading(true)
     try {
@@ -75,8 +80,9 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen grid bg-[#f9f9ff] text-slate-900 md:grid-cols-[45%_55%]">
-      <section className="relative hidden min-h-screen overflow-hidden bg-[#004532] px-10 py-10 text-white md:flex lg:px-14 lg:py-12">
+    <main className="w-full bg-[#f9f9ff] text-slate-900">
+      <div className="grid min-h-[calc(100vh-4rem)] w-full md:grid-cols-[48%_52%] xl:grid-cols-[50%_50%]">
+      <section className="relative hidden min-w-0 overflow-hidden bg-[#004532] px-10 py-10 text-white md:flex lg:px-16 xl:px-20 lg:py-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(108,248,187,0.20),transparent_28%),radial-gradient(circle_at_82%_72%,rgba(255,255,255,0.18),transparent_32%)]" />
         <div className="absolute -left-24 top-24 h-72 w-72 rounded-full border border-white/10" />
         <div className="absolute -right-28 bottom-24 h-96 w-96 rounded-full bg-white/5" />
@@ -93,23 +99,23 @@ export default function RegisterPage() {
             </div>
           </Link>
 
-          <div className="max-w-xl space-y-7 py-14">
+          <div className="w-full max-w-2xl space-y-7 py-14">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-medium text-emerald-50 backdrop-blur">
               <span className="material-symbols-outlined text-base text-[#6cf8bb]">workspace_premium</span>
               Trusted certification onboarding
             </div>
             <div className="space-y-5">
-              <h1 className="text-4xl font-bold leading-[1.08] tracking-[-0.04em] lg:text-5xl">
+              <h1 className="max-w-2xl text-4xl font-bold leading-[1.08] tracking-[-0.04em] lg:text-5xl xl:text-[56px]">
                 Elevating global standards for <span className="text-[#6cf8bb]">Muslim-friendly</span> tourism.
               </h1>
-              <p className="max-w-md text-base leading-7 text-emerald-50/75 lg:text-lg">
+              <p className="max-w-xl text-base leading-7 text-emerald-50/75 lg:text-lg">
                 Join tourism providers completing the Muslim Friendly Tourism Certification process with a guided,
                 secure, and transparent digital workflow.
               </p>
             </div>
           </div>
 
-          <div className="grid max-w-lg grid-cols-3 gap-3">
+          <div className="grid w-full max-w-2xl grid-cols-3 gap-3">
             {[
               { value: '500+', label: 'Certified partners' },
               { value: '25', label: 'Countries' },
@@ -124,7 +130,7 @@ export default function RegisterPage() {
         </div>
       </section>
 
-      <section className="flex min-h-screen flex-col bg-[#f9f9ff] px-5 py-6 sm:px-8 md:px-10 lg:px-14">
+      <section className="flex min-w-0 flex-col bg-[#f9f9ff] px-5 py-6 sm:px-8 md:px-10 lg:px-14">
         <div className="mx-auto flex w-full max-w-[460px] flex-1 flex-col justify-center py-8">
           <Link to="/" className="mb-8 inline-flex items-center justify-center gap-3 md:hidden" aria-label="MFTC home">
             <span className="material-symbols-outlined flex h-10 w-10 items-center justify-center rounded-2xl bg-[#004532] text-2xl text-white">
@@ -190,20 +196,12 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <label className={labelClassName} htmlFor="phone">
-                  Nomor Telepon / WhatsApp
-                </label>
-                <div className="relative">
-                  <span className={iconClassName}>call</span>
-                  <input
-                    {...register('phone')}
-                    id="phone"
-                    type="tel"
-                    autoComplete="tel"
-                    placeholder="+62 812 3456 7890"
-                    className={inputClassName}
-                  />
-                </div>
+                <PhoneInputField
+                  name="phone"
+                  control={control}
+                  label="Nomor Telepon / WhatsApp"
+                  errors={errors}
+                />
               </div>
 
               <div className="space-y-2">
@@ -318,9 +316,10 @@ export default function RegisterPage() {
         </div>
 
         <footer className="mx-auto w-full max-w-[460px] pb-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-          © 2024 Muslim Friendly Tourism Certification
+          © 2026 Muslim Friendly Tourism Certification
         </footer>
       </section>
+      </div>
     </main>
   )
 }

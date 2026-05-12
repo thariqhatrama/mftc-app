@@ -13,13 +13,14 @@ export function PublicLayout() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface">
-      <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-200">
-        <div className="flex justify-between items-center h-16 px-6 max-w-[1280px] mx-auto">
-          <Link to="/" className="text-xl font-bold tracking-tight text-emerald-900">
+    <div className="flex min-h-screen flex-col overflow-x-hidden bg-surface text-on-surface">
+      <nav className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur-sm">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6 lg:px-8">
+          <Link to="/" className="shrink-0 text-xl font-bold tracking-tight text-emerald-900">
             MFT Certification
           </Link>
-          <div className="hidden md:flex items-center space-x-8">
+
+          <div className="hidden items-center gap-8 md:flex">
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.to}
@@ -28,7 +29,7 @@ export function PublicLayout() {
                 className={({ isActive }) =>
                   `font-inter text-sm font-medium transition-colors ${
                     isActive
-                      ? 'text-emerald-700 border-b-2 border-emerald-700 pb-1'
+                      ? 'border-b-2 border-emerald-700 pb-1 text-emerald-700'
                       : 'text-gray-600 hover:text-emerald-700'
                   }`
                 }
@@ -37,12 +38,13 @@ export function PublicLayout() {
               </NavLink>
             ))}
           </div>
-          <div className="flex items-center space-x-4">
+
+          <div className="flex shrink-0 items-center gap-3">
             {user ? (
               <button
                 type="button"
                 onClick={() => navigate('/dashboard')}
-                className="bg-primary-container text-white px-5 py-2 rounded-lg font-inter text-sm font-medium hover:bg-primary transition-all active:opacity-80"
+                className="rounded-lg bg-primary-container px-5 py-2 font-inter text-sm font-medium text-white transition-all hover:bg-primary active:opacity-80"
               >
                 Dashboard
               </button>
@@ -51,14 +53,14 @@ export function PublicLayout() {
                 <button
                   type="button"
                   onClick={() => navigate('/login')}
-                  className="font-inter text-sm font-medium text-gray-600 px-4 py-2"
+                  className="px-4 py-2 font-inter text-sm font-medium text-gray-600"
                 >
                   Login
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate('/register')}
-                  className="bg-primary-container text-white px-5 py-2 rounded-lg font-inter text-sm font-medium hover:bg-primary transition-all active:opacity-80"
+                  className="rounded-lg bg-primary-container px-5 py-2 font-inter text-sm font-medium text-white transition-all hover:bg-primary active:opacity-80"
                 >
                   Daftar
                 </button>
@@ -68,59 +70,63 @@ export function PublicLayout() {
         </div>
       </nav>
 
-      <main className="pt-16">
+      <main className="flex-1 w-full min-w-0">
         <Outlet />
       </main>
 
-      <footer className="bg-white border-t border-gray-100">
-        <div className="max-w-[1280px] mx-auto py-16 px-6">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            <div className="col-span-1 md:col-span-2">
-              <div className="text-xl font-bold tracking-tight text-emerald-900 mb-6">
+      <footer className="w-full border-t border-gray-100 bg-white">
+        <div className="mx-auto w-full max-w-[1440px] px-6 py-16 lg:px-10 xl:px-12">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,2.4fr)_minmax(180px,0.8fr)_minmax(180px,0.8fr)]">
+            <div className="min-w-0">
+              <div className="mb-6 text-xl font-bold tracking-tight text-emerald-900">
                 MFT Certification
               </div>
-              <p className="text-gray-500 font-body-sm max-w-sm">
+              <p className="max-w-2xl text-sm leading-7 text-gray-500">
                 Leading the transformation of global tourism towards an inclusive, respectful,
                 and certified Muslim-friendly ecosystem.
               </p>
             </div>
-            <div>
-              <h5 className="font-semibold text-primary mb-6">Links</h5>
-              <ul className="space-y-4 font-body-sm text-gray-500">
+
+            <div className="min-w-0">
+              <h5 className="mb-6 font-semibold text-primary">Links</h5>
+              <ul className="space-y-4 text-sm text-gray-500">
                 <li>
-                  <Link to="/about" className="hover:text-emerald-700 transition-colors">
+                  <Link to="/about" className="hover:text-emerald-700">
                     Tentang MFTC
                   </Link>
                 </li>
                 <li>
-                  <Link to="/standards" className="hover:text-emerald-700 transition-colors">
+                  <Link to="/standards" className="hover:text-emerald-700">
                     Standar
                   </Link>
                 </li>
                 <li>
-                  <Link to="/verify" className="hover:text-emerald-700 transition-colors">
+                  <Link to="/verify" className="hover:text-emerald-700">
                     Verifikasi Sertifikat
                   </Link>
                 </li>
               </ul>
             </div>
-            <div>
-              <h5 className="font-semibold text-primary mb-6">Follow Us</h5>
+
+            <div className="min-w-0">
+              <h5 className="mb-6 font-semibold text-primary">Follow Us</h5>
               <div className="flex gap-4">
-                <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-emerald-50 transition-colors cursor-pointer text-emerald-900">
+                <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-50 text-emerald-900 transition-colors hover:bg-emerald-50">
                   <span className="material-symbols-outlined">share</span>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-emerald-50 transition-colors cursor-pointer text-emerald-900">
+                <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-50 text-emerald-900 transition-colors hover:bg-emerald-50">
                   <span className="material-symbols-outlined">language</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+
+          <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-gray-100 pt-8 md:flex-row md:items-center">
             <div className="font-inter text-xs text-gray-500">
               © {new Date().getFullYear()} Muslim Friendly Tourism Certification. All rights reserved.
             </div>
-            <div className="flex gap-6">
+
+            <div className="flex flex-wrap gap-6">
               <a className="font-inter text-xs text-gray-400 hover:text-emerald-600" href="#">
                 Privacy Policy
               </a>

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import api, { ApiError, type ApiSuccess } from '../lib/api'
 
 interface PaymentProofResponse {
@@ -42,6 +42,15 @@ export function UploadProofForm({ applicationId, onSuccess }: UploadProofFormPro
   const [progress, setProgress] = useState(0)
   const [stage, setStage] = useState<'idle' | 'uploading' | 'success'>('idle')
   const [dragOver, setDragOver] = useState(false)
+  const previewUrl = useMemo(() => (file ? URL.createObjectURL(file) : null), [file])
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl)
+      }
+    }
+  }, [previewUrl])
 
   const reset = () => {
     setFile(null)
@@ -161,20 +170,32 @@ export function UploadProofForm({ applicationId, onSuccess }: UploadProofFormPro
       </label>
 
       {file ? (
-        <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-white">
-          <span className="material-symbols-outlined text-emerald-700">description</span>
-          <div className="flex-1 min-w-0">
-            <p className="text-body-sm font-semibold text-neutral-800 truncate">{file.name}</p>
-            <p className="text-xs text-gray-500">{formatBytes(file.size)}</p>
+        <div className="space-y-3 rounded-xl border border-gray-200 bg-white p-3">
+          <div className="flex items-center gap-3">
+            <span className="material-symbols-outlined text-emerald-700">description</span>
+            <div className="min-w-0 flex-1">
+              <p className="text-body-sm truncate font-semibold text-neutral-800">{file.name}</p>
+              <p className="text-xs text-gray-500">{formatBytes(file.size)}</p>
+            </div>
+            {stage === 'idle' ? (
+              <button
+                type="button"
+                className="text-xs font-bold uppercase text-gray-500 hover:text-red-600"
+                onClick={reset}
+              >
+                Hapus
+              </button>
+            ) : null}
           </div>
-          {stage === 'idle' ? (
-            <button
-              type="button"
-              className="text-xs font-bold text-gray-500 hover:text-red-600 uppercase"
-              onClick={reset}
-            >
-              Hapus
-            </button>
+
+          {previewUrl ? (
+            <div className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+              {file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf') ? (
+                <iframe title="Preview bukti pembayaran" src={previewUrl} className="h-[420px] w-full" />
+              ) : (
+                <img src={previewUrl} alt="Preview bukti pembayaran" className="max-h-[420px] w-full object-contain" />
+              )}
+            </div>
           ) : null}
         </div>
       ) : null}

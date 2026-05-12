@@ -3,8 +3,6 @@
 namespace App\Filament\Resources\Users;
 
 use App\Enums\UserRole;
-use App\Filament\Resources\Users\Pages\CreateUser;
-use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
@@ -14,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class UserResource extends Resource
 {
@@ -21,9 +20,11 @@ class UserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
+    protected static string|UnitEnum|null $navigationGroup = 'Manajemen User';
+
     protected static ?string $recordTitleAttribute = 'email';
 
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
     {
@@ -49,8 +50,6 @@ class UserResource extends Resource
     {
         return [
             'index' => ListUsers::route('/'),
-            'create' => CreateUser::route('/create'),
-            'edit' => EditUser::route('/{record}/edit'),
         ];
     }
 }

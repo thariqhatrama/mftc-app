@@ -29,10 +29,10 @@ export const router = createBrowserRouter([
       { path: '/pricing', element: <PricingPage /> },
       { path: '/about', element: <AboutPage /> },
       { path: '/login', element: <LoginPage /> },
+      { path: '/register', element: <RegisterPage /> },
       { path: '/verify', element: <VerifyPage /> },
     ],
   },
-  { path: '/register', element: <RegisterPage /> },
   {
     element: <ProtectedRoute />,
     children: [

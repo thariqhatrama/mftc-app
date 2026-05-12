@@ -7,6 +7,8 @@ use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
@@ -108,13 +110,32 @@ class UsersTable
                         return redirect()->away("{$frontendUrl}/impersonate?token={$token}&return_url={$returnUrl}");
                     }),
 
-                EditAction::make(),
-                Action::make('deactivate')
-                    ->label('Delete')
-                    ->icon(Heroicon::OutlinedTrash)
-                    ->color('danger')
+                EditAction::make()
+                    ->modalHeading('Edit User')
+                    ->modalWidth('lg')
+                    ->successNotificationTitle('User berhasil diperbarui'),
+                DeleteAction::make()
                     ->requiresConfirmation()
-                    ->action(fn (User $record) => $record->update(['is_active' => false])),
+                    ->modalHeading('Hapus User')
+                    ->modalDescription('User akan dinonaktifkan (soft delete). Data transaksi tetap tersimpan.')
+                    ->modalSubmitActionLabel('Ya, Nonaktifkan')
+                    ->action(function (User $record): void {
+                        if (auth()->id() === $record->id) {
+                            Notification::make()
+                                ->danger()
+                                ->title('Tidak dapat menghapus akun sendiri')
+                                ->send();
+
+                            return;
+                        }
+
+                        $record->update(['is_active' => false]);
+
+                        Notification::make()
+                            ->success()
+                            ->title('User dinonaktifkan')
+                            ->send();
+                    }),
                 Action::make('resetPassword')
                     ->label('Reset Password')
                     ->icon(Heroicon::OutlinedEnvelope)
@@ -127,6 +148,12 @@ class UsersTable
                             ->success()
                             ->send();
                     }),
+            ])
+            ->headerActions([
+                CreateAction::make()
+                    ->modalHeading('Tambah User Baru')
+                    ->modalWidth('lg')
+                    ->successNotificationTitle('User berhasil ditambahkan'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

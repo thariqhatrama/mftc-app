@@ -28,6 +28,7 @@ export interface BusinessProfile {
   contact_person: string
   contact_phone: string
   legal_document_url?: string | null
+  legal_document_path?: string | null
   completed: boolean
   created_at?: string
   updated_at?: string

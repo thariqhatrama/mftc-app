@@ -5,8 +5,12 @@ namespace App\Filament\Resources\AuditAssignments\Tables;
 use App\Enums\ApplicationStatus;
 use App\Enums\UserRole;
 use App\Filament\Resources\AuditAssignments\Schemas\AuditAssignmentForm;
+use App\Mail\AuditorAssignedMail;
+use App\Mail\RevisionRequestedMail;
 use App\Models\Application;
 use App\Models\AuditAssignment;
+use App\Models\AuditChecklist;
+use App\Models\NonConformity;
 use App\Models\User;
 use App\Services\StatusTransitionService;
 use Exception;
@@ -14,6 +18,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -145,8 +150,6 @@ class AuditAssignmentsTable
                             ApplicationStatus::REVISION,
                             ApplicationStatus::REPORT_REJECTED,
                         ], true))
-                    ->disabled(fn (Application $record): bool => self::hasIncompleteChecklist($record) || self::hasOpenNonConformities($record))
-                    ->tooltip(fn (Application $record): ?string => self::submitReportDisabledReason($record))
                     ->schema([
                         Textarea::make('auditor_notes')
                             ->label('Catatan Auditor')
@@ -154,38 +157,123 @@ class AuditAssignmentsTable
                         Select::make('recommendation')
                             ->label('Rekomendasi')
                             ->options([
-                                'approve' => 'Rekomendasikan Disetujui',
-                                'revision' => 'Masih Perlu Perbaikan',
+                                'approve' => '✓ Rekomendasikan Disetujui — Kirim ke Super Admin',
+                                'revision' => '↩ Perlu Revisi — Kembalikan ke PU',
                             ])
-                            ->required(),
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'Rekomendasi wajib dipilih sebelum submit laporan.',
+                            ])
+                            ->live()
+                            ->helperText(fn (Get $get): string => match ($get('recommendation')) {
+                                'approve' => 'Laporan akan dikirim ke Super Admin untuk di-review.',
+                                'revision' => 'PU akan dinotifikasi untuk melakukan perbaikan.',
+                                default => '',
+                            }),
                     ])
                     ->action(function (Application $record, array $data) {
-                        try {
-                            if ($record->auditAssignment) {
-                                $record->auditAssignment->update([
-                                    'auditor_notes' => $data['auditor_notes'] ?? null,
-                                    'recommendation' => $data['recommendation'],
-                                ]);
-                            }
+                        $assignment = $record->auditAssignment;
 
-                            app(StatusTransitionService::class)->transition(
-                                $record,
-                                ApplicationStatus::REPORT_SUBMITTED->value,
-                                auth()->user(),
-                            );
-                        } catch (Exception $exception) {
+                        if (! $assignment) {
                             Notification::make()
-                                ->title($exception->getMessage())
                                 ->danger()
+                                ->title('Assignment audit tidak ditemukan.')
                                 ->send();
 
                             return null;
                         }
 
-                        Notification::make()
-                            ->title('Laporan audit berhasil disubmit')
-                            ->success()
-                            ->send();
+                        $unfinished = AuditChecklist::where('audit_assignment_id', $assignment->id)
+                            ->whereNull('result')
+                            ->count();
+
+                        if ($unfinished > 0) {
+                            Notification::make()
+                                ->danger()
+                                ->title("Masih ada {$unfinished} item checklist yang belum diaudit.")
+                                ->send();
+
+                            return null;
+                        }
+
+                        $assignment->update([
+                            'auditor_notes' => $data['auditor_notes'] ?? null,
+                            'recommendation' => $data['recommendation'],
+                        ]);
+
+                        if ($data['recommendation'] === 'approve') {
+                            try {
+                                app(StatusTransitionService::class)->transition(
+                                    $record,
+                                    ApplicationStatus::REPORT_SUBMITTED->value,
+                                    auth()->user(),
+                                );
+                            } catch (Exception $exception) {
+                                Notification::make()
+                                    ->title($exception->getMessage())
+                                    ->danger()
+                                    ->send();
+
+                                return null;
+                            }
+
+                            Mail::raw(
+                                "Laporan audit aplikasi #{$record->id} berhasil disubmit dan menunggu review Super Admin.",
+                                fn ($mail) => $mail->to(config('mail.from.address'))->subject('[MFTC] Laporan Audit Submitted')
+                            );
+
+                            Notification::make()
+                                ->success()
+                                ->title('Laporan berhasil disubmit!')
+                                ->body('Menunggu review dan persetujuan Super Admin.')
+                                ->persistent()
+                                ->send();
+
+                            return redirect('/admin/audit-assignments');
+                        }
+
+                        if ($data['recommendation'] === 'revision') {
+                            $openNc = NonConformity::where('audit_assignment_id', $assignment->id)
+                                ->where('verified_by_auditor', false)
+                                ->count();
+
+                            if ($openNc === 0) {
+                                Notification::make()
+                                    ->warning()
+                                    ->title('Tidak ada Non-Conformity terbuka.')
+                                    ->body('Tambahkan NC terlebih dahulu sebelum merekomendasikan revisi, atau pilih "Rekomendasikan Disetujui".')
+                                    ->persistent()
+                                    ->send();
+
+                                return null;
+                            }
+
+                            try {
+                                app(StatusTransitionService::class)->transition(
+                                    $record,
+                                    ApplicationStatus::REVISION->value,
+                                    auth()->user(),
+                                );
+                            } catch (Exception $exception) {
+                                Notification::make()
+                                    ->title($exception->getMessage())
+                                    ->danger()
+                                    ->send();
+
+                                return null;
+                            }
+
+                            if ($record->puUser?->email) {
+                                Mail::to($record->puUser->email)->queue(new RevisionRequestedMail($record));
+                            }
+
+                            Notification::make()
+                                ->warning()
+                                ->title('Status dikembalikan ke Revisi.')
+                                ->body("PU akan dinotifikasi. Ada {$openNc} NC yang perlu diperbaiki.")
+                                ->persistent()
+                                ->send();
+                        }
 
                         return redirect('/admin/audit-assignments');
                     }),
@@ -240,15 +328,13 @@ class AuditAssignmentsTable
 
         $auditor = User::find($data['auditor_user_id']);
         $pu = $application->puUser;
-        $verb = $existingId ? 'dijadwalkan ulang' : 'dijadwalkan';
-        $body = "Audit untuk aplikasi #{$application->id} telah {$verb} pada {$assignment->scheduled_date} {$assignment->scheduled_time}. Lokasi: {$assignment->location}.";
 
         if ($pu?->email) {
-            Mail::raw($body, fn ($m) => $m->to($pu->email)->subject('Jadwal Audit MFTC'));
+            Mail::to($pu->email)->queue(new AuditorAssignedMail($assignment));
         }
 
         if ($auditor?->email) {
-            Mail::raw($body, fn ($m) => $m->to($auditor->email)->subject('Penugasan Audit MFTC'));
+            Mail::to($auditor->email)->queue(new AuditorAssignedMail($assignment));
         }
 
         Notification::make()

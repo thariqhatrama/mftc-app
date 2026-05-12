@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SelfAssessmentQuestionResource extends Resource
 {
@@ -23,7 +24,9 @@ class SelfAssessmentQuestionResource extends Resource
 
     protected static ?string $navigationLabel = 'Self-Assessment Questions';
 
-    protected static ?int $navigationSort = 60;
+    protected static string|UnitEnum|null $navigationGroup = 'Konfigurasi';
+
+    protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
     {

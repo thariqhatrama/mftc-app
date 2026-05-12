@@ -56,12 +56,12 @@ export default function LoginPage() {
                 <div className="w-10 h-10 bg-secondary-container rounded-lg flex items-center justify-center">
                   <span className="material-symbols-outlined text-primary">verified_user</span>
                 </div>
-                <span className="font-h3 text-h3 text-white tracking-tight">HalalCertify</span>
+                <span className="font-h3 text-h3 text-white tracking-tight">MFT Certify</span>
               </div>
               <h1 className="font-h1 text-h1 text-white mb-md leading-tight">
                 Membangun Kepercayaan Melalui Sertifikasi Halal Global.
               </h1>
-              <p className="font-body-lg text-body-lg text-primary-fixed tracking-wide max-w-md">
+              <p className="font-body-lg text-body-lg text-primary-fixed tracking-wide leading-tight">
                 Akses portal manajemen untuk memantau standar, aplikasi, dan kepatuhan pariwisata
                 ramah Muslim Anda.
               </p>

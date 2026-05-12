@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ApplicationResource extends Resource
 {
@@ -22,7 +23,9 @@ class ApplicationResource extends Resource
 
     protected static ?string $navigationLabel = 'Applications';
 
-    protected static ?int $navigationSort = 20;
+    protected static string|UnitEnum|null $navigationGroup = 'Pengajuan';
+
+    protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
     {

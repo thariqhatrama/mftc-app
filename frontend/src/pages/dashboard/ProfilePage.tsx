@@ -1,12 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { ApiError } from '../../lib/api'
 import api, { type ApiSuccess } from '../../lib/api'
+import { PhoneInputField } from '../../components/PhoneInputField'
 import { useAuth } from '../../contexts/AuthContext'
 import type { BusinessProfile } from '../../types/api'
+
+const MAX_NIB_DOCUMENT_SIZE = 10 * 1024 * 1024
 
 const profileSchema = z.object({
   company_name: z.string().min(2, 'Nama perusahaan wajib diisi.'),
@@ -19,7 +22,28 @@ const profileSchema = z.object({
 type ProfileForm = z.infer<typeof profileSchema>
 
 const fieldClass =
-  'w-full px-md py-sm border border-outline rounded-lg focus:ring-2 focus:ring-secondary-container focus:border-secondary transition-all outline-none'
+  'w-full rounded-lg border border-outline px-md py-sm outline-none transition-all focus:border-secondary focus:ring-2 focus:ring-secondary-container'
+
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024 * 1024) {
+    return `${Math.max(1, Math.round(bytes / 1024))} KB`
+  }
+
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+}
+
+function fileNameFromUrl(url?: string | null): string | null {
+  if (!url) {
+    return null
+  }
+
+  try {
+    const pathname = new URL(url, window.location.origin).pathname
+    return decodeURIComponent(pathname.split('/').filter(Boolean).pop() ?? 'Dokumen NIB.pdf')
+  } catch {
+    return 'Dokumen NIB.pdf'
+  }
+}
 
 export default function ProfilePage() {
   const { logout } = useAuth()
@@ -30,6 +54,8 @@ export default function ProfilePage() {
   const [uploading, setUploading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [selectedLegalFile, setSelectedLegalFile] = useState<File | null>(null)
+  const [legalDocumentUrl, setLegalDocumentUrl] = useState<string | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deletePassword, setDeletePassword] = useState('')
   const [deleting, setDeleting] = useState(false)
@@ -53,6 +79,7 @@ export default function ProfilePage() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<ProfileForm>({
     resolver: zodResolver(profileSchema),
@@ -65,6 +92,7 @@ export default function ProfilePage() {
         const res = await api.get<ApiSuccess<BusinessProfile>>('/profile')
         if (mounted) {
           setProfile(res.data.data)
+          setLegalDocumentUrl(res.data.data.legal_document_url ?? null)
           reset({
             company_name: res.data.data.company_name ?? '',
             nib: res.data.data.nib ?? '',
@@ -89,6 +117,19 @@ export default function ProfilePage() {
     }
   }, [reset])
 
+  const localLegalPreviewUrl = useMemo(
+    () => (selectedLegalFile ? URL.createObjectURL(selectedLegalFile) : null),
+    [selectedLegalFile],
+  )
+
+  useEffect(() => {
+    return () => {
+      if (localLegalPreviewUrl) {
+        URL.revokeObjectURL(localLegalPreviewUrl)
+      }
+    }
+  }, [localLegalPreviewUrl])
+
   const onSubmit = async (data: ProfileForm) => {
     setSaving(true)
     setError(null)
@@ -104,6 +145,10 @@ export default function ProfilePage() {
         contact_phone: res.data.data.contact_phone ?? '',
       })
       setMessage('Profil berhasil disimpan.')
+
+      if (res.data.data.completed) {
+        navigate('/dashboard/applications/new')
+      }
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Profil gagal disimpan.')
     } finally {
@@ -117,19 +162,35 @@ export default function ProfilePage() {
       return
     }
 
-    setUploading(true)
     setError(null)
     setMessage(null)
+
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      setError('Dokumen NIB wajib berupa file PDF.')
+      event.target.value = ''
+      return
+    }
+
+    if (file.size > MAX_NIB_DOCUMENT_SIZE) {
+      setError('Ukuran Dokumen NIB maksimal 10MB.')
+      event.target.value = ''
+      return
+    }
+
+    setSelectedLegalFile(file)
+    setUploading(true)
+
     try {
       const formData = new FormData()
       formData.append('file', file)
-      const res = await api.post<ApiSuccess<{ legal_document_url: string; profile: BusinessProfile }>>(
+      const res = await api.post<ApiSuccess<{ legal_document_path: string; legal_document_url: string; profile: BusinessProfile }>>(
         '/profile/upload-legal-doc',
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } },
       )
       setProfile(res.data.data.profile)
-      setMessage('Dokumen legal berhasil diupload.')
+      setLegalDocumentUrl(res.data.data.legal_document_url)
+      setMessage('Dokumen NIB PDF berhasil diupload.')
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Upload dokumen gagal.')
     } finally {
@@ -138,17 +199,24 @@ export default function ProfilePage() {
     }
   }
 
+  const previewUrl = legalDocumentUrl ?? localLegalPreviewUrl
+  const storedLegalFileName = fileNameFromUrl(legalDocumentUrl)
+  const legalFileName = selectedLegalFile?.name ?? storedLegalFileName
+  const legalFileSize = selectedLegalFile ? formatFileSize(selectedLegalFile.size) : null
+  const uploadStatus = uploading ? 'Mengupload PDF…' : legalDocumentUrl ? 'Upload berhasil' : selectedLegalFile ? 'Menunggu upload selesai' : 'Belum ada file'
+  const hasLegalDocument = Boolean(previewUrl)
+
   return (
-    <div className="space-y-lg">
-      <div className="mb-xl flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-        <div>
-          <h1 className="font-h1 text-h1 text-primary mb-xs">Lengkapi Profil Usaha</h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-            Pastikan data perusahaan Anda akurat untuk mempermudah proses verifikasi sertifikasi Pariwisata Ramah Muslim.
+    <div className="w-full min-w-0 space-y-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <div className="min-w-0">
+          <h1 className="mb-xs font-h1 text-h1 text-primary">Profil Usaha</h1>
+          <p className="max-w-3xl font-body-lg text-body-lg text-on-surface-variant">
+            Lengkapi biodata usaha, legalitas NIB, alamat, dan kontak penanggung jawab sebelum membuat pengajuan sertifikasi.
           </p>
         </div>
         <span
-          className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
+          className={`inline-flex w-fit shrink-0 items-center rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${
             profile?.completed ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-50 text-amber-700'
           }`}
         >
@@ -156,198 +224,202 @@ export default function ProfilePage() {
         </span>
       </div>
 
-      <div className="grid grid-cols-12 gap-gutter">
-        <div className="col-span-12 lg:col-span-4">
-          <div className="bg-white border border-outline-variant rounded-xl p-md sticky top-24">
-            <h3 className="font-label-caps text-label-caps text-on-surface-variant mb-md">TAHAPAN PENDAFTARAN</h3>
-            <div className="space-y-sm">
-              {[
-                ['Biodata Usaha', 'Informasi dasar entitas'],
-                ['NIB & Legalitas', 'Nomor Induk Berusaha'],
-                ['Alamat Lengkap', 'Lokasi operasional utama'],
-                ['Personil Penghubung', 'Kontak penanggung jawab'],
-              ].map(([title, subtitle], index) => (
-                <div key={title} className="flex items-start gap-md">
-                  <div className="relative flex items-center justify-center">
-                    <div
-                      className={
-                        index === 0
-                          ? 'w-8 h-8 rounded-full border-2 border-primary bg-white z-10 flex items-center justify-center'
-                          : 'w-8 h-8 rounded-full border border-outline-variant bg-surface-container-low z-10 flex items-center justify-center'
-                      }
-                    >
-                      <span className={index === 0 ? 'text-primary font-bold text-sm' : 'text-on-surface-variant font-medium text-sm'}>
-                        {index + 1}
-                      </span>
-                    </div>
-                    {index < 3 ? <div className="absolute top-8 w-0.5 h-12 bg-outline-variant"></div> : null}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className={index === 0 ? 'font-body-md text-body-md font-semibold text-primary' : 'font-body-md text-body-md text-on-surface-variant'}>
-                      {title}
-                    </span>
-                    <span className="font-body-sm text-xs text-on-surface-variant">{subtitle}</span>
-                  </div>
-                </div>
-              ))}
+      <div className="w-full max-w-5xl min-w-0">
+        <form className="overflow-hidden rounded-xl border border-outline-variant bg-white shadow-sm" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-3 border-b border-outline-variant bg-surface-container-low p-md md:flex-row md:items-center md:justify-between">
+            <div className="min-w-0">
+              <h2 className="font-h3 text-h3 text-on-surface">Biodata Usaha</h2>
+              <p className="font-body-sm text-on-surface-variant">Semua informasi profil usaha berada dalam satu form.</p>
             </div>
-            <div className="mt-xl p-sm bg-tertiary-fixed rounded-lg border border-tertiary-container/10">
-              <p className="text-[11px] font-medium text-tertiary uppercase tracking-widest mb-xs flex items-center gap-1">
-                <span className="material-symbols-outlined text-[14px]">info</span>
-                Bantuan
-              </p>
-              <p className="font-body-sm text-xs text-tertiary leading-relaxed">
-                Pastikan nama perusahaan sesuai dengan dokumen Akta Pendirian atau NIB yang berlaku.
-              </p>
-            </div>
+            <span className="w-fit rounded-full bg-primary-container px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-on-primary">
+              Wajib Diisi
+            </span>
           </div>
-        </div>
 
-        <div className="col-span-12 lg:col-span-8">
-          <form className="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden" onSubmit={handleSubmit(onSubmit)}>
-            <div className="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center">
-              <div>
-                <h2 className="font-h3 text-h3 text-on-surface">Biodata Usaha</h2>
-                <p className="font-body-sm text-on-surface-variant">Langkah 1 dari 4</p>
-              </div>
-              <span className="bg-primary-container text-on-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
-                Wajib Diisi
-              </span>
-            </div>
+          <div className="space-y-6 p-md">
+            {loading ? <p className="font-body-sm text-on-surface-variant">Memuat profil…</p> : null}
+            {message ? <div className="rounded-lg bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">{message}</div> : null}
+            {error ? <div className="rounded-lg bg-error-container px-4 py-3 text-sm font-medium text-on-error-container">{error}</div> : null}
 
-            <div className="p-md space-y-md">
-              {loading ? <p className="font-body-sm text-on-surface-variant">Memuat profil…</p> : null}
-              {message ? <div className="rounded-lg bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">{message}</div> : null}
-              {error ? <div className="rounded-lg bg-error-container px-4 py-3 text-sm font-medium text-on-error-container">{error}</div> : null}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
-                <div className="space-y-xs">
-                  <label className="font-label-caps text-label-caps text-on-surface" htmlFor="company_name">
-                    NAMA PERUSAHAAN
-                  </label>
-                  <input id="company_name" className={fieldClass} placeholder="Contoh: PT. Wisata Halal Indonesia" {...register('company_name')} />
-                  {errors.company_name ? <p className="text-sm text-error">{errors.company_name.message}</p> : null}
-                </div>
-                <div className="space-y-xs">
-                  <label className="font-label-caps text-label-caps text-on-surface" htmlFor="contact_person">
-                    PERSONIL PENGHUBUNG
-                  </label>
-                  <input id="contact_person" className={fieldClass} placeholder="Contoh: Ahmad Abdullah" {...register('contact_person')} />
-                  {errors.contact_person ? <p className="text-sm text-error">{errors.contact_person.message}</p> : null}
-                </div>
+            <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="min-w-0 space-y-xs">
+                <label className="font-label-caps text-label-caps text-on-surface" htmlFor="company_name">
+                  NAMA PERUSAHAAN
+                </label>
+                <input id="company_name" className={fieldClass} placeholder="Contoh: PT. Wisata Halal Indonesia" {...register('company_name')} />
+                {errors.company_name ? <p className="text-sm text-error">{errors.company_name.message}</p> : null}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
-                <div className="space-y-xs">
-                  <label className="font-label-caps text-label-caps text-on-surface" htmlFor="nib">
-                    NOMOR INDUK BERUSAHA (NIB)
-                  </label>
-                  <div className="relative">
-                    <input id="nib" className={`${fieldClass} pl-10`} placeholder="13 Digit Nomor NIB" {...register('nib')} />
-                    <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">pin</span>
-                  </div>
-                  {errors.nib ? <p className="text-sm text-error">{errors.nib.message}</p> : null}
-                </div>
-                <div className="space-y-xs">
-                  <label className="font-label-caps text-label-caps text-on-surface" htmlFor="contact_phone">
-                    NOMOR KONTAK
-                  </label>
-                  <input id="contact_phone" className={fieldClass} placeholder="+62 812 3456 7890" {...register('contact_phone')} />
-                  {errors.contact_phone ? <p className="text-sm text-error">{errors.contact_phone.message}</p> : null}
-                </div>
+              <div className="min-w-0 space-y-xs">
+                <label className="font-label-caps text-label-caps text-on-surface" htmlFor="contact_person">
+                  PERSONIL PENGHUBUNG
+                </label>
+                <input id="contact_person" className={fieldClass} placeholder="Contoh: Ahmad Abdullah" {...register('contact_person')} />
+                {errors.contact_person ? <p className="text-sm text-error">{errors.contact_person.message}</p> : null}
               </div>
 
-              <div className="space-y-xs">
+              <div className="min-w-0 space-y-xs">
+                <label className="font-label-caps text-label-caps text-on-surface" htmlFor="nib">
+                  NOMOR INDUK BERUSAHA (NIB)
+                </label>
+                <div className="relative">
+                  <input id="nib" className={`${fieldClass} pl-10`} placeholder="13 Digit Nomor NIB" {...register('nib')} />
+                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">pin</span>
+                </div>
+                {errors.nib ? <p className="text-sm text-error">{errors.nib.message}</p> : null}
+              </div>
+
+              <div className="min-w-0 space-y-xs">
+                <PhoneInputField
+                  name="contact_phone"
+                  control={control}
+                  label="Nomor Telepon / WhatsApp"
+                  errors={errors}
+                />
+              </div>
+
+              <div className="min-w-0 space-y-xs md:col-span-2">
                 <label className="font-label-caps text-label-caps text-on-surface" htmlFor="address">
                   ALAMAT LENGKAP
                 </label>
-                <textarea id="address" className={fieldClass} placeholder="Alamat operasional utama..." rows={4} {...register('address')}></textarea>
+                <textarea id="address" className={fieldClass} placeholder="Alamat operasional utama..." rows={4} {...register('address')} />
                 {errors.address ? <p className="text-sm text-error">{errors.address.message}</p> : null}
               </div>
 
-              <div className="p-md bg-tertiary-fixed/30 rounded-xl border border-dashed border-outline-variant flex flex-col items-center justify-center text-center gap-sm">
-                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                  <span className="material-symbols-outlined text-primary">cloud_upload</span>
+              <div className="min-w-0 space-y-4 md:col-span-2">
+                <div className="rounded-xl border border-dashed border-outline-variant bg-tertiary-fixed/30 p-md">
+                  <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                    <div className="flex min-w-0 gap-4">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
+                        <span className="material-symbols-outlined text-primary">picture_as_pdf</span>
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-body-md font-semibold text-primary">Upload Dokumen NIB (PDF)</p>
+                        <p className="font-body-sm text-xs text-on-surface-variant">
+                          Dokumen wajib berupa PDF dengan ukuran maksimal 10MB.
+                        </p>
+                        <div className="mt-3 rounded-lg bg-white px-3 py-2 text-left text-sm shadow-sm">
+                          <p className="truncate font-semibold text-on-surface">{legalFileName ?? 'Belum ada dokumen PDF'}</p>
+                          <p className="text-xs text-on-surface-variant">
+                            {legalFileSize ? `${legalFileSize} · ${uploadStatus}` : uploadStatus}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <label className="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-primary bg-white px-md py-xs font-button text-button text-primary transition-colors hover:bg-primary-fixed">
+                      {uploading ? 'Mengupload…' : hasLegalDocument ? 'Ganti File' : 'Pilih File'}
+                      <input className="hidden" type="file" accept="application/pdf,.pdf" onChange={handleUpload} disabled={uploading} />
+                    </label>
+                  </div>
+
+                  {previewUrl ? (
+                    <div className="mt-5 overflow-hidden rounded-xl border border-outline-variant bg-white">
+                      <iframe
+                        title="Preview Dokumen NIB PDF"
+                        src={previewUrl}
+                        className="h-[420px] w-full"
+                      />
+                    </div>
+                  ) : null}
                 </div>
-                <div>
-                  <p className="font-body-md font-semibold text-primary">Upload Dokumen NIB (PDF)</p>
-                  <p className="font-body-sm text-xs text-on-surface-variant">
-                    {profile?.legal_document_url ? `File tersimpan: ${profile.legal_document_url}` : 'Maksimal ukuran file 10MB'}
-                  </p>
-                </div>
-                <label className="font-button text-button px-md py-xs bg-white border border-primary text-primary rounded-full hover:bg-primary-fixed transition-colors cursor-pointer">
-                  {uploading ? 'Mengupload…' : 'Pilih File'}
-                  <input className="hidden" type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleUpload} disabled={uploading} />
-                </label>
               </div>
             </div>
+          </div>
 
-            <div className="p-md bg-gray-50 flex justify-between items-center border-t border-outline-variant">
+          <div className="flex flex-col gap-3 border-t border-outline-variant bg-gray-50 p-md sm:flex-row sm:items-center sm:justify-end">
+            {profile?.completed ? (
               <button
-                className="font-button text-button px-lg py-sm border border-outline text-on-surface-variant rounded-lg hover:bg-white transition-colors flex items-center gap-2"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-primary px-lg py-sm font-button text-button text-primary transition-colors hover:bg-primary-fixed"
                 type="button"
+                onClick={() => navigate('/dashboard/applications/new')}
               >
-                <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-                Kembali
-              </button>
-              <button
-                className="font-button text-button px-xl py-sm bg-primary text-white rounded-lg hover:opacity-90 transition-all flex items-center gap-2 shadow-md disabled:opacity-60"
-                type="submit"
-                disabled={saving}
-              >
-                {saving ? 'Menyimpan…' : 'Simpan & Lanjutkan'}
+                Lanjut Buat Pengajuan
                 <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </button>
-            </div>
-          </form>
-
-          <div className="mt-md p-md bg-white border-l-4 border-secondary rounded-lg shadow-sm flex gap-md">
-            <span className="material-symbols-outlined text-secondary">verified_user</span>
-            <div>
-              <h4 className="font-body-md font-bold text-on-surface">Data Terenkripsi</h4>
-              <p className="font-body-sm text-xs text-on-surface-variant">
-                Seluruh informasi yang Anda masukkan dilindungi oleh enkripsi standar industri dan hanya akan digunakan untuk keperluan verifikasi sertifikasi.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-lg p-md bg-white border border-red-200 rounded-xl shadow-sm">
-            <h3 className="font-h3 text-h3 text-red-700 mb-2">Hapus Akun</h3>
-            <p className="font-body-sm text-sm text-on-surface-variant mb-4">
-              Akun Anda akan dianonimkan secara permanen sesuai UU PDP. Data transaksi tetap tersimpan untuk keperluan audit.
-            </p>
+            ) : null}
             <button
-              type="button"
-              onClick={() => setShowDeleteModal(true)}
-              className="font-button text-button px-md py-sm border border-red-600 text-red-700 rounded-lg hover:bg-red-50 transition-colors"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-xl py-sm font-button text-button text-white shadow-md transition-all hover:opacity-90 disabled:opacity-60"
+              type="submit"
+              disabled={saving}
             >
-              Hapus Akun
+              {saving ? 'Menyimpan…' : 'Simpan Profil'}
+              <span className="material-symbols-outlined text-[18px]">save</span>
             </button>
           </div>
+        </form>
+
+        <div className="mt-md flex gap-md rounded-lg border-l-4 border-secondary bg-white p-md shadow-sm">
+          <span className="material-symbols-outlined shrink-0 text-secondary">verified_user</span>
+          <div className="min-w-0">
+            <h4 className="font-body-md font-bold text-on-surface">Data Terenkripsi</h4>
+            <p className="font-body-sm text-xs text-on-surface-variant">
+              Seluruh informasi yang Anda masukkan dilindungi oleh enkripsi standar industri dan hanya akan digunakan untuk keperluan verifikasi sertifikasi.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-lg rounded-xl border border-red-200 bg-white p-md shadow-sm">
+          <h3 className="mb-2 font-h3 text-h3 text-red-700">Hapus Akun</h3>
+          <p className="mb-4 font-body-sm text-sm text-on-surface-variant">
+            Akun Anda akan dianonimkan secara permanen sesuai UU PDP. Data transaksi tetap tersimpan untuk keperluan audit.
+          </p>
+          <button
+            type="button"
+            onClick={() => setShowDeleteModal(true)}
+            className="rounded-lg border border-red-600 px-md py-sm font-button text-button text-red-700 transition-colors hover:bg-red-50"
+          >
+            Hapus Akun
+          </button>
         </div>
       </div>
 
-      {showDeleteModal ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-            <h2 className="text-xl font-bold text-red-700 mb-3">Konfirmasi Hapus Akun</h2>
-            <p className="text-sm text-gray-700 mb-4">
-              Akun Anda akan dianonimkan secara permanen sesuai UU PDP. Data transaksi tetap tersimpan untuk keperluan audit.
-            </p>
-            <label className="block text-xs font-semibold uppercase tracking-widest text-gray-700 mb-2">
-              Konfirmasi Password
-            </label>
-            <input
-              type="password"
-              className={fieldClass}
-              value={deletePassword}
-              onChange={(event) => setDeletePassword(event.target.value)}
-              placeholder="Masukkan password Anda"
-            />
-            {deleteError ? (
-              <p className="mt-2 text-sm text-red-700">{deleteError}</p>
-            ) : null}
-            <div className="mt-6 flex justify-end gap-3">
+      {showDeleteModal && (
+        <div
+          className="fixed inset-0 z-[9999] flex min-h-screen w-screen items-center justify-center bg-black/60 px-4 py-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-account-title"
+        >
+          <div className="relative w-full min-w-[320px] max-w-[480px] rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600">
+                <span className="material-symbols-outlined">warning</span>
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <h2 id="delete-account-title" className="text-xl font-bold leading-7 text-red-700">
+                  Hapus Akun
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-gray-600">
+                  Akun Anda akan dianonimkan secara permanen sesuai UU PDP. Data transaksi tetap tersimpan untuk keperluan audit.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-xl bg-red-50 p-4 text-sm leading-6 text-red-700">
+              Tindakan ini tidak dapat dibatalkan. Pastikan Anda sudah memahami konsekuensinya sebelum melanjutkan.
+            </div>
+
+            <div className="mt-6">
+              <label className="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray-600" htmlFor="delete-password">
+                Konfirmasi Password
+              </label>
+
+              <input
+                id="delete-password"
+                type="password"
+                className="block h-11 w-full rounded-lg border border-gray-300 bg-white px-4 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                value={deletePassword}
+                onChange={(event) => setDeletePassword(event.target.value)}
+                placeholder="Masukkan password Anda"
+                autoComplete="current-password"
+              />
+
+              {deleteError ? <p className="mt-2 text-sm text-red-700">{deleteError}</p> : null}
+            </div>
+
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 type="button"
                 onClick={() => {
@@ -355,23 +427,24 @@ export default function ProfilePage() {
                   setDeletePassword('')
                   setDeleteError(null)
                 }}
-                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50"
+                className="inline-flex h-10 items-center justify-center rounded-lg border border-gray-300 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                 disabled={deleting}
               >
                 Batal
               </button>
+
               <button
                 type="button"
                 onClick={handleDeleteAccount}
-                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
+                className="inline-flex h-10 items-center justify-center rounded-lg bg-red-600 px-4 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
                 disabled={deleting || deletePassword.length === 0}
               >
-                {deleting ? 'Memproses…' : 'Ya, Hapus Akun Saya'}
+                {deleting ? 'Memproses…' : 'Ya, Hapus Akun'}
               </button>
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   )
 }

@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Enums\ApplicationStatus;
 use App\Enums\UserRole;
+use App\Mail\ReportRejectedMail;
 use App\Models\Application;
 use App\Services\AuditLogService;
 use App\Services\StatusTransitionService;
@@ -148,10 +149,7 @@ class ReportReviewPage extends Page
 
                 $auditor = $application->auditAssignment?->auditor;
                 if ($auditor?->email) {
-                    Mail::raw(
-                        "Laporan audit untuk aplikasi #{$application->id} ditolak.\nAlasan: {$data['rejection_reason']}",
-                        fn ($m) => $m->to($auditor->email)->subject('Laporan Audit Ditolak — MFTC')
-                    );
+                    Mail::to($auditor->email)->queue(new ReportRejectedMail($application, $data['rejection_reason']));
                 }
 
                 Notification::make()

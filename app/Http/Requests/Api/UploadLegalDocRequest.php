@@ -16,7 +16,7 @@ class UploadLegalDocRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'file', 'max:10240', 'mimes:pdf,jpg,jpeg,png'],
+            'file' => ['required', 'file', 'max:10240', 'mimes:pdf'],
         ];
     }
 

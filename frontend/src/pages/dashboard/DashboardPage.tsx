@@ -104,10 +104,10 @@ export default function DashboardPage() {
     ?? recentApplications[0]
 
   return (
-    <div className="space-y-gutter">
+    <div className="w-full min-w-0 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 border border-gray-200 rounded-xl flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center">
+        <div className="min-w-0 bg-white p-6 border border-gray-200 rounded-xl flex items-center gap-4">
+          <div className="h-12 w-12 shrink-0 rounded-lg bg-emerald-50 flex items-center justify-center">
             <span className="material-symbols-outlined text-emerald-700">description</span>
           </div>
           <div>
@@ -115,8 +115,8 @@ export default function DashboardPage() {
             <h2 className="font-h2 text-h2 text-on-surface">{applications.length}</h2>
           </div>
         </div>
-        <div className="bg-white p-6 border border-gray-200 rounded-xl flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center">
+        <div className="min-w-0 bg-white p-6 border border-gray-200 rounded-xl flex items-center gap-4">
+          <div className="h-12 w-12 shrink-0 rounded-lg bg-emerald-50 flex items-center justify-center">
             <span className="material-symbols-outlined text-emerald-700">verified</span>
           </div>
           <div>
@@ -124,8 +124,8 @@ export default function DashboardPage() {
             <h2 className="font-h2 text-h2 text-on-surface">{certifiedApplications.length}</h2>
           </div>
         </div>
-        <div className="bg-white p-6 border border-gray-200 rounded-xl flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-lg bg-amber-50 flex items-center justify-center">
+        <div className="min-w-0 bg-white p-6 border border-gray-200 rounded-xl flex items-center gap-4">
+          <div className="h-12 w-12 shrink-0 rounded-lg bg-amber-50 flex items-center justify-center">
             <span className="material-symbols-outlined text-amber-600">notification_important</span>
           </div>
           <div>
@@ -136,8 +136,8 @@ export default function DashboardPage() {
       </div>
 
       {revisionTarget ? (
-        <div className="bg-pink-50 border border-pink-200 rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex gap-3">
+        <div className="min-w-0 bg-pink-50 border border-pink-200 rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex min-w-0 gap-3">
             <span className="material-symbols-outlined text-pink-700">warning</span>
             <div>
               <div className="flex flex-wrap items-center gap-2">
@@ -160,8 +160,8 @@ export default function DashboardPage() {
         </div>
       ) : null}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 bg-white border border-gray-200 rounded-xl p-6">
+      <div className="grid grid-cols-1 xl:grid-cols-[320px_1fr] gap-6">
+        <div className="min-w-0 bg-white border border-gray-200 rounded-xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-body-md font-bold text-primary">Latest Progress</h3>
             <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded">
@@ -227,7 +227,7 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="min-w-0 bg-white border border-gray-200 rounded-xl overflow-hidden">
           <div className="p-6 flex justify-between items-center border-b border-gray-100">
             <h3 className="font-body-md font-bold text-primary">Recent Applications</h3>
             <Link className="text-sm font-semibold text-emerald-700 hover:underline" to="/dashboard/applications">
@@ -235,7 +235,7 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-left">
+            <table className="min-w-[760px] w-full text-left">
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 font-label-caps text-gray-500 uppercase tracking-wider">App ID</th>
@@ -278,14 +278,14 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="bg-primary p-gutter rounded-xl text-white flex flex-col md:flex-row items-center justify-between">
-        <div className="mb-4 md:mb-0">
-          <h3 className="font-h3 text-h3 mb-2">Grow your business with Halal Excellence</h3>
-          <p className="font-body-md opacity-80 max-w-lg">
+      <div className="min-w-0 bg-primary p-6 rounded-xl text-white flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+        <div className="min-w-0">
+          <h3 className="font-h3 text-h3 mb-2 leading-tight">Grow your business with Halal Excellence</h3>
+          <p className="font-body-md opacity-80 leading tight">
             Learn how MFT certification can help you reach 1.9 billion Muslim consumers worldwide with our new marketing toolkit.
           </p>
         </div>
-        <button className="px-6 py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-colors">
+        <button className="shrink-0 px-6 py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-100 transition-colors">
           Access Toolkit
         </button>
       </div>

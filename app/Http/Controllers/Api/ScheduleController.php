@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ApplicationStatus;
 use App\Http\Controllers\Controller;
+use App\Mail\RescheduleRequestedMail;
 use App\Models\Application;
+use App\Models\User;
 use App\Services\AuditLogService;
 use App\Services\StatusTransitionService;
 use App\Traits\ApiResponse;
@@ -23,7 +25,7 @@ class ScheduleController extends Controller
 
     public function confirmSchedule(Request $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::with('auditAssignment')
@@ -58,7 +60,7 @@ class ScheduleController extends Controller
 
     public function reschedule(Request $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::with('auditAssignment')
@@ -92,13 +94,7 @@ class ScheduleController extends Controller
             actor: $user,
         );
 
-        // Mail stub — will be replaced with proper Mailable in Phase 4
-        Mail::raw(
-            "PU meminta reschedule audit untuk pengajuan #{$application->id}.",
-            fn ($message) => $message
-                ->to('admin@mftc.test')
-                ->subject('Permintaan Reschedule Audit')
-        );
+        Mail::to(config('mail.from.address'))->queue(new RescheduleRequestedMail($application));
 
         return $this->success([
             'status' => $application->fresh()->status->value,

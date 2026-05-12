@@ -181,10 +181,9 @@ export default function PricingPage() {
                 </span>
                 <h3 className="text-2xl font-semibold mb-4">Akomodasi &amp; Transportasi</h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Untuk lokasi di luar area operasional utama (Jabodetabek), biaya perjalanan dan
-                  akomodasi auditor akan dibebankan sesuai dengan tarif standar perjalanan dinas.
+                  Transportasi dan akomodasi dapat disediakan oleh pelaku usaha.
                 </p>
-                <p className="text-emerald-800 font-bold">Mulai dari IDR 1.5jt / kunjungan</p>
+                {/* <p className="text-emerald-800 font-bold">Mulai dari IDR 1.5jt / kunjungan</p> */}
               </div>
             </div>
             <div className="md:col-span-4 bg-white p-8 rounded-xl border border-gray-200 flex flex-col justify-between">
@@ -197,9 +196,9 @@ export default function PricingPage() {
                   Penambahan lokasi atau cabang tambahan dalam satu grup perusahaan yang sama.
                 </p>
               </div>
-              <div className="mt-8 pt-4 border-t border-gray-200">
+              {/* <div className="mt-8 pt-4 border-t border-gray-200">
                 <p className="text-emerald-800 font-bold">Diskon 30% untuk site ke-2+</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -14,16 +14,19 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use UnitEnum;
 
 class AuditChecklistResource extends Resource
 {
     protected static ?string $model = AuditChecklist::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedListBullet;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
 
     protected static ?string $navigationLabel = 'Audit Checklists';
 
-    protected static ?int $navigationSort = 50;
+    protected static string|UnitEnum|null $navigationGroup = 'Audit';
+
+    protected static ?int $navigationSort = 2;
 
     public static function canAccess(): bool
     {

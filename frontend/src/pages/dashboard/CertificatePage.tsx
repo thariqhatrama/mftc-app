@@ -11,7 +11,7 @@ interface CertificateDetail {
   download_url?: string | null
 }
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL ?? window.location.origin
 const APP_URL = import.meta.env.VITE_APP_URL ?? window.location.origin
 
 function formatDateID(value: string | null | undefined): string {
@@ -73,13 +73,14 @@ export default function CertificatePage() {
     }
   }, [id])
 
+  const [now] = useState(() => Date.now())
+
   const validity = useMemo(() => {
     if (!certificate?.issued_at || !certificate.valid_until) {
       return { percent: 0, daysLeft: null as number | null, totalDays: 0 }
     }
     const issued = new Date(certificate.issued_at).getTime()
     const valid = new Date(certificate.valid_until).getTime()
-    const now = Date.now()
 
     if (Number.isNaN(issued) || Number.isNaN(valid) || valid <= issued) {
       return { percent: 0, daysLeft: null, totalDays: 0 }
@@ -90,7 +91,7 @@ export default function CertificatePage() {
     const percent = Math.max(0, Math.min(100, Math.round((daysLeft / totalDays) * 100)))
 
     return { percent, daysLeft, totalDays }
-  }, [certificate])
+  }, [certificate, now])
 
   const handleCopyLink = async () => {
     if (!certificate?.certificate_number) return

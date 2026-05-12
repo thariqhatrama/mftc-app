@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SystemConfigResource extends Resource
 {
@@ -23,7 +24,9 @@ class SystemConfigResource extends Resource
 
     protected static ?string $navigationLabel = 'System Config';
 
-    protected static ?int $navigationSort = 90;
+    protected static string|UnitEnum|null $navigationGroup = 'Konfigurasi';
+
+    protected static ?int $navigationSort = 2;
 
     public static function canAccess(): bool
     {

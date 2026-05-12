@@ -10,16 +10,19 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class AuditLogResource extends Resource
 {
     protected static ?string $model = AuditLog::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEye;
 
     protected static ?string $navigationLabel = 'Audit Logs';
 
-    protected static ?int $navigationSort = 80;
+    protected static string|UnitEnum|null $navigationGroup = 'Monitoring';
+
+    protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
     {

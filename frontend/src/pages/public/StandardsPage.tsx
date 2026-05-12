@@ -45,10 +45,10 @@ const MATRIX_ROWS = [
     three: 'Sistem Sanitasi Canggih',
   },
   {
-    label: 'Aktivitas Ramah Keluarga',
+    label: 'Memilliki sertifikat laik hygiene',
     one: 'Opsional',
     two: 'Direkomendasikan',
-    three: 'Wajib (Tersedia Area Khusus)',
+    three: 'Wajib',
   },
 ]
 
@@ -184,9 +184,9 @@ export default function StandardsPage() {
       <section id="dokumen" className="py-24 bg-white">
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-xl">
+            <div className="">
               <h2 className="text-3xl font-semibold text-emerald-900 mb-4">Dokumen Acuan</h2>
-              <p className="text-base text-gray-600">
+              <p className="text- text-gray-600">
                 Unduh dokumen standar operasional dan prosedur teknis untuk persiapan sertifikasi MFTC.
               </p>
             </div>

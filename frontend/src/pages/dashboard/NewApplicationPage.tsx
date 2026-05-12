@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
+import { PhoneInputField } from '../../components/PhoneInputField'
 import QuestionField, {
   type AssessmentQuestion,
   type QuestionAnswer,
@@ -74,7 +75,7 @@ interface AnswersPayload {
 
 function toAnswerPayload(answers: Record<string, QuestionAnswer>) {
   return Object.entries(answers)
-    .filter(([, answer]) => Boolean(answer.answer_value) || Boolean(answer.answer_files?.length))
+    .filter(([, answer]) => answer.answer_value !== undefined || answer.answer_files !== undefined)
     .map(([question_id, answer]) => ({
       question_id,
       answer_value: answer.answer_value ?? null,
@@ -107,6 +108,8 @@ export default function NewApplicationPage() {
   })
 
   const { fields, append, remove } = useFieldArray({ control: siteForm.control, name: 'sites' })
+  const selectedScope = useWatch({ control: stepOneForm.control, name: 'scope' })
+  const selectedLevel = useWatch({ control: stepOneForm.control, name: 'level' })
 
   const answeredCount = useMemo(
     () => questions.filter((question) => Boolean(answers[question.id]?.answer_value) || Boolean(answers[question.id]?.answer_files?.length)).length,
@@ -289,7 +292,7 @@ export default function NewApplicationPage() {
             </p>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {scopes.map(([value, icon, label]) => {
-                const selected = stepOneForm.watch('scope') === value
+                const selected = selectedScope === value
                 return (
                   <button
                     key={value}
@@ -316,7 +319,7 @@ export default function NewApplicationPage() {
             <h3 className="font-h3 text-h3 text-emerald-900 mb-6">Pilih Level Sertifikasi</h3>
             <div className="grid md:grid-cols-3 gap-4">
               {levels.map((level) => {
-                const selected = stepOneForm.watch('level') === level.value
+                const selected = selectedLevel === level.value
                 return (
                   <label
                     key={level.value}
@@ -395,7 +398,12 @@ export default function NewApplicationPage() {
                     <input className="px-4 py-3 border border-gray-300 rounded-lg" placeholder="Kontak person" {...siteForm.register(`sites.${index}.contact_person`)} />
                   </div>
                   <textarea className="w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Alamat lengkap" rows={3} {...siteForm.register(`sites.${index}.address`)}></textarea>
-                  <input className="w-full px-4 py-3 border border-gray-300 rounded-lg" placeholder="Nomor kontak" {...siteForm.register(`sites.${index}.contact_phone`)} />
+                  <PhoneInputField
+                    name={`sites.${index}.contact_phone`}
+                    control={siteForm.control}
+                    label="Nomor Kontak"
+                    errors={siteForm.formState.errors}
+                  />
                 </div>
               ))}
             </div>

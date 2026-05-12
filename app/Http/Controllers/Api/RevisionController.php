@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Enums\ApplicationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\SubmitRevisionRequest;
+use App\Mail\RevisionSubmittedMail;
 use App\Models\Application;
 use App\Models\NonConformity;
+use App\Models\User;
 use App\Services\AuditLogService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +23,7 @@ class RevisionController extends Controller
 
     public function index(Request $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::with('auditAssignment.nonConformities')
@@ -48,7 +50,7 @@ class RevisionController extends Controller
 
     public function submit(SubmitRevisionRequest $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::with('auditAssignment')
@@ -87,13 +89,10 @@ class RevisionController extends Controller
             actor: $user,
         );
 
-        // Mail stub — will be replaced with proper Mailable in Phase 4
-        Mail::raw(
-            "PU telah mengirim perbaikan untuk NC #{$nc->id} pada pengajuan #{$application->id}.",
-            fn ($message) => $message
-                ->to($application->auditAssignment->auditor->email ?? 'auditor@mftc.test')
-                ->subject('Perbaikan NC Diterima')
-        );
+        $auditor = $application->auditAssignment?->auditor;
+        if ($auditor?->email) {
+            Mail::to($auditor->email)->queue(new RevisionSubmittedMail($application, $nc));
+        }
 
         return $this->success([
             'id' => $nc->id,

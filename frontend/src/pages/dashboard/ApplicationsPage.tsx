@@ -78,7 +78,7 @@ export default function ApplicationsPage() {
   }
 
   return (
-    <div className="space-y-gutter">
+    <div className="w-full min-w-0 space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="font-h1 text-h1 text-primary mb-2">Daftar Pengajuan</h1>
@@ -96,7 +96,7 @@ export default function ApplicationsPage() {
         </button>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="min-w-0 bg-white border border-gray-200 rounded-xl overflow-hidden">
         <div className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-gray-100">
           <h2 className="font-body-md font-bold text-primary">Applications</h2>
           <label className="flex items-center gap-3 font-body-sm text-gray-500">
@@ -116,7 +116,7 @@ export default function ApplicationsPage() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="min-w-[860px] w-full text-left">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 font-label-caps text-gray-500 uppercase tracking-wider">ID Pengajuan</th>

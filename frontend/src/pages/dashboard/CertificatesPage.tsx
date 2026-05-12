@@ -69,7 +69,7 @@ export default function CertificatesPage() {
   }, [])
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
           <h1 className="text-h1 font-bold text-neutral-900">Sertifikat Halal Tourism</h1>
@@ -96,13 +96,13 @@ export default function CertificatesPage() {
             workspace_premium
           </span>
           <p className="text-h3 font-bold text-neutral-800">Belum ada sertifikat</p>
-          <p className="text-sm text-gray-500 mt-2 max-w-sm">
+          <p className="text-sm text-gray-500 mt-2 text-neutral-800">
             Sertifikat akan muncul di sini setelah pengajuan Anda disetujui dan diterbitkan oleh
             LPH MFTC.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid min-w-0 grid-cols-1 gap-4 lg:grid-cols-2">
           {certificates.map((cert) => (
             <div
               key={cert.id}

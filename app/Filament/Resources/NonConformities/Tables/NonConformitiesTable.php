@@ -4,6 +4,7 @@ namespace App\Filament\Resources\NonConformities\Tables;
 
 use App\Models\NonConformity;
 use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
@@ -58,12 +59,29 @@ class NonConformitiesTable
                     ->label('Verified'),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->modalHeading('Edit Non-Conformity')
+                    ->modalWidth('lg'),
+                Action::make('viewAttachment')
+                    ->label('Lihat File PU')
+                    ->icon(Heroicon::OutlinedPaperClip)
+                    ->color('info')
+                    ->visible(fn (NonConformity $record): bool => ! empty($record->pu_correction_attachment_url))
+                    ->modalHeading('File Perbaikan dari PU')
+                    ->modalContent(fn (NonConformity $record) => view(
+                        'filament.modals.nc-attachment',
+                        ['nc' => $record]
+                    ))
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Tutup')
+                    ->modalWidth('lg'),
                 Action::make('verifyNc')
-                    ->label('Verify NC')
-                    ->icon(Heroicon::OutlinedCheckBadge)
+                    ->label('Verifikasi Perbaikan')
+                    ->icon(Heroicon::OutlinedCheckCircle)
                     ->color('success')
                     ->requiresConfirmation()
+                    ->modalHeading('Verifikasi Perbaikan PU')
+                    ->modalDescription('Konfirmasi bahwa perbaikan PU sudah memadai dan NC ini dapat ditutup.')
                     ->visible(fn (NonConformity $record): bool => filled($record->pu_correction) && ! $record->verified_by_auditor)
                     ->action(function (NonConformity $record): void {
                         $record->update([
@@ -71,18 +89,29 @@ class NonConformitiesTable
                             'closed_at' => now(),
                         ]);
 
-                        $openCount = $record->auditAssignment
-                            ->nonConformities()
-                            ->whereNull('closed_at')
+                        $openCount = NonConformity::where('audit_assignment_id', $record->audit_assignment_id)
+                            ->where('verified_by_auditor', false)
                             ->count();
 
-                        Notification::make()
-                            ->title($openCount === 0
-                                ? 'Semua NC sudah diverifikasi. Anda sekarang dapat submit laporan.'
-                                : 'NC verified and closed')
-                            ->success()
-                            ->send();
+                        if ($openCount === 0) {
+                            Notification::make()
+                                ->success()
+                                ->title('Semua NC terverifikasi! Anda dapat submit laporan.')
+                                ->persistent()
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->success()
+                                ->title("NC ditutup. Sisa {$openCount} NC belum diverifikasi.")
+                                ->send();
+                        }
                     }),
+            ])
+            ->headerActions([
+                CreateAction::make()
+                    ->modalHeading('Tambah Non-Conformity')
+                    ->modalWidth('lg')
+                    ->successNotificationTitle('NC berhasil ditambahkan'),
             ])
             ->toolbarActions([]);
     }
