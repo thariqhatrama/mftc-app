@@ -4,7 +4,7 @@ namespace App\Filament\Resources\Invoices\Schemas;
 
 use App\Enums\ApplicationStatus;
 use App\Models\Application;
-use Filament\Forms\Components\Hidden;
+use App\Models\Invoice;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -24,12 +24,19 @@ class InvoiceForm
                             ->schema([
                                 Select::make('application_id')
                                     ->label('Application')
-                                    ->options(function (): array {
-                                        return Application::where('status', ApplicationStatus::SUBMITTED)
-                                            ->whereDoesntHave('invoice')
+                                    ->options(function (?Invoice $record): array {
+                                        return Application::query()
+                                            ->where(function ($query) use ($record): void {
+                                                $query->where('status', ApplicationStatus::SUBMITTED)
+                                                    ->whereDoesntHave('invoice');
+
+                                                if ($record) {
+                                                    $query->orWhere('id', $record->application_id);
+                                                }
+                                            })
                                             ->get()
                                             ->mapWithKeys(fn (Application $app) => [
-                                                $app->id => $app->id . ' — ' . ($app->puUser?->businessProfile?->company_name ?? 'N/A'),
+                                                $app->id => $app->id.' — '.($app->puUser?->businessProfile?->company_name ?? 'N/A'),
                                             ])
                                             ->toArray();
                                     })
@@ -57,7 +64,7 @@ class InvoiceForm
     public static function generateInvoiceNumber(): string
     {
         $year = now()->year;
-        $lastInvoice = \App\Models\Invoice::where('invoice_number', 'like', "INV/MFTC/{$year}/%")
+        $lastInvoice = Invoice::where('invoice_number', 'like', "INV/MFTC/{$year}/%")
             ->orderByDesc('invoice_number')
             ->first();
 

@@ -8,6 +8,7 @@ use App\Models\SelfAssessmentQuestion;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
@@ -69,7 +70,10 @@ class SelfAssessmentQuestionsTable
                     ->label('Active'),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->modalHeading('Edit Self-Assessment Question')
+                    ->modalWidth('3xl')
+                    ->successNotificationTitle('Question berhasil diperbarui'),
                 Action::make('deactivate')
                     ->label('Deactivate')
                     ->icon(Heroicon::OutlinedEyeSlash)
@@ -100,6 +104,10 @@ class SelfAssessmentQuestionsTable
                     }),
             ])
             ->headerActions([
+                CreateAction::make()
+                    ->modalHeading('Tambah Self-Assessment Question')
+                    ->modalWidth('3xl')
+                    ->successNotificationTitle('Question berhasil ditambahkan'),
                 Action::make('importJson')
                     ->label('Import JSON')
                     ->icon(Heroicon::OutlinedArrowUpTray)

@@ -11,6 +11,7 @@ use App\Services\AuditLogService;
 use App\Services\StatusTransitionService;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -111,6 +112,9 @@ class InvoicesTable
                     ->modalHeading('Edit Invoice')
                     ->modalWidth('lg')
                     ->successNotificationTitle('Invoice berhasil diperbarui')
+                    ->visible(fn (Invoice $record): bool => (self::isSales() && $record->status === PaymentStatus::PENDING)
+                        || self::isSuperAdmin()),
+                DeleteAction::make()
                     ->visible(fn (Invoice $record): bool => (self::isSales() && $record->status === PaymentStatus::PENDING)
                         || self::isSuperAdmin()),
                 Action::make('viewProof')
@@ -241,6 +245,20 @@ class InvoicesTable
                             ->minValue(0),
                         Textarea::make('description'),
                     ])
+                    ->mutateDataUsing(function (array $data): array {
+                        $data['status'] = PaymentStatus::PENDING->value;
+                        $data['original_amount'] = $data['amount'];
+
+                        return $data;
+                    })
+                    ->after(function (Invoice $record): void {
+                        $application = $record->application;
+
+                        if ($application && $application->status === ApplicationStatus::SUBMITTED) {
+                            app(StatusTransitionService::class)
+                                ->transition($application, ApplicationStatus::INVOICED->value, auth()->user());
+                        }
+                    })
                     ->successNotificationTitle('Invoice berhasil ditambahkan'),
             ])
             ->toolbarActions([]);

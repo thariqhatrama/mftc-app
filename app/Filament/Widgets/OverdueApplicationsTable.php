@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\ApplicationStatus;
-use App\Enums\UserRole;
 use App\Models\Application;
 use App\Models\SystemConfig;
 use Filament\Tables\Columns\TextColumn;
@@ -22,7 +21,7 @@ class OverdueApplicationsTable extends TableWidget
 
     public static function canView(): bool
     {
-        return auth()->check() && auth()->user()->role === UserRole::SUPER_ADMIN;
+        return false;
     }
 
     public function table(Table $table): Table

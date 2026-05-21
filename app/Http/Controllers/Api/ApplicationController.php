@@ -8,6 +8,7 @@ use App\Http\Requests\Api\StoreApplicationRequest;
 use App\Http\Requests\Api\UpdateApplicationRequest;
 use App\Models\Application;
 use App\Models\SelfAssessmentQuestion;
+use App\Models\User;
 use App\Services\StatusTransitionService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -22,7 +23,7 @@ class ApplicationController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $query = Application::with(['sites', 'invoice'])
@@ -48,7 +49,7 @@ class ApplicationController extends Controller
 
     public function store(StoreApplicationRequest $request): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = DB::transaction(function () use ($request, $user): Application {
@@ -75,7 +76,7 @@ class ApplicationController extends Controller
 
     public function show(Request $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::with([
@@ -122,7 +123,7 @@ class ApplicationController extends Controller
 
     public function update(UpdateApplicationRequest $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::where('pu_user_id', $user->id)
@@ -175,9 +176,35 @@ class ApplicationController extends Controller
         );
     }
 
+    public function destroy(Request $request, string $id): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        $application = Application::where('pu_user_id', $user->id)
+            ->findOrFail($id);
+
+        if ($application->status !== ApplicationStatus::DRAFT) {
+            return $this->error(
+                'DELETE_NOT_ALLOWED',
+                'Hanya pengajuan berstatus DRAFT yang bisa dihapus.',
+                422
+            );
+        }
+
+        DB::transaction(function () use ($application): void {
+            $application->sites()->delete();
+            $application->selfAssessment?->answers()->delete();
+            $application->selfAssessment?->delete();
+            $application->delete();
+        });
+
+        return $this->success(['deleted' => true]);
+    }
+
     public function submit(Request $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::with('selfAssessment.answers')
@@ -225,7 +252,7 @@ class ApplicationController extends Controller
 
     public function cancel(Request $request, string $id): JsonResponse
     {
-        /** @var \App\Models\User $user */
+        /** @var User $user */
         $user = $request->user();
 
         $application = Application::where('pu_user_id', $user->id)

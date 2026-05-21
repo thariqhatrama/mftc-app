@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CertificateController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\PublicController;
@@ -31,6 +32,7 @@ Route::prefix('v1')->group(function () {
         Route::delete('auth/impersonate-leave', [AuthController::class, 'impersonateLeave']);
 
         // Profile
+        Route::get('notifications', [NotificationController::class, 'index']);
         Route::get('profile', [ProfileController::class, 'show']);
         Route::post('profile', [ProfileController::class, 'upsert']);
         Route::post('profile/upload-legal-doc', [ProfileController::class, 'uploadLegalDoc']);
@@ -40,6 +42,7 @@ Route::prefix('v1')->group(function () {
         Route::post('applications', [ApplicationController::class, 'store']);
         Route::get('applications/{id}', [ApplicationController::class, 'show']);
         Route::put('applications/{id}', [ApplicationController::class, 'update']);
+        Route::delete('applications/{id}', [ApplicationController::class, 'destroy']);
         Route::post('applications/{id}/submit', [ApplicationController::class, 'submit']);
         Route::post('applications/{id}/cancel', [ApplicationController::class, 'cancel']);
 

@@ -3,8 +3,6 @@
 namespace App\Filament\Resources\SelfAssessmentQuestions;
 
 use App\Enums\UserRole;
-use App\Filament\Resources\SelfAssessmentQuestions\Pages\CreateSelfAssessmentQuestion;
-use App\Filament\Resources\SelfAssessmentQuestions\Pages\EditSelfAssessmentQuestion;
 use App\Filament\Resources\SelfAssessmentQuestions\Pages\ListSelfAssessmentQuestions;
 use App\Filament\Resources\SelfAssessmentQuestions\Schemas\SelfAssessmentQuestionForm;
 use App\Filament\Resources\SelfAssessmentQuestions\Tables\SelfAssessmentQuestionsTable;
@@ -52,8 +50,6 @@ class SelfAssessmentQuestionResource extends Resource
     {
         return [
             'index' => ListSelfAssessmentQuestions::route('/'),
-            'create' => CreateSelfAssessmentQuestion::route('/create'),
-            'edit' => EditSelfAssessmentQuestion::route('/{record}/edit'),
         ];
     }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import api, { ApiError, type ApiSuccess } from '../../lib/api'
 import StatusBadge from '../../components/StatusBadge'
 import UploadProofForm from '../../components/UploadProofForm'
@@ -297,6 +297,7 @@ function ScheduleSection({
 
 export default function ApplicationDetailPage() {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const [application, setApplication] = useState<ApplicationDetail | null>(null)
   const [invoiceData, setInvoiceData] = useState<InvoiceResponse | null>(null)
   const [revisionStats, setRevisionStats] = useState<{
@@ -307,6 +308,7 @@ export default function ApplicationDetailPage() {
   const [loading, setLoading] = useState(true)
   const [refreshKey, setRefreshKey] = useState(0)
   const [error, setError] = useState<string | null>(null)
+  const [deletingDraft, setDeletingDraft] = useState(false)
 
   useEffect(() => {
     if (!id) return
@@ -376,6 +378,23 @@ export default function ApplicationDetailPage() {
 
   const refresh = () => setRefreshKey((value) => value + 1)
 
+  const deleteDraft = async () => {
+    if (!application || !window.confirm('Hapus draft pengajuan ini? Data yang sudah diisi akan hilang.')) {
+      return
+    }
+
+    setDeletingDraft(true)
+    setError(null)
+    try {
+      await api.delete(`/applications/${application.id}`)
+      navigate('/dashboard/applications')
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Draft gagal dihapus.')
+    } finally {
+      setDeletingDraft(false)
+    }
+  }
+
   const activeStepIndex = useMemo(() => {
     if (!application) return -1
     return STATUS_ORDER[application.status] ?? -1
@@ -420,16 +439,50 @@ export default function ApplicationDetailPage() {
           <p className="text-h2 font-bold text-neutral-900 break-all">APP-{application.id.slice(0, 8)}</p>
           <p className="text-xs text-gray-500 mt-1">Versi data: v{application.version}</p>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase">
-            {scopeLabel(application.scope)}
-          </span>
-          <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold uppercase">
-            {levelLabel(application.level)}
-          </span>
-          <StatusBadge status={application.display_status} />
+        <div className="flex flex-col items-start md:items-end gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase">
+              {scopeLabel(application.scope)}
+            </span>
+            <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-bold uppercase">
+              {levelLabel(application.level)}
+            </span>
+            <StatusBadge status={application.display_status} />
+          </div>
+          {application.status === 'draft' ? (
+            <div className="flex flex-wrap gap-2">
+              <Link
+                to={`/dashboard/applications/${application.id}/edit`}
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-bold uppercase text-on-primary hover:bg-primary-container"
+              >
+                <span className="material-symbols-outlined text-base">edit</span>
+                Lanjutkan Draft
+              </Link>
+              <button
+                type="button"
+                onClick={() => void deleteDraft()}
+                disabled={deletingDraft}
+                className="inline-flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold uppercase text-red-700 hover:bg-red-100 disabled:opacity-50"
+              >
+                <span className="material-symbols-outlined text-base">delete</span>
+                {deletingDraft ? 'Menghapus...' : 'Hapus Draft'}
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
+
+      {application.status === 'draft' ? (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6 flex items-start gap-4">
+          <span className="material-symbols-outlined text-emerald-700 text-3xl">draft</span>
+          <div>
+            <p className="text-h3 font-bold text-emerald-900">Draft belum dikirim</p>
+            <p className="text-sm text-emerald-800 mt-1">
+              Lanjutkan pengisian lokasi dan pra-assessment, atau hapus draft jika tidak digunakan.
+            </p>
+          </div>
+        </div>
+      ) : null}
 
       <div className="bg-white border border-gray-200 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-5">

@@ -1,65 +1,77 @@
+import { useLanguage } from '../../contexts/LanguageContext'
+
 const KRITERIA = [
   {
     icon: 'mosque',
-    title: 'Fasilitas Ibadah',
-    description:
-      'Ketersediaan ruang sholat yang bersih, arah kiblat yang presisi, serta fasilitas wudhu yang memadai dan terpisah.',
+    titleKey: 'standards.criteria.prayer.title',
+    descriptionKey: 'standards.criteria.prayer.description',
   },
   {
     icon: 'restaurant_menu',
-    title: 'Makanan Halal',
-    description:
-      'Jaminan proses penyediaan makanan dan minuman yang bersertifikat Halal, mulai dari bahan baku hingga penyajian.',
+    titleKey: 'standards.criteria.food.title',
+    descriptionKey: 'standards.criteria.food.description',
   },
   {
     icon: 'support_agent',
-    title: 'Pelayanan Umum',
-    description:
-      'Staf yang terlatih dalam etika pelayanan ramah Muslim dan pemahaman mendalam tentang kebutuhan tamu.',
+    titleKey: 'standards.criteria.service.title',
+    descriptionKey: 'standards.criteria.service.description',
   },
   {
     icon: 'clean_hands',
-    title: 'Higienitas & Sanitasi',
-    description:
-      'Standar kebersihan yang ketat pada seluruh area publik dan toilet yang mendukung konsep Thaharah.',
+    titleKey: 'standards.criteria.sanitation.title',
+    descriptionKey: 'standards.criteria.sanitation.description',
   },
 ]
 
 const MATRIX_ROWS = [
   {
-    label: 'Penyediaan Musholla',
-    one: 'Wajib (Tersedia)',
-    two: 'Wajib (Luas & Nyaman)',
-    three: 'Eksklusif (Fasilitas Premium)',
+    labelKey: 'standards.matrix.prayer',
+    oneKey: 'standards.matrix.prayer.one',
+    twoKey: 'standards.matrix.prayer.two',
+    threeKey: 'standards.matrix.prayer.three',
   },
   {
-    label: 'Menu Halal',
-    one: 'Minimal 50% Menu',
-    two: 'Minimal 75% Menu',
-    three: '100% Halal Certified',
+    labelKey: 'standards.matrix.menu',
+    oneKey: 'standards.matrix.menu.one',
+    twoKey: 'standards.matrix.menu.two',
+    threeKey: 'standards.matrix.menu.three',
   },
   {
-    label: 'Toilet ramah Muslim',
-    one: 'Sesuai Standar Umum',
-    two: 'Peralatan Istinja Lengkap',
-    three: 'Sistem Sanitasi Canggih',
+    labelKey: 'standards.matrix.toilet',
+    oneKey: 'standards.matrix.toilet.one',
+    twoKey: 'standards.matrix.toilet.two',
+    threeKey: 'standards.matrix.toilet.three',
   },
   {
-    label: 'Memilliki sertifikat laik hygiene',
-    one: 'Opsional',
-    two: 'Direkomendasikan',
-    three: 'Wajib',
+    labelKey: 'standards.matrix.hygiene',
+    oneKey: 'standards.matrix.hygiene.one',
+    twoKey: 'standards.matrix.hygiene.two',
+    threeKey: 'standards.matrix.hygiene.three',
   },
 ]
 
 const DOCUMENTS = [
-  { title: 'Standar MFTC 2025', subtitle: 'Panduan Utama Kriteria Sertifikasi Baru' },
-  { title: 'PO/HALAL-PPS/04', subtitle: 'Prosedur Operasional Penjaminan Halal' },
-  { title: 'Formulir Self-Assessment', subtitle: 'Dokumen Persiapan Audit Internal' },
-  { title: 'Panduan Higienitas 2.0', subtitle: 'Standar Sanitasi Thaharah untuk Hotel' },
+  { titleKey: 'standards.documents.standard.title', subtitleKey: 'standards.documents.standard.subtitle' },
+  { titleKey: 'standards.documents.procedure.title', subtitleKey: 'standards.documents.procedure.subtitle' },
+  { titleKey: 'standards.documents.self.title', subtitleKey: 'standards.documents.self.subtitle' },
+  { titleKey: 'standards.documents.hygiene.title', subtitleKey: 'standards.documents.hygiene.subtitle' },
 ]
 
+function starLabel(stars: number, t: (key: string) => string): string {
+  if (stars === 1) {
+    return t('standards.matrix.one')
+  }
+
+  if (stars === 2) {
+    return t('standards.matrix.two')
+  }
+
+  return t('standards.matrix.three')
+}
+
 export default function StandardsPage() {
+  const { t } = useLanguage()
+
   return (
     <div className="bg-background text-on-background antialiased">
       <section className="relative py-24 bg-white overflow-hidden">
@@ -68,14 +80,13 @@ export default function StandardsPage() {
         </div>
         <div className="max-w-[1280px] mx-auto px-6 relative z-10 flex flex-col items-center text-center">
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold tracking-wider uppercase mb-6">
-            Panduan Resmi 2025
+            {t('standards.badge')}
           </span>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-emerald-900 mb-6 max-w-4xl">
-            Standar Pariwisata Ramah Muslim (MFTC)
+            {t('standards.hero.title')}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mb-10">
-            Acuan komprehensif untuk meningkatkan standar pelayanan pariwisata ramah Muslim di
-            Indonesia, memastikan kenyamanan, kepercayaan, dan kepatuhan global.
+            {t('standards.hero.description')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -83,14 +94,14 @@ export default function StandardsPage() {
               className="bg-emerald-700 text-white px-8 py-4 rounded-xl text-sm font-medium shadow-sm hover:opacity-90 transition-all flex items-center gap-2"
             >
               <span className="material-symbols-outlined text-lg">description</span>
-              Pelajari Kriteria
+              {t('standards.hero.criteria')}
             </a>
             <a
               href="#dokumen"
               className="bg-white border border-gray-300 px-8 py-4 rounded-xl text-sm font-medium text-emerald-900 hover:bg-emerald-50 transition-all flex items-center gap-2"
             >
               <span className="material-symbols-outlined text-lg">download</span>
-              Unduh Dokumen
+              {t('standards.hero.download')}
             </a>
           </div>
         </div>
@@ -99,13 +110,15 @@ export default function StandardsPage() {
       <section id="kriteria" className="py-24 bg-background">
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="mb-16">
-            <h2 className="text-3xl font-semibold text-emerald-900 mb-4">Kriteria Utama</h2>
+            <h2 className="text-3xl font-semibold text-emerald-900 mb-4">
+              {t('standards.criteria.title')}
+            </h2>
             <div className="w-20 h-1 bg-emerald-500 rounded-full" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {KRITERIA.map((item) => (
               <div
-                key={item.title}
+                key={item.titleKey}
                 className="bg-white p-8 border-l-4 border-emerald-700 rounded-xl shadow-sm border border-gray-100 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-700 mb-6">
@@ -116,8 +129,8 @@ export default function StandardsPage() {
                     {item.icon}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-sm text-gray-600">{item.description}</p>
+                <h3 className="text-xl font-semibold mb-3">{t(item.titleKey)}</h3>
+                <p className="text-sm text-gray-600">{t(item.descriptionKey)}</p>
               </div>
             ))}
           </div>
@@ -127,10 +140,10 @@ export default function StandardsPage() {
       <section className="py-24 bg-emerald-50/40">
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-semibold text-emerald-900 mb-4">Matriks Level Bintang</h2>
-            <p className="text-base text-gray-600">
-              Perbandingan persyaratan standar berdasarkan tingkatan sertifikasi
-            </p>
+            <h2 className="text-3xl font-semibold text-emerald-900 mb-4">
+              {t('standards.matrix.title')}
+            </h2>
+            <p className="text-base text-gray-600">{t('standards.matrix.description')}</p>
           </div>
           <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
             <div className="overflow-x-auto">
@@ -138,7 +151,7 @@ export default function StandardsPage() {
                 <thead>
                   <tr className="bg-gray-50">
                     <th className="p-6 text-xs font-semibold uppercase tracking-wider border-b border-gray-200">
-                      Kriteria Penilaian
+                      {t('standards.matrix.criteria')}
                     </th>
                     {[1, 2, 3].map((stars) => (
                       <th
@@ -157,7 +170,7 @@ export default function StandardsPage() {
                               </span>
                             ))}
                           </div>
-                          {stars === 1 ? 'One Star' : stars === 2 ? 'Two Star' : 'Three Star'}
+                          {starLabel(stars, t)}
                         </div>
                       </th>
                     ))}
@@ -165,12 +178,12 @@ export default function StandardsPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {MATRIX_ROWS.map((row) => (
-                    <tr key={row.label} className="hover:bg-emerald-50/40 transition-colors">
-                      <td className="p-6 font-medium">{row.label}</td>
-                      <td className="p-6 text-center text-gray-600 text-sm">{row.one}</td>
-                      <td className="p-6 text-center text-gray-600 text-sm">{row.two}</td>
+                    <tr key={row.labelKey} className="hover:bg-emerald-50/40 transition-colors">
+                      <td className="p-6 font-medium">{t(row.labelKey)}</td>
+                      <td className="p-6 text-center text-gray-600 text-sm">{t(row.oneKey)}</td>
+                      <td className="p-6 text-center text-gray-600 text-sm">{t(row.twoKey)}</td>
                       <td className="p-6 text-center text-sm font-semibold text-emerald-800">
-                        {row.three}
+                        {t(row.threeKey)}
                       </td>
                     </tr>
                   ))}
@@ -184,23 +197,24 @@ export default function StandardsPage() {
       <section id="dokumen" className="py-24 bg-white">
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="">
-              <h2 className="text-3xl font-semibold text-emerald-900 mb-4">Dokumen Acuan</h2>
-              <p className="text- text-gray-600">
-                Unduh dokumen standar operasional dan prosedur teknis untuk persiapan sertifikasi MFTC.
-              </p>
+            <div>
+              <h2 className="text-3xl font-semibold text-emerald-900 mb-4">
+                {t('standards.documents.title')}
+              </h2>
+              <p className="text-gray-600">{t('standards.documents.description')}</p>
             </div>
             <button
               type="button"
               className="flex items-center gap-2 text-emerald-800 font-bold hover:underline"
             >
-              Lihat Semua Arsip <span className="material-symbols-outlined">arrow_forward</span>
+              {t('standards.documents.viewAll')}{' '}
+              <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {DOCUMENTS.map((doc) => (
               <div
-                key={doc.title}
+                key={doc.titleKey}
                 className="flex items-center p-6 bg-white border border-gray-200 rounded-xl group hover:border-emerald-700 transition-all"
               >
                 <div className="w-16 h-16 bg-rose-100 text-rose-700 rounded-lg flex items-center justify-center mr-6 shrink-0">
@@ -208,9 +222,9 @@ export default function StandardsPage() {
                 </div>
                 <div className="flex-grow">
                   <h4 className="text-lg font-semibold mb-1 group-hover:text-emerald-800 transition-colors">
-                    {doc.title}
+                    {t(doc.titleKey)}
                   </h4>
-                  <p className="text-sm text-gray-600">{doc.subtitle}</p>
+                  <p className="text-sm text-gray-600">{t(doc.subtitleKey)}</p>
                 </div>
                 <button
                   type="button"

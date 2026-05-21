@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import LanguageSwitcher from '../components/LanguageSwitcher'
+import NotificationDropdown from '../components/NotificationDropdown'
 import { useAuth } from '../contexts/AuthContext'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const SIDEBAR_LINKS = [
-  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard', end: true },
-  { to: '/dashboard/applications', label: 'Pengajuan', icon: 'description', end: false },
-  { to: '/dashboard/certificates', label: 'Sertifikat', icon: 'verified', end: false },
-  { to: '/dashboard/profile', label: 'Profil Usaha', icon: 'person', end: false },
+  { to: '/dashboard', labelKey: 'pu.sidebar.dashboard', icon: 'dashboard', end: true },
+  { to: '/dashboard/profile', labelKey: 'pu.sidebar.profile', icon: 'person', end: false },
+  { to: '/dashboard/applications', labelKey: 'pu.sidebar.applications', icon: 'description', end: false },
+  { to: '/dashboard/certificates', labelKey: 'pu.sidebar.certificates', icon: 'verified', end: false },
 ]
 
 export function PULayout() {
   const { user, logout, isImpersonated, leaveImpersonate } = useAuth()
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const [signingOut, setSigningOut] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -64,8 +68,8 @@ export function PULayout() {
       )}
 
       <aside
-        className={`fixed left-0 top-0 z-40 h-screen w-60 shrink-0 flex-col border-r border-gray-200 bg-gray-50 transition-transform duration-300 ease-in-out md:flex md:translate-x-0 ${
-          mobileMenuOpen ? 'flex translate-x-0' : '-translate-x-full'
+        className={`fixed left-0 top-0 z-40 flex h-screen w-60 shrink-0 flex-col border-r border-gray-200 bg-gray-50 transition-transform duration-300 ease-in-out md:flex md:translate-x-0 ${
+          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="px-6 py-8 flex items-center justify-between">
@@ -100,7 +104,7 @@ export function PULayout() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="material-symbols-outlined mr-3">{link.icon}</span>
-              {link.label}
+              {t(link.labelKey)}
             </NavLink>
           ))}
         </nav>
@@ -111,7 +115,7 @@ export function PULayout() {
             href="#"
           >
             <span className="material-symbols-outlined mr-3">help</span>
-            Help Center
+            {t('pu.sidebar.help')}
           </a>
           <button
             type="button"
@@ -120,30 +124,26 @@ export function PULayout() {
             className="w-full flex items-center px-4 py-2 text-error font-inter text-sm font-semibold hover:bg-error-container/20 transition-colors disabled:opacity-50"
           >
             <span className="material-symbols-outlined mr-3">logout</span>
-            {signingOut ? 'Logging out…' : 'Logout'}
+            {signingOut ? t('pu.logout.loading') : t('pu.logout')}
           </button>
         </div>
       </aside>
 
       <main className="min-h-screen min-w-0 flex-1 md:ml-60">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-gray-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
+        <header className="sticky top-0 z-[35] flex h-16 items-center justify-between gap-4 border-b border-gray-200 bg-white/95 px-4 backdrop-blur-sm sm:px-6">
           <div className="flex min-w-0 items-center">
             <button
               type="button"
-              className="md:hidden mr-3 text-gray-500 hover:text-gray-900"
+              className="relative z-[36] mr-3 rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 md:hidden"
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="material-symbols-outlined text-2xl">menu</span>
             </button>
-            <h1 className="truncate font-h3 text-h3 text-primary">Dashboard PU</h1>
+            <h1 className="truncate font-h3 text-h3 text-primary">{t('pu.title')}</h1>
           </div>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-            <div className="relative">
-              <span className="material-symbols-outlined text-outline p-2 hover:bg-surface-container rounded-full cursor-pointer">
-                notifications
-              </span>
-              <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
-            </div>
+            <LanguageSwitcher />
+            <NotificationDropdown />
             <div className="flex items-center">
               <div className="text-right mr-3">
                 <p className="font-body-sm text-on-surface font-semibold">

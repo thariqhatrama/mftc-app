@@ -5,28 +5,31 @@ import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { PhoneInputField } from '../../components/PhoneInputField'
 import { useAuth } from '../../contexts/AuthContext'
+import { useLanguage } from '../../contexts/LanguageContext'
 import { ApiError } from '../../lib/api'
 
-const registerSchema = z
-  .object({
-    full_name: z.string().min(1, 'Nama lengkap wajib diisi'),
-    email: z.string().email('Format email tidak valid'),
-    phone: z.string().optional(),
-    password: z
-      .string()
-      .min(8, 'Minimal 8 karakter')
-      .regex(/(?=.*[a-zA-Z])(?=.*[0-9])/, 'Harus kombinasi huruf dan angka'),
-    password_confirmation: z.string(),
-    terms: z.literal(true, {
-      error: 'Anda harus menyetujui syarat & ketentuan',
-    }),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: 'Konfirmasi kata sandi tidak cocok',
-    path: ['password_confirmation'],
-  })
+function createRegisterSchema(t: (key: string) => string) {
+  return z
+    .object({
+      full_name: z.string().min(1, t('auth.validation.fullNameRequired')),
+      email: z.string().email(t('auth.validation.emailInvalid')),
+      phone: z.string().optional(),
+      password: z
+        .string()
+        .min(8, t('auth.validation.passwordRegisterMin'))
+        .regex(/(?=.*[a-zA-Z])(?=.*[0-9])/, t('auth.validation.passwordCombination')),
+      password_confirmation: z.string(),
+      terms: z.literal(true, {
+        error: t('auth.validation.terms'),
+      }),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t('auth.validation.passwordConfirmation'),
+      path: ['password_confirmation'],
+    })
+}
 
-type RegisterForm = z.infer<typeof registerSchema>
+type RegisterForm = z.infer<ReturnType<typeof createRegisterSchema>>
 
 const labelClassName = 'block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500'
 const inputClassName =
@@ -37,6 +40,7 @@ const errorClassName = 'text-xs font-medium text-red-600'
 
 export default function RegisterPage() {
   const { register: registerUser } = useAuth()
+  const { t } = useLanguage()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
@@ -49,7 +53,7 @@ export default function RegisterPage() {
     control,
     formState: { errors },
   } = useForm<RegisterForm>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(createRegisterSchema(t)),
     defaultValues: {
       full_name: '',
       email: '',
@@ -73,7 +77,7 @@ export default function RegisterPage() {
         setApiError(err.message)
         return
       }
-      setApiError('Registrasi gagal. Silakan coba lagi.')
+      setApiError(t('auth.register.failed'))
     } finally {
       setIsLoading(false)
     }
@@ -94,32 +98,31 @@ export default function RegisterPage() {
               verified_user
             </span>
             <div>
-              <p className="text-lg font-bold tracking-tight">HalalCertify</p>
-              <p className="text-xs font-medium uppercase tracking-[0.24em] text-emerald-100/70">MFTC Portal</p>
+              <p className="text-lg font-bold tracking-tight">{t('auth.brand.register')}</p>
+              <p className="text-xs font-medium uppercase tracking-[0.24em] text-emerald-100/70">{t('auth.portal')}</p>
             </div>
           </Link>
 
           <div className="w-full max-w-2xl space-y-7 py-14">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-medium text-emerald-50 backdrop-blur">
               <span className="material-symbols-outlined text-base text-[#6cf8bb]">workspace_premium</span>
-              Trusted certification onboarding
+              {t('auth.register.badge')}
             </div>
             <div className="space-y-5">
               <h1 className="max-w-2xl text-4xl font-bold leading-[1.08] tracking-[-0.04em] lg:text-5xl xl:text-[56px]">
-                Elevating global standards for <span className="text-[#6cf8bb]">Muslim-friendly</span> tourism.
+                {t('auth.register.hero.title')}
               </h1>
               <p className="max-w-xl text-base leading-7 text-emerald-50/75 lg:text-lg">
-                Join tourism providers completing the Muslim Friendly Tourism Certification process with a guided,
-                secure, and transparent digital workflow.
+                {t('auth.register.hero.description')}
               </p>
             </div>
           </div>
 
           <div className="grid w-full max-w-2xl grid-cols-3 gap-3">
             {[
-              { value: '500+', label: 'Certified partners' },
-              { value: '25', label: 'Countries' },
-              { value: '100%', label: 'Integrity rate' },
+              { value: '500+', label: t('auth.register.stat.partners') },
+              { value: '25', label: t('auth.register.stat.countries') },
+              { value: '100%', label: t('auth.register.stat.integrity') },
             ].map((item) => (
               <div key={item.label} className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                 <p className="text-2xl font-bold text-white">{item.value}</p>
@@ -136,16 +139,16 @@ export default function RegisterPage() {
             <span className="material-symbols-outlined flex h-10 w-10 items-center justify-center rounded-2xl bg-[#004532] text-2xl text-white">
               verified_user
             </span>
-            <span className="text-lg font-bold tracking-tight text-[#004532]">HalalCertify</span>
+            <span className="text-lg font-bold tracking-tight text-[#004532]">{t('auth.brand.register')}</span>
           </Link>
 
           <div className="rounded-[2rem] border border-white bg-white/85 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur sm:p-8">
             <header className="mb-8 space-y-3">
-              <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#006c49]">Pelaku Usaha</p>
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#006c49]">{t('auth.register.role')}</p>
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-[-0.03em] text-slate-950">Daftar Akun MFTC</h2>
+                <h2 className="text-3xl font-bold tracking-[-0.03em] text-slate-950">{t('auth.register.title')}</h2>
                 <p className="text-sm leading-6 text-slate-500">
-                  Lengkapi data di bawah ini untuk memulai proses sertifikasi Anda sebagai Pelaku Usaha (PU).
+                  {t('auth.register.subtitle')}
                 </p>
               </div>
             </header>
@@ -159,7 +162,7 @@ export default function RegisterPage() {
             <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
               <div className="space-y-2">
                 <label className={labelClassName} htmlFor="full_name">
-                  Nama Lengkap
+                  {t('auth.register.fullName')}
                 </label>
                 <div className="relative">
                   <span className={iconClassName}>person</span>
@@ -168,7 +171,7 @@ export default function RegisterPage() {
                     id="full_name"
                     type="text"
                     autoComplete="name"
-                    placeholder="Contoh: Ahmad Abdullah"
+                    placeholder={t('auth.register.fullNamePlaceholder')}
                     className={inputClassName}
                     aria-invalid={Boolean(errors.full_name)}
                   />
@@ -178,7 +181,7 @@ export default function RegisterPage() {
 
               <div className="space-y-2">
                 <label className={labelClassName} htmlFor="email">
-                  Email Bisnis
+                  {t('auth.register.email')}
                 </label>
                 <div className="relative">
                   <span className={iconClassName}>mail</span>
@@ -199,14 +202,14 @@ export default function RegisterPage() {
                 <PhoneInputField
                   name="phone"
                   control={control}
-                  label="Nomor Telepon / WhatsApp"
+                  label={t('auth.register.phone')}
                   errors={errors}
                 />
               </div>
 
               <div className="space-y-2">
                 <label className={labelClassName} htmlFor="password">
-                  Kata Sandi
+                  {t('auth.register.password')}
                 </label>
                 <div className="relative">
                   <span className={iconClassName}>lock</span>
@@ -215,7 +218,7 @@ export default function RegisterPage() {
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="new-password"
-                    placeholder="Minimal 8 karakter"
+                    placeholder={t('auth.register.passwordPlaceholder')}
                     className={passwordInputClassName}
                     aria-invalid={Boolean(errors.password)}
                   />
@@ -223,20 +226,20 @@ export default function RegisterPage() {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
-                    aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
+                    aria-label={showPassword ? t('auth.password.hide') : t('auth.password.show')}
                   >
                     <span className="material-symbols-outlined text-xl">
                       {showPassword ? 'visibility_off' : 'visibility'}
                     </span>
                   </button>
                 </div>
-                <p className="text-xs leading-5 text-slate-400">Minimal 8 karakter dengan kombinasi huruf dan angka.</p>
+                <p className="text-xs leading-5 text-slate-400">{t('auth.register.passwordHelp')}</p>
                 {errors.password && <p className={errorClassName}>{errors.password.message}</p>}
               </div>
 
               <div className="space-y-2">
                 <label className={labelClassName} htmlFor="password_confirmation">
-                  Konfirmasi Kata Sandi
+                  {t('auth.register.confirmPassword')}
                 </label>
                 <div className="relative">
                   <span className={iconClassName}>lock</span>
@@ -245,7 +248,7 @@ export default function RegisterPage() {
                     id="password_confirmation"
                     type={showConfirm ? 'text' : 'password'}
                     autoComplete="new-password"
-                    placeholder="Ulangi kata sandi"
+                    placeholder={t('auth.register.confirmPasswordPlaceholder')}
                     className={passwordInputClassName}
                     aria-invalid={Boolean(errors.password_confirmation)}
                   />
@@ -253,7 +256,7 @@ export default function RegisterPage() {
                     type="button"
                     onClick={() => setShowConfirm(!showConfirm)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
-                    aria-label={showConfirm ? 'Sembunyikan konfirmasi kata sandi' : 'Tampilkan konfirmasi kata sandi'}
+                    aria-label={showConfirm ? t('auth.password.hideConfirm') : t('auth.password.showConfirm')}
                   >
                     <span className="material-symbols-outlined text-xl">
                       {showConfirm ? 'visibility_off' : 'visibility'}
@@ -273,15 +276,15 @@ export default function RegisterPage() {
                     aria-invalid={Boolean(errors.terms)}
                   />
                   <label htmlFor="terms" className="cursor-pointer text-sm leading-6 text-slate-600">
-                    Saya menyetujui{' '}
+                    {t('auth.register.termsPrefix')}{' '}
                     <Link to="/terms" className="font-semibold text-[#004532] hover:underline">
-                      Syarat & Ketentuan
+                      {t('auth.register.terms')}
                     </Link>{' '}
-                    serta{' '}
+                    {t('auth.register.privacyPrefix')}{' '}
                     <Link to="/privacy" className="font-semibold text-[#004532] hover:underline">
-                      Kebijakan Privasi
+                      {t('auth.register.privacy')}
                     </Link>{' '}
-                    MFTC.
+                    {t('auth.register.termsSuffix')}
                   </label>
                 </div>
                 {errors.terms && <p className={errorClassName}>{errors.terms.message}</p>}
@@ -295,11 +298,11 @@ export default function RegisterPage() {
                 {isLoading ? (
                   <>
                     <span className="material-symbols-outlined text-base animate-spin">progress_activity</span>
-                    Mendaftar...
+                    {t('auth.register.submitting')}
                   </>
                 ) : (
                   <>
-                    Daftar Sekarang
+                    {t('auth.register.submit')}
                     <span className="material-symbols-outlined text-base">arrow_forward</span>
                   </>
                 )}
@@ -307,9 +310,9 @@ export default function RegisterPage() {
             </form>
 
             <p className="mt-7 text-center text-sm text-slate-500">
-              Sudah memiliki akun?{' '}
+              {t('auth.register.haveAccount')}{' '}
               <Link to="/login" className="font-semibold text-[#004532] hover:underline">
-                Login di sini
+                {t('auth.register.loginLink')}
               </Link>
             </p>
           </div>

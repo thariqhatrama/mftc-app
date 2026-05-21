@@ -6,6 +6,7 @@ use App\Enums\ApplicationStatus;
 use App\Exceptions\InvalidStatusTransitionException;
 use App\Models\Application;
 use App\Models\AuditChecklist;
+use App\Models\NonConformity;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -60,6 +61,14 @@ class StatusTransitionService
 
             if ($uncompleted > 0) {
                 throw new Exception("Masih ada {$uncompleted} item checklist yang belum diisi.");
+            }
+
+            $openNonConformities = $assignment
+                ? NonConformity::where('audit_assignment_id', $assignment->id)->whereNull('closed_at')->count()
+                : 0;
+
+            if ($openNonConformities > 0) {
+                throw new Exception("Masih ada {$openNonConformities} NC yang belum ditutup/verifikasi auditor.");
             }
         }
 

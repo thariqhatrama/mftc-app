@@ -202,6 +202,19 @@ class AuditAssignmentsTable
                         ]);
 
                         if ($data['recommendation'] === 'approve') {
+                            $openNc = $assignment->nonConformities()->whereNull('closed_at')->count();
+
+                            if ($openNc > 0) {
+                                Notification::make()
+                                    ->danger()
+                                    ->title("Masih ada {$openNc} NC yang belum ditutup/verifikasi auditor.")
+                                    ->body('Laporan tidak bisa disubmit ke Super Admin sebelum semua NC selesai.')
+                                    ->persistent()
+                                    ->send();
+
+                                return null;
+                            }
+
                             try {
                                 app(StatusTransitionService::class)->transition(
                                     $record,

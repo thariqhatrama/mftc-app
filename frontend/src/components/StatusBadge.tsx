@@ -1,3 +1,5 @@
+import { useLanguage } from '../contexts/LanguageContext'
+
 const STATUS_CLASSES: Record<string, string> = {
   DRAFT: 'bg-gray-100 text-gray-600',
   SUBMITTED: 'bg-blue-50 text-blue-700',
@@ -21,12 +23,15 @@ const STATUS_CLASSES: Record<string, string> = {
 }
 
 export function StatusBadge({ status }: { status: string }) {
-  const classes = STATUS_CLASSES[status.toUpperCase()] ?? 'bg-gray-100 text-gray-600'
+  const { t } = useLanguage()
+  const statusKey = status.toUpperCase()
+  const classes = STATUS_CLASSES[statusKey] ?? 'bg-gray-100 text-gray-600'
+
   return (
     <span
       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase ${classes}`}
     >
-      {status}
+      {t(statusKey)}
     </span>
   )
 }

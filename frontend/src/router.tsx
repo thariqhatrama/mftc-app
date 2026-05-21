@@ -42,6 +42,7 @@ export const router = createBrowserRouter([
           { path: '/dashboard', element: <DashboardPage /> },
           { path: '/dashboard/applications', element: <ApplicationsPage /> },
           { path: '/dashboard/applications/new', element: <NewApplicationPage /> },
+          { path: '/dashboard/applications/:id/edit', element: <NewApplicationPage /> },
           { path: '/dashboard/applications/:id', element: <ApplicationDetailPage /> },
           {
             path: '/dashboard/applications/:id/revisions',

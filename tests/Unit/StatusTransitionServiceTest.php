@@ -5,7 +5,9 @@ use App\Enums\CertificationLevel;
 use App\Enums\ScopeObject;
 use App\Exceptions\InvalidStatusTransitionException;
 use App\Models\Application;
+use App\Models\AuditAssignment;
 use App\Models\AuditLog;
+use App\Models\NonConformity;
 use App\Models\User;
 use App\Services\StatusTransitionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -91,3 +93,27 @@ test('unknown target status throws InvalidStatusTransitionException', function (
 
     app(StatusTransitionService::class)->transition($application, 'unknown_status');
 })->throws(InvalidStatusTransitionException::class);
+
+test('report cannot be submitted while non conformities are still open', function () {
+    $application = makeStatusTransitionApplication(ApplicationStatus::REVISION);
+    $assignment = AuditAssignment::create([
+        'application_id' => $application->id,
+        'auditor_user_id' => User::factory()->auditor()->create()->id,
+        'scheduled_date' => now()->toDateString(),
+        'scheduled_time' => '09:00:00',
+        'location' => 'Main site',
+    ]);
+
+    NonConformity::create([
+        'audit_assignment_id' => $assignment->id,
+        'description' => 'Dokumen pendukung belum lengkap.',
+        'severity' => 'minor',
+        'verified_by_auditor' => false,
+    ]);
+
+    app(StatusTransitionService::class)->transition(
+        $application,
+        ApplicationStatus::REPORT_SUBMITTED->value,
+        User::factory()->auditor()->create(),
+    );
+})->throws(Exception::class, 'Masih ada 1 NC yang belum ditutup/verifikasi auditor.');

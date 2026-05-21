@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useFieldArray, useForm, useWatch } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 import { PhoneInputField } from '../../components/PhoneInputField'
 import QuestionField, {
@@ -73,6 +73,15 @@ interface AnswersPayload {
   }>
 }
 
+interface DraftApplicationPayload extends ApplicationSummary {
+  sites?: Array<{
+    site_name: string
+    address: string
+    contact_person?: string | null
+    contact_phone?: string | null
+  }> | null
+}
+
 function toAnswerPayload(answers: Record<string, QuestionAnswer>) {
   return Object.entries(answers)
     .filter(([, answer]) => answer.answer_value !== undefined || answer.answer_files !== undefined)
@@ -85,6 +94,7 @@ function toAnswerPayload(answers: Record<string, QuestionAnswer>) {
 
 export default function NewApplicationPage() {
   const navigate = useNavigate()
+  const { id: draftId } = useParams<{ id: string }>()
   const [currentStep, setCurrentStep] = useState<WizardStep>(1)
   const [applicationId, setApplicationId] = useState<string | null>(null)
   const [applicationVersion, setApplicationVersion] = useState<number>(1)
@@ -92,6 +102,7 @@ export default function NewApplicationPage() {
   const [answers, setAnswers] = useState<Record<string, QuestionAnswer>>({})
   const [assessmentError, setAssessmentError] = useState<string | null>(null)
   const [apiError, setApiError] = useState<string | null>(null)
+  const [draftMessage, setDraftMessage] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const debounceRef = useRef<number | null>(null)
 
@@ -115,6 +126,56 @@ export default function NewApplicationPage() {
     () => questions.filter((question) => Boolean(answers[question.id]?.answer_value) || Boolean(answers[question.id]?.answer_files?.length)).length,
     [answers, questions],
   )
+
+  useEffect(() => {
+    if (!draftId) {
+      return
+    }
+
+    let mounted = true
+    ;(async () => {
+      setSaving(true)
+      setApiError(null)
+      try {
+        const res = await api.get<ApiSuccess<DraftApplicationPayload>>(`/applications/${draftId}`)
+        if (!mounted) {
+          return
+        }
+
+        const draft = res.data.data
+        if (draft.status !== 'draft') {
+          setApiError('Pengajuan ini bukan draft dan tidak bisa dilanjutkan.')
+          return
+        }
+
+        setApplicationId(draft.id)
+        setApplicationVersion(draft.version)
+        stepOneForm.reset({ scope: draft.scope ?? '', level: draft.level ?? '' })
+        siteForm.reset({
+          sites: draft.sites?.length
+            ? draft.sites.map((site) => ({
+                site_name: site.site_name,
+                address: site.address,
+                contact_person: site.contact_person ?? '',
+                contact_phone: site.contact_phone ?? '',
+              }))
+            : [{ site_name: '', address: '', contact_person: '', contact_phone: '' }],
+        })
+        setCurrentStep(2)
+        setDraftMessage('Draft berhasil dimuat. Lanjutkan pengisian data lokasi atau pra-assessment.')
+      } catch (err) {
+        setApiError(err instanceof ApiError ? err.message : 'Draft gagal dimuat.')
+      } finally {
+        if (mounted) {
+          setSaving(false)
+        }
+      }
+    })()
+
+    return () => {
+      mounted = false
+    }
+  }, [draftId, siteForm, stepOneForm])
 
   useEffect(() => {
     if (currentStep !== 3 || !applicationId) {
@@ -154,15 +215,58 @@ export default function NewApplicationPage() {
 
   const saveAnswers = async (nextAnswers = answers) => {
     if (!applicationId) {
-      return
+      return false
     }
 
     const payload = toAnswerPayload(nextAnswers)
     if (payload.length === 0) {
-      return
+      return false
     }
 
     await api.put(`/applications/${applicationId}/assessment/answers`, { answers: payload })
+    return true
+  }
+
+  const saveSitesDraft = async () => {
+    if (!applicationId) {
+      setApiError('Application ID belum tersedia.')
+      return
+    }
+
+    const isValid = await siteForm.trigger()
+    if (!isValid) {
+      return
+    }
+
+    setApiError(null)
+    setDraftMessage(null)
+    setSaving(true)
+    try {
+      const res = await api.put<ApiSuccess<ApplicationSummary>>(`/applications/${applicationId}`, {
+        version: applicationVersion,
+        sites: siteForm.getValues('sites'),
+      })
+      setApplicationVersion(res.data.data.version)
+      setDraftMessage('Draft lokasi berhasil disimpan.')
+    } catch (err) {
+      setApiError(err instanceof ApiError ? err.message : 'Draft lokasi gagal disimpan.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const saveAssessmentDraft = async () => {
+    setAssessmentError(null)
+    setDraftMessage(null)
+    setSaving(true)
+    try {
+      const saved = await saveAnswers()
+      setDraftMessage(saved ? 'Draft pra-assessment berhasil disimpan.' : 'Belum ada jawaban untuk disimpan.')
+    } catch (err) {
+      setAssessmentError(err instanceof ApiError ? err.message : 'Draft pra-assessment gagal disimpan.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const scheduleAutosave = (nextAnswers: Record<string, QuestionAnswer>) => {
@@ -283,10 +387,18 @@ export default function NewApplicationPage() {
         </div>
       ) : null}
 
+      {draftMessage ? (
+        <div className="mb-6 rounded-lg bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
+          {draftMessage}
+        </div>
+      ) : null}
+
       {currentStep === 1 ? (
         <form className="space-y-8" onSubmit={stepOneForm.handleSubmit(createApplication)}>
           <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-            <h3 className="font-h3 text-h3 text-emerald-900 mb-1">Langkah 1: Pilih Ruang Lingkup</h3>
+            <h3 className="font-h3 text-h3 text-emerald-900 mb-1">
+              {draftId ? 'Draft Dimuat: Pilih Ruang Lingkup' : 'Langkah 1: Pilih Ruang Lingkup'}
+            </h3>
             <p className="text-sm text-gray-600 leading-relaxed mb-6">
               Pilih kategori usaha dan level sertifikasi yang ingin Anda ajukan.
             </p>
@@ -418,8 +530,8 @@ export default function NewApplicationPage() {
               Kembali ke Ruang Lingkup
             </button>
             <div className="flex gap-4">
-              <button type="button" className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-button text-button hover:bg-gray-50 transition-all">
-                Simpan Draft
+              <button type="button" onClick={saveSitesDraft} disabled={saving} className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-button text-button hover:bg-gray-50 transition-all disabled:opacity-60">
+                {saving ? 'Menyimpan…' : 'Simpan Draft'}
               </button>
               <button type="submit" disabled={saving} className="px-10 py-3 bg-primary-container text-white rounded-lg font-button text-button shadow-md hover:opacity-90 transition-all disabled:opacity-60">
                 {saving ? 'Menyimpan…' : 'Selanjutnya: Pra-Assessment'}
@@ -504,8 +616,8 @@ export default function NewApplicationPage() {
                   <span>Kembali ke Lokasi</span>
                 </button>
                 <div className="flex gap-3">
-                  <button type="button" onClick={() => void saveAnswers()} className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-bold text-sm hover:bg-gray-50 transition-all">
-                    Simpan Draft
+                  <button type="button" onClick={saveAssessmentDraft} disabled={saving} className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-bold text-sm hover:bg-gray-50 transition-all disabled:opacity-60">
+                    {saving ? 'Menyimpan…' : 'Simpan Draft'}
                   </button>
                   <button type="button" onClick={submitApplication} disabled={saving} className="bg-emerald-900 text-white px-8 py-3 rounded-lg font-bold flex items-center space-x-2 hover:bg-emerald-950 transition-all shadow-sm disabled:opacity-60">
                     <span>{saving ? 'Mengirim…' : 'Submit Pengajuan'}</span>

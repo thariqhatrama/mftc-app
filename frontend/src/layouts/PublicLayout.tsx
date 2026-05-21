@@ -1,16 +1,21 @@
+import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 import { useAuth } from '../contexts/AuthContext'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const NAV_LINKS = [
-  { to: '/', label: 'Home', end: true },
-  { to: '/standards', label: 'Standards', end: false },
-  { to: '/pricing', label: 'Pricing', end: false },
-  { to: '/about', label: 'About', end: false },
+  { to: '/', labelKey: 'public.nav.home', end: true },
+  { to: '/standards', labelKey: 'public.nav.standards', end: false },
+  { to: '/pricing', labelKey: 'public.nav.pricing', end: false },
+  { to: '/about', labelKey: 'public.nav.about', end: false },
 ]
 
 export function PublicLayout() {
   const { user } = useAuth()
+  const { t } = useLanguage()
   const navigate = useNavigate()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-surface text-on-surface">
@@ -34,19 +39,20 @@ export function PublicLayout() {
                   }`
                 }
               >
-                {link.label}
+                {t(link.labelKey)}
               </NavLink>
             ))}
           </div>
 
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="hidden shrink-0 items-center gap-3 md:flex">
+            <LanguageSwitcher />
             {user ? (
               <button
                 type="button"
                 onClick={() => navigate('/dashboard')}
                 className="rounded-lg bg-primary-container px-5 py-2 font-inter text-sm font-medium text-white transition-all hover:bg-primary active:opacity-80"
               >
-                Dashboard
+                {t('common.dashboard')}
               </button>
             ) : (
               <>
@@ -55,19 +61,87 @@ export function PublicLayout() {
                   onClick={() => navigate('/login')}
                   className="px-4 py-2 font-inter text-sm font-medium text-gray-600"
                 >
-                  Login
+                  {t('common.login')}
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate('/register')}
                   className="rounded-lg bg-primary-container px-5 py-2 font-inter text-sm font-medium text-white transition-all hover:bg-primary active:opacity-80"
                 >
-                  Daftar
+                  {t('common.register')}
                 </button>
               </>
             )}
           </div>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((value) => !value)}
+            className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 md:hidden"
+            aria-label="Menu"
+          >
+            <span className="material-symbols-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
+          </button>
         </div>
+        {mobileMenuOpen ? (
+          <div className="border-t border-gray-100 bg-white px-6 py-4 shadow-sm md:hidden">
+            <div className="flex flex-col gap-3">
+              {NAV_LINKS.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.end}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `rounded-lg px-3 py-2 font-inter text-sm font-semibold ${
+                      isActive ? 'bg-emerald-50 text-emerald-700' : 'text-gray-600'
+                    }`
+                  }
+                >
+                  {t(link.labelKey)}
+                </NavLink>
+              ))}
+              <div className="flex items-center justify-between gap-3 border-t border-gray-100 pt-3">
+                <LanguageSwitcher />
+                {user ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false)
+                      navigate('/dashboard')
+                    }}
+                    className="rounded-lg bg-primary-container px-4 py-2 text-sm font-medium text-white"
+                  >
+                    {t('common.dashboard')}
+                  </button>
+                ) : (
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileMenuOpen(false)
+                        navigate('/login')
+                      }}
+                      className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600"
+                    >
+                      {t('common.login')}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileMenuOpen(false)
+                        navigate('/register')
+                      }}
+                      className="rounded-lg bg-primary-container px-4 py-2 text-sm font-medium text-white"
+                    >
+                      {t('common.register')}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ) : null}
       </nav>
 
       <main className="flex-1 w-full min-w-0">
@@ -82,34 +156,33 @@ export function PublicLayout() {
                 MFT Certification
               </div>
               <p className="max-w-2xl text-sm leading-7 text-gray-500">
-                Leading the transformation of global tourism towards an inclusive, respectful,
-                and certified Muslim-friendly ecosystem.
+                {t('public.footer.description')}
               </p>
             </div>
 
             <div className="min-w-0">
-              <h5 className="mb-6 font-semibold text-primary">Links</h5>
+              <h5 className="mb-6 font-semibold text-primary">{t('public.footer.links')}</h5>
               <ul className="space-y-4 text-sm text-gray-500">
                 <li>
                   <Link to="/about" className="hover:text-emerald-700">
-                    Tentang MFTC
+                    {t('public.footer.about')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/standards" className="hover:text-emerald-700">
-                    Standar
+                    {t('public.footer.standards')}
                   </Link>
                 </li>
                 <li>
                   <Link to="/verify" className="hover:text-emerald-700">
-                    Verifikasi Sertifikat
+                    {t('public.footer.verify')}
                   </Link>
                 </li>
               </ul>
             </div>
 
             <div className="min-w-0">
-              <h5 className="mb-6 font-semibold text-primary">Follow Us</h5>
+              <h5 className="mb-6 font-semibold text-primary">{t('public.footer.follow')}</h5>
               <div className="flex gap-4">
                 <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-50 text-emerald-900 transition-colors hover:bg-emerald-50">
                   <span className="material-symbols-outlined">share</span>
@@ -128,13 +201,13 @@ export function PublicLayout() {
 
             <div className="flex flex-wrap gap-6">
               <a className="font-inter text-xs text-gray-400 hover:text-emerald-600" href="#">
-                Privacy Policy
+                {t('public.footer.privacy')}
               </a>
               <a className="font-inter text-xs text-gray-400 hover:text-emerald-600" href="#">
-                Terms of Service
+                {t('public.footer.terms')}
               </a>
               <a className="font-inter text-xs text-gray-400 hover:text-emerald-600" href="#">
-                Contact Support
+                {t('public.footer.support')}
               </a>
             </div>
           </div>

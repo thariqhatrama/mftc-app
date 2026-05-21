@@ -2,7 +2,7 @@
 
 > Update file ini setiap kali selesai satu sesi Claude Code.
 > File ini dibaca Claude Code di awal setiap sesi baru untuk orientasi cepat.
-> Last update: 2026-05-11 (Phase D Auditor checklist, assignment tabs, NC modal, report flow)
+> Last update: 2026-05-13 (invoice flow fix, modal CRUD updates, payment verification table, audit logs dashboard, NC report guard)
 
 ---
 
@@ -180,6 +180,32 @@ Phase 7 — Infra & Test   [x] Selesai
 > Format: [tanggal] - apa yang selesai - apa yang belum - error yang tersisa
 
 ```
+[2026-05-13]
+- Selesai: Perbaikan flow invoice F08-F11. Create invoice dari header action tabel
+  Filament sekarang set `status=pending`, `original_amount=amount`, dan transisi
+  application `submitted → invoiced` via `StatusTransitionService`, sehingga PU
+  bisa melihat pembayaran/upload bukti. Test: `php artisan test --compact
+  tests/Feature/InvoiceResourceTest.php` sukses (4 passed, 26 assertions).
+- Selesai: `/admin/self-assessment-questions` diubah menjadi modal CRUD. Route
+  create/edit resource dihapus sehingga hanya halaman index; create/edit berjalan
+  sebagai modal Filament, import JSON tetap ada. Test self-assessment sukses
+  (6 passed).
+- Selesai: `/admin/payment-verification-page` diubah dari custom Blade menjadi
+  tabel Filament biasa dengan kolom invoice/company/amount/status/bukti bayar,
+  modal preview bukti pembayaran, modal create/edit/delete invoice, serta action
+  approve/reject payment. Blade page kini hanya render `{{ $this->table }}`.
+- Selesai: dashboard awal super_admin tidak lagi menampilkan tabel SLA overdue.
+  Widget baru `AuditLogsTable` menampilkan audit logs terbaru; `OverdueApplicationsTable`
+  disembunyikan dari dashboard (`canView=false`) namun file tetap ada.
+- Selesai: guard submit laporan auditor diperketat. Rekomendasi approve pada
+  action `Submit Laporan` ditolak jika masih ada NC terbuka (`closed_at` null),
+  dan `StatusTransitionService` juga memblokir transisi ke `report_submitted`
+  jika masih ada NC terbuka agar tidak bisa ditembus dari jalur lain.
+- Verifikasi sesi: `vendor/bin/pint --dirty --format agent`; route payment
+  verification terdaftar; `php artisan about --only=environment` boot normal;
+  `php artisan test --compact tests/Unit/StatusTransitionServiceTest.php` sukses
+  (28 passed, 154 assertions).
+
 [2026-05-11]
 - Selesai: Phase D Auditor. AuditChecklistResource memiliki default filter item
   belum diaudit, progress action, row styling item selesai, modal audit item
