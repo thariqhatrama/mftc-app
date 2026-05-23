@@ -17,8 +17,8 @@ Acuan standar yang digunakan adalah **Standar Pariwisata Ramah Muslim:2025**.
 
 | Layer | Teknologi | Versi |
 |---|---|---|
-| Backend | Laravel, PHP | Laravel 11, PHP 8.3 |
-| Admin Panel | Filament | v3 |
+| Backend | Laravel, PHP | Laravel 12, PHP 8.3 |
+| Admin Panel | Filament | v5 |
 | Frontend PU | React, Vite, TypeScript, TailwindCSS | React 18 |
 | Database | PostgreSQL | 15 |
 | Cache/Queue/Session | Redis | via Laragon/dev server |
